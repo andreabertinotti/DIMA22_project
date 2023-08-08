@@ -34,7 +34,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
       TimeOfDay(hour: 12, minute: 12); // Default drop-off time
   TimeOfDay pickupTime =
       TimeOfDay(hour: 23, minute: 59); // Default pick-up time
-  String lockerName = 'Select a locker';
+  //String lockerName = 'Select a locker';
   String baggageSize = 'Select a size';
 
   /*
@@ -582,14 +582,14 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                                     return;
                                   }
 
-                                  if (lockerName == 'Select a locker') {
-                                    // Show error message for locker name
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text('Please select a locker'),
-                                    ));
-                                    return;
-                                  }
+                                  //if (lockerName == 'Select a locker') {
+                                  //  // Show error message for locker name
+                                  //  ScaffoldMessenger.of(context)
+                                  //      .showSnackBar(SnackBar(
+                                  //    content: Text('Please select a locker'),
+                                  //  ));
+                                  //  return;
+                                  //}
 
                                   // Add data to Firestore when all validations pass
                                   FirebaseFirestore.instance
@@ -600,7 +600,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                                       .collection('reservations')
                                       .add({
                                     'userUid': user.uid,
-                                    'locker': widget.document['lockerName'],
+                                    'locker': widget.document.id,
                                     'cell': 'cell1',
                                     'baggageSize': baggageSize,
                                     'reservationStartDate': dropoff,

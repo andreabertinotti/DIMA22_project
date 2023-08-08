@@ -16,7 +16,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   Set<Marker> markers = Set();
-  late BitmapDescriptor customIcon;
+  late BitmapDescriptor customIcon = BitmapDescriptor.defaultMarker;
   var user_location = Location();
   LocationData? currentLocation;
   late var initial_location;
