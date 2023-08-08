@@ -70,24 +70,24 @@ class _HomeViewState extends State<HomeView> {
               location = document['lockerPosition'];
               var latLng = LatLng(location.latitude, location.longitude);
               markers.add(Marker(
-                  markerId: MarkerId(document.id),
-                  position: latLng,
-                  infoWindow: InfoWindow(
-                      title: document['lockerName'],
-                      snippet: document['lockerFare'].toString() + '€/hour'),
-                  onTap: () => MediaQuery.of(context).size.width < 800
-                      ? _showBottomSheet(document)
-                      : showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            Map<String, dynamic> map = document.data();
-                            return CustomDialogBox(
-                              map: map,
-                              document: document,
-                            );
-                          }),
-                  icon: BitmapDescriptor.defaultMarker //customIcon,
-                  ));
+                markerId: MarkerId(document.id),
+                position: latLng,
+                infoWindow: InfoWindow(
+                    title: document['lockerName'],
+                    snippet: document['lockerFare'].toString() + '€/hour'),
+                onTap: () => MediaQuery.of(context).size.width < 800
+                    ? _showBottomSheet(document)
+                    : showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          Map<String, dynamic> map = document.data();
+                          return CustomDialogBox(
+                            map: map,
+                            document: document,
+                          );
+                        }),
+                icon: customIcon, //BitmapDescriptor.defaultMarker
+              ));
 
               print('position: ' + latLng.toString());
             } else {
