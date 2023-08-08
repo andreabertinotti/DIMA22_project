@@ -13,67 +13,65 @@ class ReservationsScreenHorizontal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Column(
-              //children: [
-              //  ProfilePic(email: snapshot.data!.email!, uid: snapshot.data!.uid),
-              //  Text(
-              //    "User email: " + snapshot.data!.email!,
-              //    style: TextStyle(fontSize: 20),
-              //  ),
-              //],
-              ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ButtonTheme(
-                  minWidth: 300,
-                  height: 100,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  HostMap(uid: snapshot.data!.uid)));
-                    },
-                    child: const Text(
-                      "check my reservaitons",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Column(
+            //children: [
+            //  ProfilePic(email: snapshot.data!.email!, uid: snapshot.data!.uid),
+            //  Text(
+            //    "User email: " + snapshot.data!.email!,
+            //    style: TextStyle(fontSize: 20),
+            //  ),
+            //],
+            ),
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ButtonTheme(
+                minWidth: 300,
+                height: 100,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                HostMap(uid: snapshot.data!.uid)));
+                  },
+                  child: const Text(
+                    "check my reservaitons",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ButtonTheme(
-                  minWidth: 300,
-                  height: 100,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EditBooking(
-                                    uid: snapshot.data!.uid,
-                                    // TODO: change email with a reservation code or other identifier
-                                  )));
-                    },
-                    child: const Text(
-                      "add new reservation",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ButtonTheme(
+                minWidth: 300,
+                height: 100,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditBooking(
+                                  uid: snapshot.data!.uid,
+                                  // TODO: change email with a reservation code or other identifier
+                                )));
+                  },
+                  child: const Text(
+                    "add new reservation",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
               ),
-            ],
-          )
-        ],
-      ),
+            ),
+          ],
+        )
+      ],
     );
   }
 }

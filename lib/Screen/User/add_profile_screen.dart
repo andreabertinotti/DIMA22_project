@@ -142,7 +142,7 @@ class _AddProfileState extends State<AddProfile> {
 
     // Create a new document in the "users" collection with the user's data
     try {
-      await FirebaseFirestore.instance.collection('users').add({
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({
         'name': name,
         'surname': surname,
         'email': email,

@@ -90,18 +90,15 @@ class _HomeViewState extends State<HomeView> {
                         }),
                 icon: customIcon, //BitmapDescriptor.defaultMarker
               ));
-
-              print('position: ' + latLng.toString());
             } else {
               print('document does not exist');
             }
           });
-          print('here 2');
+
           currentLocation == null
               ? initial_location = LatLng(45.478436, 9.226619)
               : initial_location = LatLng(
                   currentLocation!.latitude!, currentLocation!.longitude!);
-          print('here 3');
 
           return GoogleMap(
             myLocationButtonEnabled: false,

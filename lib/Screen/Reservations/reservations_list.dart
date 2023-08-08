@@ -2,7 +2,10 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // package used to edit date format
+import 'package:intl/intl.dart';
+import 'package:pro/Models/user_model.dart';
+import 'package:pro/Services/auth_service.dart';
+import 'package:provider/provider.dart'; // package used to edit date format
 
 // A stateful widget representing the bookings page.
 class BookingsPage extends StatefulWidget {
@@ -134,7 +137,7 @@ class _BookingsPageState extends State<BookingsPage> {
   final GlobalKey<ScaffoldMessengerState> _bookingMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
-  Future<List<Map<String, dynamic>>> fetchReservations() async {
+  Future<List<Map<String, dynamic>>> fetchReservations(User user) async {
     // Firestore query to fetch lockers
     QuerySnapshot lockerSnapshot =
         await FirebaseFirestore.instance.collection('lockers').get();
@@ -154,7 +157,16 @@ class _BookingsPageState extends State<BookingsPage> {
         for (QueryDocumentSnapshot reservationDoc in reservationSnapshot.docs) {
           // Check if the document exists and is not empty
           if (reservationDoc.exists && reservationDoc.data() != null) {
-            reservations.add(reservationDoc.data()! as Map<String, dynamic>);
+            Map<String, dynamic> reservationData =
+                reservationDoc.data()! as Map<String, dynamic>;
+
+            // Check if the userUID matches the UID of the logged-in user
+            if (reservationData.containsKey('userUid') &&
+                reservationData['userUid'] == user.uid) {
+              //print(user.uid + ' --- ' + reservationData['userUid']);
+              //print('ADDED');
+              reservations.add(reservationData);
+            }
           }
         }
       }
@@ -174,45 +186,63 @@ class _BookingsPageState extends State<BookingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldMessenger(
-      key: _bookingMessengerKey,
-      child: Scaffold(
-        body: FutureBuilder<List<Map<String, dynamic>>>(
-          future: fetchReservations(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text("Error loading data."),
-              );
-            } else if (snapshot.data!.isEmpty) {
-              return Center(
-                child:
-                    Text("No booking found!", style: TextStyle(fontSize: 20)),
-              );
-            } else {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  // Create a CustomListItem using the data retrieved from Firestore
-                  return CustomListItem(
-                    dropOff:
-                        snapshot.data![index]['reservationStartDate'].toDate(),
-                    pickUp:
-                        snapshot.data![index]['reservationEndDate'].toDate(),
-                    baggageSize: snapshot.data![index]['baggageSize'],
-                    //notificationSet: snapshot.data![index]['notificationSet'],
-                    //price: snapshot.data![index]['price'],
-                  );
+    final authService = Provider.of<AuthService>(context);
+    return StreamBuilder<User?>(
+      stream: authService.user,
+      builder: (_, AsyncSnapshot<User?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          final User? user = snapshot.data;
+          return ScaffoldMessenger(
+            key: _bookingMessengerKey,
+            child: Scaffold(
+              body: FutureBuilder<List<Map<String, dynamic>>>(
+                future: fetchReservations(user!),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    print(user.uid);
+                    print(snapshot);
+
+                    return Center(
+                      child: Text("Error loading data."),
+                    );
+                  } else if (snapshot.data!.isEmpty) {
+                    return Center(
+                      child: Text("No booking found!",
+                          style: TextStyle(fontSize: 20)),
+                    );
+                  } else {
+                    return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        // Create a CustomListItem using the data retrieved from Firestore
+                        return CustomListItem(
+                          dropOff: snapshot.data![index]['reservationStartDate']
+                              .toDate(),
+                          pickUp: snapshot.data![index]['reservationEndDate']
+                              .toDate(),
+                          baggageSize: snapshot.data![index]['baggageSize'],
+                          //notificationSet: snapshot.data![index]['notificationSet'],
+                          //price: snapshot.data![index]['price'],
+                        );
+                      },
+                    );
+                  }
                 },
-              );
-            }
-          },
-        ),
-      ),
+              ),
+            ),
+          );
+        } else {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
     );
   }
 }
