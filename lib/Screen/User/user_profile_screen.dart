@@ -65,9 +65,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       CircleAvatar(
                         // User image
-                        minRadius: 40,
-                        maxRadius: 60,
+                        radius: 60,
                         backgroundColor: Colors.orange,
+                        child: Center(
+                          child: Text(
+                            "${userData['name'][0] ?? ''}${userData['surname'][0] ?? ''}", //Initials on user image
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 60, 
+                              fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ),
                       ),
                       Text(
                         '${userData['name'] ?? ''} ${userData['surname'] ?? ''}',

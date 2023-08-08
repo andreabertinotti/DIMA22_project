@@ -258,8 +258,18 @@ class _EditProfileState extends State<EditProfile> {
                         bottom: 8,
                       ),
                       child: CircleAvatar(
-                        radius: 50,
+                        radius: 60,
                         backgroundColor: Colors.orange,
+                        child: Center(
+                          child: Text(
+                            "${nameController.text[0]}${surnameController.text[0]}", //Initials on user image
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 60, 
+                              fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ),
                       ),
                     ),
                     Padding(
