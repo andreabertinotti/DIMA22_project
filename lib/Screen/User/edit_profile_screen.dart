@@ -241,6 +241,7 @@ class _EditProfileState extends State<EditProfile> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.orange,
+            foregroundColor: Colors.white,
             title: const Text(
               'Update your profile',
               style: TextStyle(

@@ -157,7 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
               );
             },
             backgroundColor: Color(0xFFFF9800),
-            child: Icon(Icons.edit),
+            child: Icon(Icons.edit, color: Colors.white,),
           ),
         );
       },

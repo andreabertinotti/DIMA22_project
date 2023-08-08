@@ -82,7 +82,15 @@ class _MyHomeState extends State<MyHome> {
         title: 'Flutter layout demo',
         home: Scaffold(
           appBar: AppBar(
-            toolbarHeight: 38,
+            //toolbarHeight: 38,
+            backgroundColor: Colors.orange,
+            foregroundColor: Colors.white,
+            title: const Text(
+              'Milan Baggage keeper',     //Change app name (?)
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
           //drawer is the menu that can be hidden on left side
           drawer: Drawer(
@@ -97,7 +105,7 @@ class _MyHomeState extends State<MyHome> {
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                backgroundColor: Colors.black,
+                backgroundColor: Colors.orange,
                 label: 'Home',
               ),
               //BottomNavigationBarItem(
@@ -112,23 +120,23 @@ class _MyHomeState extends State<MyHome> {
               //),
               BottomNavigationBarItem(
                 icon: Icon(Icons.list_alt),
-                backgroundColor: Colors.black,
+                backgroundColor: Colors.orange,
                 label: 'My Reservations',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.add),
-                backgroundColor: Colors.black,
+                backgroundColor: Colors.orange,
                 label: 'Add Reservations',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
-                backgroundColor: Colors.black,
+                backgroundColor: Colors.orange,
                 label: 'Profile',
               ),
             ],
             currentIndex: _selectedIndex,
-            backgroundColor: Colors.black,
-            selectedItemColor: Color(0xFFFF9800),
+            backgroundColor: Colors.orange,
+            selectedItemColor: Colors.orange.shade900,  //TODO: change colors
             onTap: _onItemTapped,
           ),
         ),

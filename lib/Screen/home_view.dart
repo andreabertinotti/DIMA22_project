@@ -41,7 +41,7 @@ class _HomeViewState extends State<HomeView> {
 
   getIcons() async {
     var icon = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(devicePixelRatio: 3.0),
+      ImageConfiguration(devicePixelRatio: 3.0, size: Size(37, 50)),    //marker size scaled by 0.5x (original: 74x100)
       "assets/images/marker.png",
     );
     // temptative condition to avoid exceptions
