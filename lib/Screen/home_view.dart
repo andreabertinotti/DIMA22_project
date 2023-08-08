@@ -41,7 +41,9 @@ class _HomeViewState extends State<HomeView> {
 
   getIcons() async {
     var icon = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(devicePixelRatio: 3.0, size: Size(37, 50)),    //marker size scaled by 0.5x (original: 74x100)
+      ImageConfiguration(
+          devicePixelRatio: 3.0,
+          size: Size(37, 50)), //marker size scaled by 0.5x (original: 74x100)
       "assets/images/marker.png",
     );
     // temptative condition to avoid exceptions
@@ -137,9 +139,9 @@ class _HomeViewState extends State<HomeView> {
                                   builder: (context) =>
                                       Wrapper(widget: CreatePost(document))));
                         },
-                        color: Colors.amber,
+                        color: Colors.orange,
                         textColor: Colors.white,
-                        child: const Text("Create Post"),
+                        child: const Text("Create a reservation"),
                       ),
                     ],
                   ),
@@ -147,7 +149,7 @@ class _HomeViewState extends State<HomeView> {
                 Row(
                   children: [
                     const Text(
-                      "flat's name: ",
+                      "Locker's name: ",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
@@ -184,7 +186,7 @@ class _HomeViewState extends State<HomeView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "description: ",
+                      "Address: ",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
