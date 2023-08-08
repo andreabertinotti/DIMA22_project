@@ -137,52 +137,62 @@ class _BookingsPageState extends State<BookingsPage> {
   final GlobalKey<ScaffoldMessengerState> _bookingMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
+  //Future<List<Map<String, dynamic>>> fetchReservations(User user) async {
+  //  // Firestore query to fetch lockers
+  //  QuerySnapshot lockerSnapshot =
+  //      await FirebaseFirestore.instance.collection('lockers').get();
+//
+  //  List<Map<String, dynamic>> reservations = [];
+//
+  //  for (QueryDocumentSnapshot lockerDoc in lockerSnapshot.docs) {
+  //    // Firestore query to fetch cells within the locker
+  //    QuerySnapshot cellSnapshot =
+  //        await lockerDoc.reference.collection('cells').get();
+//
+  //    for (QueryDocumentSnapshot cellDoc in cellSnapshot.docs) {
+  //      // Firestore query to fetch reservations within the cell
+  //      QuerySnapshot reservationSnapshot =
+  //          await cellDoc.reference.collection('reservations').get();
+//
+  //      for (QueryDocumentSnapshot reservationDoc in reservationSnapshot.docs) {
+  //        // Check if the document exists and is not empty
+  //        if (reservationDoc.exists && reservationDoc.data() != null) {
+  //          Map<String, dynamic> reservationData =
+  //              reservationDoc.data()! as Map<String, dynamic>;
+//
+  //          // Check if the userUID matches the UID of the logged-in user
+  //          if (reservationData.containsKey('userUid') &&
+  //              reservationData['userUid'] == user.uid) {
+  //            //print(user.uid + ' --- ' + reservationData['userUid']);
+  //            //print('ADDED');
+  //            reservations.add(reservationData);
+  //          }
+  //        }
+  //      }
+  //    }
+  //  }
+//
+  //  return reservations;
+  //}
+
   Future<List<Map<String, dynamic>>> fetchReservations(User user) async {
-    // Firestore query to fetch lockers
-    QuerySnapshot lockerSnapshot =
-        await FirebaseFirestore.instance.collection('lockers').get();
+    QuerySnapshot reservationSnapshot = await FirebaseFirestore.instance
+        .collectionGroup('reservations')
+        .where('userUid', isEqualTo: user.uid)
+        .get();
 
     List<Map<String, dynamic>> reservations = [];
 
-    for (QueryDocumentSnapshot lockerDoc in lockerSnapshot.docs) {
-      // Firestore query to fetch cells within the locker
-      QuerySnapshot cellSnapshot =
-          await lockerDoc.reference.collection('cells').get();
-
-      for (QueryDocumentSnapshot cellDoc in cellSnapshot.docs) {
-        // Firestore query to fetch reservations within the cell
-        QuerySnapshot reservationSnapshot =
-            await cellDoc.reference.collection('reservations').get();
-
-        for (QueryDocumentSnapshot reservationDoc in reservationSnapshot.docs) {
-          // Check if the document exists and is not empty
-          if (reservationDoc.exists && reservationDoc.data() != null) {
-            Map<String, dynamic> reservationData =
-                reservationDoc.data()! as Map<String, dynamic>;
-
-            // Check if the userUID matches the UID of the logged-in user
-            if (reservationData.containsKey('userUid') &&
-                reservationData['userUid'] == user.uid) {
-              //print(user.uid + ' --- ' + reservationData['userUid']);
-              //print('ADDED');
-              reservations.add(reservationData);
-            }
-          }
-        }
+    for (QueryDocumentSnapshot reservationDoc in reservationSnapshot.docs) {
+      if (reservationDoc.exists && reservationDoc.data() != null) {
+        Map<String, dynamic> reservationData =
+            reservationDoc.data()! as Map<String, dynamic>;
+        reservations.add(reservationData);
       }
     }
 
     return reservations;
   }
-
-  ///////////////////////////////////////////////////////////////////////
-  /// PROBLEM: avendo inserito prenotazioni fittizie per ogni locker,
-  /// vengono tutte contate e l'app cerca di mostrarle, ma siccome hanno i campi vuoti danno un errore.
-  /// RISOLVERE INSERENDO SOLO PRENOTAZIONI BEN FORMATE!
-  ///
-  ///
-  ///
-  ///
 
   @override
   Widget build(BuildContext context) {
