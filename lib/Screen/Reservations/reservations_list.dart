@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:pro/Models/user_model.dart';
 import 'package:pro/Services/auth_service.dart';
 import 'package:provider/provider.dart'; // package used to edit date format
+import 'package:pro/Screen/menu.dart';
+import 'package:pro/Utils/wrapper.dart';
 
 // A stateful widget representing the bookings page.
 class BookingsPage extends StatefulWidget {
@@ -49,8 +51,7 @@ class CustomListItem extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors
-                          .red), // TODO: insert locker image or map instead of a solid color
+                      color: Colors.red), // TODO: insert locker image or map instead of a solid color
                 ),
               ),
               Container(
@@ -205,6 +206,16 @@ class _BookingsPageState extends State<BookingsPage> {
           return ScaffoldMessenger(
             key: _bookingMessengerKey,
             child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.orange,
+                foregroundColor: Colors.white,
+                title: const Text(
+                  'My Reservations',     //Change app name (?)
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
               body: FutureBuilder<List<Map<String, dynamic>>>(
                 future: fetchReservations(user!),
                 builder: (context, snapshot) {

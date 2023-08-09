@@ -53,20 +53,30 @@ class _ProfilePageState extends State<ProfilePage> {
         var userData = snapshot.data!.docs[0];
 
         return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.orange,
+            toolbarHeight: 0,
+            foregroundColor: Colors.white,
+          ),
           body: Column(
             children: [
-              Flexible(
-                flex: 2,
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
+              SizedBox(
+                width: double.infinity,
+                height: 240,
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Container(
+                      color: Colors.orange,
+                      width: double.infinity,
+                      height: 180,
+                    ),
+                    Positioned(
+                      top: 120,
+                      child: CircleAvatar(
                         // User image
                         radius: 60,
-                        backgroundColor: Colors.orange,
+                        backgroundColor: Colors.red,
                         child: Center(
                           child: Text(
                             "${userData['name'][0] ?? ''}${userData['surname'][0] ?? ''}", //Initials on user image
@@ -78,74 +88,112 @@ class _ProfilePageState extends State<ProfilePage> {
                           )
                         ),
                       ),
-                      Text(
+                    ),
+                    Positioned(
+                      top: 50,
+                      child: Text(
                         '${userData['name'] ?? ''} ${userData['surname'] ?? ''}',
-                        style: TextStyle(fontSize: 25),
-                      ), // User name&surname under image
-                    ],
-                  ),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 40
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
-              Flexible(
-                flex: 3,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 35),
-                        child: Text(
-                          'Name: ${userData['name'] ?? ''}',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontSize: 18),
-                        ),
+              Container(
+                margin: EdgeInsets.only(left: 25, right: 25, top: 25),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2)))),
+                child: Row(
+                  children: [
+                    Icon(Icons.person_outline, color: Colors.orange, size: 45,),
+                    SizedBox(width: 20,),
+                    Text(
+                      '${userData['name'] ?? ''} ${userData['surname'] ?? ''}',
+                      style: TextStyle(
+                        fontSize: userData['name'].length + userData['surname'].length > 30 ? 15 : 18
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 35),
-                        child: Text(
-                          'Surname: ${userData['surname'] ?? ''}',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 35),
-                        child: Text(
-                          'Phone Number: ${userData['phone'] ?? ''}',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 35),
-                        child: Text(
-                          'Address: ${userData['address'] ?? ''}',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 35),
-                        child: Text(
-                          'Email: ${userData['email'] ?? ''}',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 35, bottom: 35),
-                        child: Text(
-                          'Other info: ...',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
+              Container(
+                margin: EdgeInsets.only(left: 25, right: 25, top: 10),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2)))),
+                child: Row(
+                  children: [
+                    Icon(Icons.mail_outline, color: Colors.orange, size: 45,),
+                    SizedBox(width: 20,),
+                    Text(
+                      '${userData['email'] ?? ''}',
+                      style: TextStyle(
+                        fontSize: userData['email'].length > 30 ? 15 : 18
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 25, right: 25, top: 10),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2)))),
+                child: Row(
+                  children: [
+                    Icon(Icons.place_outlined, color: Colors.orange, size: 45,),
+                    SizedBox(width: 20,),
+                    Text(
+                      '${userData['address'] ?? ''}',
+                      style: TextStyle(
+                        fontSize: userData['address'].length > 30 ? 15 : 18
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 25, right: 25, top: 10),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2)))),
+                child: Row(
+                  children: [
+                    Icon(Icons.phone_outlined, color: Colors.orange, size: 45,),
+                    SizedBox(width: 20,),
+                    Text(
+                      '${userData['phone'] ?? ''}',
+                      style: TextStyle(
+                        fontSize: 18
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 40),
+              /*ElevatedButton(               //ELEVATED BUTTON INSTEAD OF FLOATING ACTION BUTTON
+                onPressed: () {
+                  Navigator.push( context,
+                    MaterialPageRoute(builder: (context) => const EditProfile()),);
+                },
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        side: BorderSide(color: Colors.orange)
+                      )
+                  )
+                ),
+                child: Text(
+                  "Edit profile".toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
+                ),
+              )*/
             ],
           ),
           // Floating button to open edit profile page

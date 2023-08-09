@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-
+import 'package:pro/Screen/menu.dart';
 import '../Social/create_post.dart';
 import '../Utils/custom_dialog_box.dart';
 import '../Utils/image_view.dart';
@@ -55,7 +55,21 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.orange,
+        foregroundColor: Colors.white,
+        title: const Text(
+          'Milan Baggage keeper',     //Change app name (?)
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+      drawer: Drawer(
+            child: Wrapper(widget: Menu()),
+      ),
+      body: SafeArea(
       child: StreamBuilder(
         stream: FirebaseFirestore.instance.collection("lockers").snapshots(),
         builder: (context, AsyncSnapshot snapshot) {
@@ -109,7 +123,7 @@ class _HomeViewState extends State<HomeView> {
           );
         },
       ),
-    );
+    ));
   }
 
   _showBottomSheet(dynamic document) async {

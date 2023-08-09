@@ -81,17 +81,6 @@ class _MyHomeState extends State<MyHome> {
         theme: appTheme,
         title: 'Flutter layout demo',
         home: Scaffold(
-          appBar: AppBar(
-            //toolbarHeight: 38,
-            backgroundColor: Colors.orange,
-            foregroundColor: Colors.white,
-            title: const Text(
-              'Milan Baggage keeper',     //Change app name (?)
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
           //drawer is the menu that can be hidden on left side
           drawer: Drawer(
             child: Wrapper(widget: Menu()),
