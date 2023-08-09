@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:pro/Screen/Reservations/reservation_add_locker.dart';
 import 'package:pro/Screen/menu.dart';
 import '../Social/create_post.dart';
 import '../Utils/custom_dialog_box.dart';
@@ -56,74 +57,75 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.orange,
-        foregroundColor: Colors.white,
-        title: const Text(
-          'Milan Baggage keeper',     //Change app name (?)
-          style: TextStyle(
-            color: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.orange,
+          foregroundColor: Colors.white,
+          title: const Text(
+            'Milan Baggage keeper', //Change app name (?)
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
-      ),
-      drawer: Drawer(
-        child: Wrapper(widget: Menu()),
-      ),
-      body: SafeArea(
-      child: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("lockers").snapshots(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return const Text("Loading...");
-          }
-          // Check if the icon was loaded successfully
+        drawer: Drawer(
+          child: Wrapper(widget: Menu()),
+        ),
+        body: SafeArea(
+          child: StreamBuilder(
+            stream:
+                FirebaseFirestore.instance.collection("lockers").snapshots(),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return const Text("Loading...");
+              }
+              // Check if the icon was loaded successfully
 
-          GeoPoint location;
-          //print('here');
-          var document = snapshot.data.docs.forEach((document) {
-            if (document.exists) {
-              //print('found locker: ' + document['lockerName']);
-              location = document['lockerPosition'];
-              var latLng = LatLng(location.latitude, location.longitude);
-              markers.add(Marker(
-                markerId: MarkerId(document.id),
-                position: latLng,
-                infoWindow: InfoWindow(
-                    title: document['lockerName'],
-                    snippet: document['lockerFare'].toString() + '€/hour'),
-                onTap: () => MediaQuery.of(context).size.width < 800
-                    ? _showBottomSheet(document)
-                    : showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          Map<String, dynamic> map = document.data();
-                          return CustomDialogBox(
-                            map: map,
-                            document: document,
-                          );
-                        }),
-                icon: customIcon, //BitmapDescriptor.defaultMarker
-              ));
-            } else {
-              print('document does not exist');
-            }
-          });
+              GeoPoint location;
+              //print('here');
+              var document = snapshot.data.docs.forEach((document) {
+                if (document.exists) {
+                  //print('found locker: ' + document['lockerName']);
+                  location = document['lockerPosition'];
+                  var latLng = LatLng(location.latitude, location.longitude);
+                  markers.add(Marker(
+                    markerId: MarkerId(document.id),
+                    position: latLng,
+                    infoWindow: InfoWindow(
+                        title: document['lockerName'],
+                        snippet: document['lockerFare'].toString() + '€/hour'),
+                    onTap: () => MediaQuery.of(context).size.width < 800
+                        ? _showBottomSheet(document)
+                        : showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              Map<String, dynamic> map = document.data();
+                              return CustomDialogBox(
+                                map: map,
+                                document: document,
+                              );
+                            }),
+                    icon: customIcon, //BitmapDescriptor.defaultMarker
+                  ));
+                } else {
+                  print('document does not exist');
+                }
+              });
 
-          currentLocation == null
-              ? initial_location = LatLng(45.478436, 9.226619)
-              : initial_location = LatLng(
-                  currentLocation!.latitude!, currentLocation!.longitude!);
+              currentLocation == null
+                  ? initial_location = LatLng(45.478436, 9.226619)
+                  : initial_location = LatLng(
+                      currentLocation!.latitude!, currentLocation!.longitude!);
 
-          return GoogleMap(
-            myLocationButtonEnabled: false,
-            zoomControlsEnabled: false,
-            initialCameraPosition:
-                CameraPosition(target: initial_location, zoom: 13),
-            markers: markers,
-          );
-        },
-      ),
-    ));
+              return GoogleMap(
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
+                initialCameraPosition:
+                    CameraPosition(target: initial_location, zoom: 13),
+                markers: markers,
+              );
+            },
+          ),
+        ));
   }
 
   _showBottomSheet(dynamic document) async {
@@ -147,8 +149,8 @@ class _HomeViewState extends State<HomeView> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      Wrapper(widget: CreatePost(document))));
+                                  builder: (context) => Wrapper(
+                                      widget: EditLockerBooking(document))));
                         },
                         color: Colors.orange,
                         textColor: Colors.white,
