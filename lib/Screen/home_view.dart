@@ -67,7 +67,7 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
       drawer: Drawer(
-            child: Wrapper(widget: Menu()),
+        child: Wrapper(widget: Menu()),
       ),
       body: SafeArea(
       child: StreamBuilder(
