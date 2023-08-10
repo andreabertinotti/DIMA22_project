@@ -4,8 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Services/auth_service.dart';
 
-class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
+class Menu extends StatefulWidget {
+  const Menu({super.key});
+
+  @override
+  _MenuState createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
+  
+  TextEditingController descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +42,7 @@ class Menu extends StatelessWidget {
       ),*/
       appBar: AppBar(backgroundColor: Colors.orange[900], toolbarHeight: 0,),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
             width: double.infinity,
@@ -70,7 +84,7 @@ class Menu extends StatelessWidget {
           Container(
             width: double.infinity,
             margin: EdgeInsets.symmetric(horizontal: 10),
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.only(top: 30, left: 10, right: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -83,21 +97,56 @@ class Menu extends StatelessWidget {
                   textAlign: TextAlign.justify,
                 ),
                 SizedBox(height: 40,),
-                Text(
-                  'In case of errors please write an email to:',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'riccardo1.gianni@mail.polimi.it',
-                  textAlign: TextAlign.justify,
-                ),
-                Text(
-                  'andrea.bertinotti@mail.polimi.it',
-                  textAlign: TextAlign.justify,
-                ),
               ],
             ),
           ),
+          ElevatedButton(
+            onPressed: (){
+              showDialog(
+                context: context, 
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text('Report a problem', style: TextStyle(color: Colors.orange),),
+                    content: TextField(
+                      controller: descriptionController,
+                      minLines: 1,
+                      maxLines: 6,
+                      decoration: InputDecoration(
+                        hintText: "Description",
+                        //errorText: descriptionController.text.isNotEmpty ? null : "Problem description can't be empty",
+                      ),                    
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          //TODO: send problem report to db
+                          Navigator.of(context).pop();
+                          print(descriptionController.text);
+                        },
+                        child: Text('Submit', style: TextStyle(fontSize: 16, color: Colors.orange),),
+                      ),
+                    ],
+                  );
+                }
+              );
+            }, 
+            style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  side: BorderSide(color: Colors.orange)
+                )
+              )
+            ),
+            child: Text(
+            "Report a problem".toUpperCase(),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            )),
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
