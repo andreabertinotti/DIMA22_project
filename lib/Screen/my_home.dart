@@ -108,7 +108,7 @@ class _MyHomeState extends State<MyHome> {
               //  label: 'Chat',
               //),
               BottomNavigationBarItem(
-                icon: Icon(Icons.list_alt),
+                icon: Icon(Icons.menu_book),
                 backgroundColor: Colors.orange,
                 label: 'My Reservations',
               ),
@@ -125,7 +125,7 @@ class _MyHomeState extends State<MyHome> {
             ],
             currentIndex: _selectedIndex,
             backgroundColor: Colors.orange,
-            selectedItemColor: Colors.orange.shade900,  //TODO: change colors
+            selectedItemColor: Colors.black,  //TODO: change colors
             onTap: _onItemTapped,
           ),
         ),

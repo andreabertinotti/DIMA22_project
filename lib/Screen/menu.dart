@@ -25,21 +25,6 @@ class _MenuState extends State<Menu> {
     final authService = Provider.of<AuthService>(context);
 
     return Scaffold(
-      /*appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.orange[800],
-        foregroundColor: Colors.white,
-        title: Text('Milan Baggage keeper'),
-        leading: IconButton(
-          icon: Icon(
-            Icons.logout,
-            semanticLabel: "sign out",
-          ),
-          onPressed: () {
-            authService.signOut();
-          },
-        ),
-      ),*/
       appBar: AppBar(backgroundColor: Colors.orange[900], toolbarHeight: 0,),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

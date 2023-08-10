@@ -8,6 +8,7 @@ import 'package:pro/Services/auth_service.dart';
 import 'package:provider/provider.dart'; // package used to edit date format
 import 'package:pro/Screen/menu.dart';
 import 'package:pro/Utils/wrapper.dart';
+import 'package:pro/Screen/Reservations/reservation_add.dart';
 
 // A stateful widget representing the bookings page.
 class BookingsPage extends StatefulWidget {
@@ -82,14 +83,14 @@ class CustomListItem extends StatelessWidget {
                         fontSize: 18,
                       ),
                     ),
-                    //Text(
-                    //  "Price: €$price",
-                    //  style: TextStyle(
-                    //    fontSize: 18,
-                    //    fontWeight: FontWeight.bold,
-                    //    color: Colors.orange,
-                    //  ),
-                    //),
+                    Text(
+                      "Price: ",//€$price",     //TODO:add price
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orange,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -101,31 +102,43 @@ class CustomListItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              //ElevatedButton.icon(
-              //  // Open the edit booking page when the button is pressed
-              //  onPressed: () {
-              //    Navigator.push(
-              //        context,
-              //        MaterialPageRoute(
-              //            builder: (context) => const EditBooking()));
-              //  },
-              //  icon: Icon(Icons.edit),
-              //  label: Text("Edit booking"),
-              //  style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-              //),
-              //ElevatedButton.icon(
-              //  onPressed: () {
-              //    // TODO: change booking notification preference (+ notificationSet param)
-              //  },
-              //  icon: Icon(notificationSet
-              //      ? Icons.notifications_off_outlined
-              //      : Icons.notifications_active),
-              //  label:
-              //      Text("Turn ${notificationSet ? "OFF" : "ON"} notification"),
-              //  style: ElevatedButton.styleFrom(
-              //    backgroundColor: Colors.orange,
-              //  ),
-              //),
+              ElevatedButton.icon(
+              // TODO: Open the edit booking page when the button is pressed
+                onPressed: () {
+                  //Navigator.push(context,MaterialPageRoute(
+                          //builder: (context) => const EditBooking()));
+                },
+                icon: Icon(Icons.edit, color: Colors.white,),
+                label: Text("Edit booking", style: TextStyle(fontSize: 18, color: Colors.white),),
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor:MaterialStateProperty.all<Color>(Colors.orange),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                      side: BorderSide(color: Colors.orange)
+                    )
+                  )
+                ),
+              ),
+              ElevatedButton.icon(    //TODO: if notifications are implemented, change delete and notif. buttons --> remove text (only icon buttons)
+                onPressed: () {
+                  //TODO: Delete booking on button press
+                },
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                      side: BorderSide(color: Colors.orange)
+                    )
+                  )
+                ),
+                icon: Icon(Icons.delete, color: Colors.white),
+                label:
+                    Text("Delete booking", style: TextStyle(fontSize: 18, color: Colors.white),),
+              ),
             ],
           ),
         )
@@ -210,11 +223,27 @@ class _BookingsPageState extends State<BookingsPage> {
                 backgroundColor: Colors.orange,
                 foregroundColor: Colors.white,
                 title: const Text(
-                  'My Reservations',     //Change app name (?)
+                  'My Reservations',
                   style: TextStyle(
                     color: Colors.white,
                   ),
                 ),
+                actions: [                //TODO: valutare se fare aggiunta prenotazione su tab in basso
+                  TextButton.icon(
+                    onPressed: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(
+                          builder: (context) => EditBooking(uid: snapshot.data!.uid)
+                        )
+                      );
+                    }, 
+                    icon: Icon(Icons.add, color: Colors.white,), 
+                    label: Text(
+                      "Add booking", 
+                      style: TextStyle(color: Colors.white, fontSize: 17)
+                    )
+                  )
+                ],
               ),
               body: FutureBuilder<List<Map<String, dynamic>>>(
                 future: fetchReservations(user!),
@@ -240,14 +269,26 @@ class _BookingsPageState extends State<BookingsPage> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         // Create a CustomListItem using the data retrieved from Firestore
-                        return CustomListItem(
-                          dropOff: snapshot.data![index]['reservationStartDate']
-                              .toDate(),
-                          pickUp: snapshot.data![index]['reservationEndDate']
-                              .toDate(),
-                          baggageSize: snapshot.data![index]['baggageSize'],
-                          //notificationSet: snapshot.data![index]['notificationSet'],
-                          //price: snapshot.data![index]['price'],
+                        return ExpansionTile(
+                          title: Text("Inserire Nome locker da DB", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                          subtitle: Text("Indirizzo locker da inserire da DB", style: TextStyle(fontSize: 18),),
+                          textColor: Colors.orange,
+                          iconColor: Colors.orange,
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.orange,
+                            child: Text("${index+1}", style: TextStyle(color: Colors.white, fontSize: 20),),
+                          ),
+                          children: <Widget>[
+                            CustomListItem(
+                              dropOff: snapshot.data![index]['reservationStartDate']
+                                  .toDate(),
+                              pickUp: snapshot.data![index]['reservationEndDate']
+                                  .toDate(),
+                              baggageSize: snapshot.data![index]['baggageSize'],
+                              //notificationSet: snapshot.data![index]['notificationSet'],
+                              //price: snapshot.data![index]['price'],
+                            )
+                          ],
                         );
                       },
                     );
