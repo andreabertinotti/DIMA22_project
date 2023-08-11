@@ -76,17 +76,21 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: CircleAvatar(
                         // User image
                         radius: 60,
-                        backgroundColor: Colors.red,
-                        child: Center(
+                        backgroundColor: Colors.orange,
+                        child: CircleAvatar(
+                          radius: 58,
+                          backgroundColor: Colors.white,
+                          child: Center(
                           child: Text(
                             "${userData['name'][0] ?? ''}${userData['surname'][0] ?? ''}", //Initials on user image
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.orange,
                               fontSize: 60, 
                               fontWeight: FontWeight.bold
                             ),
                           )
                         ),
+                      )                        
                       ),
                     ),
                     Positioned(
@@ -171,29 +175,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               SizedBox(height: 40),
-              /*ElevatedButton(               //ELEVATED BUTTON INSTEAD OF FLOATING ACTION BUTTON
-                onPressed: () {
-                  Navigator.push( context,
-                    MaterialPageRoute(builder: (context) => const EditProfile()),);
-                },
-                style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        side: BorderSide(color: Colors.orange)
-                      )
-                  )
-                ),
-                child: Text(
-                  "Edit profile".toUpperCase(),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                ),
-              )*/
             ],
           ),
           // Floating button to open edit profile page
