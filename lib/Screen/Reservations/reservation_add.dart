@@ -874,7 +874,10 @@ class _EditBookingState extends State<EditBooking> {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
                               'Booking saved!'),
+                              backgroundColor: Colors.green,
                         ));
+
+                      Navigator.of(context).pop();
                     },
                     child: Text("save booking".toUpperCase(),
                         style: TextStyle(fontSize: 18)),

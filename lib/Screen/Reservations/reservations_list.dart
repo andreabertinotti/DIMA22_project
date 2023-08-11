@@ -71,7 +71,7 @@ class CustomListItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(pickUp)}", // TODO: move buttons below the image/text on the tile
+                      "Duration: ", // TODO: implementare durata prenotazione
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -79,6 +79,12 @@ class CustomListItem extends StatelessWidget {
                     ),
                     Text(
                       "Baggage size: $baggageSize",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      "Locker cell: ",
                       style: TextStyle(
                         fontSize: 18,
                       ),
