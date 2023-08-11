@@ -22,16 +22,21 @@ class _EditBookingState extends State<EditBooking> {
   //String dropdownValue = "Small"; // Default baggage size
   bool isNotificationActive =
       false; // Whether the notification is active or not
-  DateTime dropoff =
-      DateTime(2023, 1, 1, 12, 12); // Default drop-off date and time
-  DateTime pickup =
-      DateTime(2023, 12, 31, 23, 59); // Default pick-up date and time
+  DateTime dropoff = DateTime.now(); // Default drop-off date and time
+  DateTime pickup = DateTime.now(); // Default pick-up date and time
   TimeOfDay dropoffTime =
       TimeOfDay(hour: 12, minute: 12); // Default drop-off time
   TimeOfDay pickupTime =
       TimeOfDay(hour: 23, minute: 59); // Default pick-up time
   String lockerName = 'Select a locker';
   String baggageSize = 'Select a size';
+  String selectedCell = 'Select a cell';
+  int duration = 0;
+  bool availabilityChecked = false;
+  bool bookingAuthorized = false;
+  List all_cells = ['Select a cell', 'cell1', 'cell2', 'cell3'];
+  List occupied_cells = [];
+  List available_cells = [];
 
   /*
   @override
@@ -85,13 +90,20 @@ class _EditBookingState extends State<EditBooking> {
 
   // Widget to build the Drop-off date and time fields
   Padding buildDropOffField() {
+    List<DropdownMenuItem<int>> dropdownHours = List.generate(24, (index) {
+      return DropdownMenuItem<int>(
+        value: index,
+        child: Text(index.toString().padLeft(2, '0')),
+      );
+    });
+
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Drop-off:",
+            "Drop-off date and time:",
             style: TextStyle(
               fontSize: 15,
             ),
@@ -103,7 +115,6 @@ class _EditBookingState extends State<EditBooking> {
                 flex: 6,
                 child: ElevatedButton.icon(
                   onPressed: () async {
-                    // Open the drop-off date picker when the button is pressed
                     DateTime? newDate = await showDatePicker(
                       context: context,
                       initialDate: dropoff,
@@ -111,7 +122,6 @@ class _EditBookingState extends State<EditBooking> {
                       lastDate: DateTime(2100),
                       builder: (context, child) {
                         return Theme(
-                          // Date picker theme customization
                           data: Theme.of(context).copyWith(
                             colorScheme: ColorScheme.light(
                               primary: Colors.orange,
@@ -131,75 +141,44 @@ class _EditBookingState extends State<EditBooking> {
 
                     if (newDate == null) {
                       return;
-                    } // Do not save the date if the "cancel" button is pressed
-
-                    // TODO: Update drop-off time and date in the database
-                    else {
-                      setState(() {
-                        // Save the date if the "OK" button is pressed
-                        dropoff = DateTime(newDate.year, newDate.month,
-                            newDate.day, dropoff.hour, dropoff.minute);
-                      });
                     }
+
+                    setState(() {
+                      dropoff = DateTime(
+                          newDate.year, newDate.month, newDate.day, 12, 0);
+                      availabilityChecked = false;
+                      occupied_cells = [];
+                    });
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                  label: Text(DateFormat('dd/MM/yyyy').format(dropoff),
-                      style: TextStyle(color: Colors.black, fontSize: 18)),
+                  label: Text(
+                    DateFormat('dd/MM/yyyy').format(dropoff),
+                    style: TextStyle(color: Colors.black, fontSize: 18),
+                  ),
                   icon:
                       Icon(Icons.calendar_month_outlined, color: Colors.black),
                 ),
               ),
               Container(
-                // Space between buttons
                 width: 15,
               ),
               Expanded(
                 flex: 4,
-                child: ElevatedButton.icon(
-                  onPressed: () async {
-                    TimeOfDay? newTime = await showTimePicker(
-                      context: context,
-                      initialTime: dropoffTime,
-                      initialEntryMode: TimePickerEntryMode.inputOnly,
-                      builder: (context, child) {
-                        return Theme(
-                          // Time picker theme customization
-                          data: Theme.of(context).copyWith(
-                            colorScheme: ColorScheme.light(
-                              onSurface: Colors.orange,
-                              primary: Colors.orange,
-                              onPrimary: Colors.white,
-                            ),
-                            textButtonTheme: TextButtonThemeData(
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.orange,
-                              ),
-                            ),
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
-                    if (newTime == null) {
-                      return;
-                    } // Do not save the time if the "cancel" button is pressed
-                    else {
-                      setState(() {
-                        // Save the time if the "OK" button is pressed
-                        dropoff = DateTime(dropoff.year, dropoff.month,
-                            dropoff.day, newTime.hour, newTime.minute);
-                        dropoffTime = newTime;
-                      });
-                    }
+                child: DropdownButton<int>(
+                  value: dropoffTime.hour,
+                  onChanged: (int? newValue) {
+                    setState(() {
+                      dropoff = DateTime(dropoff.year, dropoff.month,
+                          dropoff.day, newValue!, 0);
+                      dropoffTime = TimeOfDay(hour: newValue, minute: 0);
+                      availabilityChecked = false;
+                      occupied_cells = [];
+                    });
                   },
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                  label: Text(
-                    DateFormat('HH:mm').format(dropoff),
-                    style: TextStyle(color: Colors.black, fontSize: 18),
-                  ),
-                  icon: Icon(Icons.access_time, color: Colors.black),
+                  items: dropdownHours,
+                  style: TextStyle(color: Colors.black, fontSize: 18),
+                  underline: Container(), // Remove the default underline
                 ),
               ),
             ],
@@ -265,6 +244,8 @@ class _EditBookingState extends State<EditBooking> {
                         // Save the date if the "OK" button is pressed
                         pickup = DateTime(newDate.year, newDate.month,
                             newDate.day, pickup.hour, pickup.minute);
+                        availabilityChecked = false;
+                        occupied_cells = [];
                       });
                     }
                   },
@@ -316,6 +297,8 @@ class _EditBookingState extends State<EditBooking> {
                           pickup = DateTime(pickup.year, pickup.month,
                               pickup.day, newTime.hour, newTime.minute);
                           pickupTime = newTime;
+                          availabilityChecked = false;
+                          occupied_cells = [];
                         });
                       }
                     },
@@ -334,10 +317,279 @@ class _EditBookingState extends State<EditBooking> {
     );
   }
 
+  Padding buildAvailabilityButton() {
+    List<String> targetSlots =
+        generateReservedSlots(dropoff, dropoffTime.hour, duration);
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Check available cells:",
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          ),
+          lockerName == 'Select a locker'
+              ? ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Please select the locker."),
+                          content: Text(
+                              "You need to select the locker before checking availability."),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("OK"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.grey.shade300),
+                  ),
+                  child: Text("Select a locker"),
+                )
+              : ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Check availability"),
+                          content: Text(
+                              "Do you want to check for availability in the selected date and locker?"),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () async {
+                                // Perform Firestore query
+                                //QuerySnapshot querySnapshot =
+                                //    await FirebaseFirestore.instance
+                                //        .collection('lockers')
+                                //        .doc(lockerName)
+                                //        .collection('bookedSlots')
+                                //        .where(FieldPath.documentId,
+                                //            whereIn: targetSlots)
+                                //        .get();
+                                QuerySnapshot querySnapshot =
+                                    await FirebaseFirestore.instance
+                                        .collectionGroup('bookedSlots')
+                                        .where('locker', isEqualTo: lockerName)
+                                        .where('timeSlot', whereIn: targetSlots)
+                                        .get();
+
+                                for (QueryDocumentSnapshot bookedSlotSnap
+                                    in querySnapshot.docs) {
+                                  occupied_cells.add(bookedSlotSnap['cell']);
+                                }
+                                occupied_cells =
+                                    occupied_cells.toSet().toList();
+
+                                setState(() {
+                                  availabilityChecked = true;
+                                  selectedCell = 'Select a cell';
+                                  available_cells = all_cells
+                                      .toSet()
+                                      .difference(occupied_cells.toSet())
+                                      .toList();
+                                  print('available cells: ' +
+                                      available_cells.toString());
+                                });
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("Confirm"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.green.shade400),
+                  ),
+                  child: Text("Check availability"),
+                ),
+        ],
+      ),
+    );
+  }
+
+  Padding buildCellField() {
+    List<DropdownMenuItem<String>> dropdownCells = available_cells.map((cell) {
+      return DropdownMenuItem<String>(
+        value: cell,
+        child: Text(cell),
+      );
+    }).toList();
+
+    Widget cellDropdown = DropdownButton<String>(
+      value: selectedCell,
+      onChanged: (String? newValue) {
+        setState(() {
+          selectedCell = newValue!;
+          selectedCell == 'Select a cell'
+              ? bookingAuthorized = false
+              : bookingAuthorized = true;
+        });
+      },
+      items: dropdownCells,
+      style: TextStyle(color: Colors.black, fontSize: 18),
+    );
+    //print(availabilityChecked);
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Select available cell:",
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          ),
+          availabilityChecked == false
+              ? ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(
+                              "Fill the information about your reservation"),
+                          content: Text(
+                              "You need to fill the reservation form and check for availability before selecting a cell."),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("OK"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.grey.shade300),
+                  ),
+                  child: Text("Fill other fields"),
+                )
+              : (available_cells.length ==
+                      1 // case in which it contains only 'Select a cell'
+                  ? ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("We're sorry!"),
+                              content: Text(
+                                  "Unfortunately there are no cells available in this locker for the selected time slots"),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text("OK"),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.orange),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                    side: BorderSide(color: Colors.orange)))),
+                      child: Text("NO CELLS AVAILABLE"),
+                    )
+                  : cellDropdown),
+        ],
+      ),
+    );
+  }
+
+// Widget to build the Pick-up date and time fields
+  Padding buildDurationField() {
+    List<DropdownMenuItem<int>> dropdownDurations = List.generate(24, (index) {
+      return DropdownMenuItem<int>(
+        value: index, // Values from 1 to 24
+        child: Text('${index} hour${index != 1 ? 's' : ''}'),
+      );
+    });
+
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            "Booking duration:",
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          ),
+          SizedBox(width: 15,),
+          DropdownButton<int>(
+            value: duration,
+            onChanged: (int? newValue) {
+              setState(() {
+                duration = newValue!;
+                availabilityChecked = false;
+                occupied_cells = [];
+              });
+            },
+            items: dropdownDurations,
+            style: TextStyle(color: Colors.black, fontSize: 18),
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<String> generateReservedSlots(
+      DateTime dropoffDate, int dropoffHour, int duration) {
+    print(dropoffHour);
+    List<String> reservedSlots = [];
+
+    for (int i = 0; i < duration; i++) {
+      DateTime slotDateTime = dropoffDate.add(Duration(hours: i));
+      String slot = DateFormat('yyyyMMddHH').format(slotDateTime);
+      reservedSlots.add(slot);
+      //print(slot);
+    }
+
+    return reservedSlots;
+  }
+
   // Widget to build the Baggage Size field
   Padding buildSizeField() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -431,6 +683,8 @@ class _EditBookingState extends State<EditBooking> {
               onChanged: (String? newValue) {
                 setState(() {
                   lockerName = newValue!;
+                  availabilityChecked = false;
+                  occupied_cells = [];
                 });
               },
               items: dropdownLockers,
@@ -451,15 +705,17 @@ class _EditBookingState extends State<EditBooking> {
           appBar: AppBar(
             backgroundColor: Colors.orange,
             title: const Text(
-              'Edit booking',
+              'Add a new reservation',
               style: TextStyle(
                 color: Colors.white,
               ),
             ),
           ),
           body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
+              Padding(                                       
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
                 child: Container(
                   width: double.infinity,
@@ -469,8 +725,17 @@ class _EditBookingState extends State<EditBooking> {
               ),
               buildLockerAddressField(),
               buildDropOffField(),
-              buildPickUpField(), // Create fields through external methods above
+              //buildPickUpField(), // Create fields through external methods above
+              buildDurationField(),
               buildSizeField(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildAvailabilityButton(),
+                  buildCellField(),
+                ],
+              ),
+              
               //buildNotificationField(),
               Divider(
                 thickness: 1,
@@ -478,12 +743,12 @@ class _EditBookingState extends State<EditBooking> {
                 indent: 20,
                 endIndent: 20,
               ),
-              Padding(
+              Padding(                                               //TODO: togli commento
                 padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("$baggageSize baggage deposit"),
+                    Text("${baggageSize == 'Select a size' ? "Baggage deposit" : "$baggageSize baggage deposit"}"),
                     Text(
                         "€6,99") // TODO: assign each size a price and automate price calculation
                   ],
@@ -497,7 +762,7 @@ class _EditBookingState extends State<EditBooking> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -522,8 +787,16 @@ class _EditBookingState extends State<EditBooking> {
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18),
                                     side: BorderSide(color: Colors.orange)))),
-                    onPressed: () {
+                    onPressed: () async {
                       // Check for valid selections in dropdowns and date/time fields
+                      if (lockerName == 'Select a locker') {
+                        // Show error message for locker name
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Please select a locker'),
+                        ));
+                        return;
+                      }
+                      
                       if (baggageSize == 'Select a size') {
                         // Show error message for baggage size
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -532,29 +805,76 @@ class _EditBookingState extends State<EditBooking> {
                         return;
                       }
 
-                      if (lockerName == 'Select a locker') {
+                      if (bookingAuthorized == false) {
                         // Show error message for locker name
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Please select a locker'),
+                          content: Text(
+                              'Please complete your reservation before saving it!'),
                         ));
                         return;
                       }
 
+                      // Generate reserved slots
+                      List<String> reservedSlots = generateReservedSlots(
+                          dropoff, dropoffTime.hour, duration);
+
                       // Add data to Firestore when all validations pass
-                      FirebaseFirestore.instance
+                      // Create a reference to the parent reservation document
+                      //TODO: DELETE THIS DOCUMENT ADDITION AND REMOVE COLLECTION OF RESERVAITONS TO LOCKER DOCUMENT
+                      DocumentReference reservationRef = await FirebaseFirestore
+                          .instance
                           .collection('lockers')
-                          .doc('locker1')
+                          .doc(lockerName)
                           .collection('cells')
-                          .doc('cell1')
-                          .collection('reservations')
+                          .doc(selectedCell)
+                          .collection('reservations')   //.collection('cellReservations')
                           .add({
                         'userUid': widget.uid,
                         'locker': lockerName,
-                        'cell': 'cell1',
+                        'cell': selectedCell,
                         'baggageSize': baggageSize,
                         'reservationStartDate': dropoff,
                         'reservationEndDate': pickup,
                       });
+
+                      // add reservation document to user's reservations
+
+                      FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(widget.uid)
+                          .collection('reservations')
+                          .add({
+                        'userUid': widget.uid,
+                        'locker': lockerName,
+                        'cell': selectedCell,
+                        'baggageSize': baggageSize,
+                        'reservationStartDate': dropoff,
+                        'reservationEndDate': pickup,
+                      });
+
+                      // Add bookedSlot document to the correspondent locker and cell
+                      DocumentReference lockerRef = await FirebaseFirestore
+                          .instance
+                          .collection('lockers')
+                          .doc(lockerName)
+                          .collection('cells')
+                          .doc(selectedCell);
+
+                      for (String slot in reservedSlots) {
+                        await lockerRef
+                            .collection('bookedSlots')
+                            .doc(slot)
+                            .set({
+                          'locker': lockerName,
+                          'cell': selectedCell,
+                          'timeSlot': slot,
+                        });
+                      }
+
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              'Booking saved!'),
+                        ));
                     },
                     child: Text("save booking".toUpperCase(),
                         style: TextStyle(fontSize: 18)),

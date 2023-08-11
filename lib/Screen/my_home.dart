@@ -11,6 +11,8 @@ import '../Theme/Theme.dart';
 import '../Utils/wrapper.dart';
 import '../firebase_options.dart';
 import 'home_view.dart';
+import '../Utils/bookingWrapper.dart';
+
 
 class MyHome extends StatefulWidget {
   const MyHome({Key? key}) : super(key: key);
@@ -57,7 +59,8 @@ class _MyHomeState extends State<MyHome> {
     //Wrapper(widget: SocialScreen()),
     //Wrapper(widget: ChatHome()),
     Wrapper(widget: BookingsPage()),
-    Wrapper(widget: ReservationsScreen()),
+    //BookingWrapper(),
+    //Wrapper(widget: ReservationsScreen()),
     Wrapper(widget: ProfileCheckScreen()),
   ];
 
@@ -112,11 +115,11 @@ class _MyHomeState extends State<MyHome> {
                 backgroundColor: Colors.orange,
                 label: 'My Reservations',
               ),
-              BottomNavigationBarItem(
+              /* BottomNavigationBarItem(
                 icon: Icon(Icons.add),
                 backgroundColor: Colors.orange,
                 label: 'Add Reservations',
-              ),
+              ), */
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
                 backgroundColor: Colors.orange,
@@ -126,6 +129,8 @@ class _MyHomeState extends State<MyHome> {
             currentIndex: _selectedIndex,
             backgroundColor: Colors.orange,
             selectedItemColor: Colors.black,  //TODO: change colors
+            unselectedItemColor: Colors.white,
+            unselectedLabelStyle: TextStyle(color: Colors.white),
             onTap: _onItemTapped,
           ),
         ),
