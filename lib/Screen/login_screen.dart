@@ -74,10 +74,56 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (formGlobalKey.currentState!.validate()) {
-                      authService!.signInWithEmailAndPassword(
-                          emailController.text, passwordController.text);
+                      try {
+                        final result = await authService!
+                            .signInWithEmailAndPassword(
+                                emailController.text, passwordController.text);
+
+                        if (result == null) {
+                          // Show user-not-found error dialog
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Authentication Error"),
+                                content: Text(
+                                    "The provided email and password do not match any existing account."),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text("OK"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      } catch (e) {
+                        // Handle other exceptions here
+                        //print("Error during authentication $e");
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Authentication Error"),
+                              content: Text(
+                                  "The provided email and password do not match any existing account."),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text("OK"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     }
                   },
                   child: const Text("Login"),
