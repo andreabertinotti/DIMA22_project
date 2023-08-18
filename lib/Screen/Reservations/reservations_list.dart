@@ -363,7 +363,7 @@ class _BookingsPageState extends State<BookingsPage> {
 
                         // Create a CustomListItem using the data retrieved from Firestore
                         return ExpansionTile(
-                          title: Text("Reservation @$locker",
+                          title: Text("Reservation @ locker $locker",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20)),
                           subtitle: Text(

@@ -61,12 +61,12 @@ class _EditBookingState extends State<EditBooking> {
     List<DropdownMenuItem<String>> menuLockers = [
       DropdownMenuItem(
           value: 'Select a locker', child: Text('Select a locker')),
-      DropdownMenuItem(value: "locker1", child: Text("Leonardo")),
-      DropdownMenuItem(value: "locker2", child: Text("Duomo")),
-      DropdownMenuItem(value: "locker3", child: Text("Bovisa")),
-      DropdownMenuItem(value: "locker4", child: Text("Centrale")),
-      DropdownMenuItem(value: "locker5", child: Text("Garibaldi")),
-      DropdownMenuItem(value: "locker6", child: Text("Darsena")),
+      DropdownMenuItem(value: "Leonardo", child: Text("Leonardo")),
+      DropdownMenuItem(value: "Duomo", child: Text("Duomo")),
+      DropdownMenuItem(value: "Bovisa", child: Text("Bovisa")),
+      DropdownMenuItem(value: "Centrale", child: Text("Centrale")),
+      DropdownMenuItem(value: "Garibaldi", child: Text("Garibaldi")),
+      DropdownMenuItem(value: "Darsena", child: Text("Darsena")),
     ];
     return menuLockers;
   }
