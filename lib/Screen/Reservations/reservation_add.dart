@@ -34,7 +34,12 @@ class _EditBookingState extends State<EditBooking> {
   int duration = 0;
   bool availabilityChecked = false;
   bool bookingAuthorized = false;
-  List all_cells = ['Select a cell', 'cell1', 'cell2', 'cell3'];
+  List all_cells = [
+    'Select a cell',
+    'cell 1 (small)',
+    'cell 2 (small)',
+    'cell 3 (large)'
+  ];
   List occupied_cells = [];
   List available_cells = [];
 
