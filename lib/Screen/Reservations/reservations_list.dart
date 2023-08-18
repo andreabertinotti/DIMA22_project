@@ -260,6 +260,7 @@ class _BookingsPageState extends State<BookingsPage> {
   }
 
   Future<List<Map<String, dynamic>>> fetchReservations(User user) async {
+    final DateTime currentTime = DateTime.now();
     //QuerySnapshot reservationSnapshot = await FirebaseFirestore.instance
     //    .collectionGroup('reservations')
     //    .where('userUid', isEqualTo: user.uid)
@@ -268,6 +269,8 @@ class _BookingsPageState extends State<BookingsPage> {
         .collection('users')
         .doc(user.uid)
         .collection('reservations')
+        .where('reservationEndDate',
+            isGreaterThan: Timestamp.fromDate(currentTime))
         .get();
 
     List<Map<String, dynamic>> reservations = [];
