@@ -13,7 +13,6 @@ import '../firebase_options.dart';
 import 'home_view.dart';
 import '../Utils/bookingWrapper.dart';
 
-
 class MyHome extends StatefulWidget {
   const MyHome({Key? key}) : super(key: key);
 
@@ -128,7 +127,7 @@ class _MyHomeState extends State<MyHome> {
             ],
             currentIndex: _selectedIndex,
             backgroundColor: Colors.orange,
-            selectedItemColor: Colors.black,  //TODO: change colors
+            selectedItemColor: Colors.black, //TODO: change colors
             unselectedItemColor: Colors.white,
             unselectedLabelStyle: TextStyle(color: Colors.white),
             onTap: _onItemTapped,
