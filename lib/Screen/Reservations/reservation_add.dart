@@ -190,135 +190,6 @@ class _EditBookingState extends State<EditBooking> {
     );
   }
 
-  // Widget to build the Pick-up date and time fields
-  //Padding buildPickUpField() {
-  //  // (Continued in next comment)
-  //  return Padding(
-  //    padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-  //    child: Column(
-  //      crossAxisAlignment: CrossAxisAlignment.start,
-  //      children: [
-  //        Text(
-  //          "Pick-up:",
-  //          style: TextStyle(
-  //            fontSize: 15,
-  //          ),
-  //        ),
-  //        Row(
-  //          mainAxisAlignment: MainAxisAlignment.start,
-  //          children: [
-  //            Expanded(
-  //              flex: 6,
-  //              child: ElevatedButton.icon(
-  //                onPressed: () async {
-  //                  DateTime? newDate = await showDatePicker(
-  //                    context: context,
-  //                    initialDate: pickup,
-  //                    firstDate: DateTime(2000),
-  //                    lastDate: DateTime(2100),
-  //                    builder: (context, child) {
-  //                      return Theme(
-  //                        // Date picker theme customization
-  //                        data: Theme.of(context).copyWith(
-  //                          colorScheme: ColorScheme.light(
-  //                            primary: Colors.orange,
-  //                            onPrimary: Colors.white,
-  //                            onSurface: Colors.black,
-  //                          ),
-  //                          textButtonTheme: TextButtonThemeData(
-  //                            style: TextButton.styleFrom(
-  //                              foregroundColor: Colors.orange,
-  //                            ),
-  //                          ),
-  //                        ),
-  //                        child: child!,
-  //                      );
-  //                    },
-  //                  );
-//
-  //                  if (newDate == null) {
-  //                    return;
-  //                  } // Do not save the date if the "cancel" button is pressed
-//
-  //                  // TODO: Update pickup time and date in the database
-  //                  else {
-  //                    setState(() {
-  //                      // Save the date if the "OK" button is pressed
-  //                      pickup = DateTime(newDate.year, newDate.month,
-  //                          newDate.day, pickup.hour, pickup.minute);
-  //                      availabilityChecked = false;
-  //                      occupied_cells = [];
-  //                    });
-  //                  }
-  //                },
-  //                style:
-  //                    ElevatedButton.styleFrom(backgroundColor: Colors.white),
-  //                label: Text(DateFormat('dd/MM/yyyy').format(pickup),
-  //                    style: TextStyle(color: Colors.black, fontSize: 18)),
-  //                icon:
-  //                    Icon(Icons.calendar_month_outlined, color: Colors.black),
-  //              ),
-  //            ),
-  //            Container(
-  //              // Space between buttons
-  //              width: 15,
-  //            ),
-  //            Expanded(
-  //              flex: 4,
-  //              child: ElevatedButton.icon(
-  //                  onPressed: () async {
-  //                    TimeOfDay? newTime = await showTimePicker(
-  //                      context: context,
-  //                      initialTime: pickupTime,
-  //                      initialEntryMode: TimePickerEntryMode.inputOnly,
-  //                      builder: (context, child) {
-  //                        return Theme(
-  //                          // Time picker theme customization
-  //                          data: Theme.of(context).copyWith(
-  //                            colorScheme: ColorScheme.light(
-  //                              onSurface: Colors.orange,
-  //                              primary: Colors.orange,
-  //                              onPrimary: Colors.white,
-  //                            ),
-  //                            textButtonTheme: TextButtonThemeData(
-  //                              style: TextButton.styleFrom(
-  //                                foregroundColor: Colors.orange,
-  //                              ),
-  //                            ),
-  //                          ),
-  //                          child: child!,
-  //                        );
-  //                      },
-  //                    );
-  //                    if (newTime == null) {
-  //                      return;
-  //                    } // Do not save the time if the "cancel" button is pressed
-  //                    else {
-  //                      setState(() {
-  //                        // Save the time if the "OK" button is pressed
-  //                        pickup = DateTime(pickup.year, pickup.month,
-  //                            pickup.day, newTime.hour, newTime.minute);
-  //                        pickupTime = newTime;
-  //                        availabilityChecked = false;
-  //                        occupied_cells = [];
-  //                      });
-  //                    }
-  //                  },
-  //                  style:
-  //                      ElevatedButton.styleFrom(backgroundColor: Colors.white),
-  //                  label: Text(
-  //                    DateFormat('HH:mm').format(pickup),
-  //                    style: TextStyle(color: Colors.black, fontSize: 18),
-  //                  ),
-  //                  icon: Icon(Icons.access_time, color: Colors.black)),
-  //            ),
-  //          ],
-  //        )
-  //      ],
-  //    ),
-  //  );
-  //}
-
   Padding buildAvailabilityButton() {
     List<String> targetSlots =
         generateReservedSlots(dropoff, dropoffTime.hour, duration);
@@ -375,15 +246,6 @@ class _EditBookingState extends State<EditBooking> {
                           actions: <Widget>[
                             TextButton(
                               onPressed: () async {
-                                // Perform Firestore query
-                                //QuerySnapshot querySnapshot =
-                                //    await FirebaseFirestore.instance
-                                //        .collection('lockers')
-                                //        .doc(lockerName)
-                                //        .collection('bookedSlots')
-                                //        .where(FieldPath.documentId,
-                                //            whereIn: targetSlots)
-                                //        .get();
                                 QuerySnapshot querySnapshot =
                                     await FirebaseFirestore.instance
                                         .collectionGroup('bookedSlots')
@@ -827,58 +689,86 @@ class _EditBookingState extends State<EditBooking> {
 
                       // Add data to Firestore when all validations pass
                       // Create a reference to the parent reservation document
-                      //TODO: DELETE THIS DOCUMENT ADDITION AND REMOVE COLLECTION OF RESERVAITONS TO LOCKER DOCUMENT
-                      DocumentReference reservationRef = await FirebaseFirestore
-                          .instance
-                          .collection('lockers')
-                          .doc(lockerName)
-                          .collection('cells')
-                          .doc(selectedCell)
-                          .collection(
-                              'cellReservations') //.collection('reservations')
-                          .add({
-                        'userUid': widget.uid,
-                        'locker': lockerName,
-                        'cell': selectedCell,
-                        'baggageSize': baggageSize,
-                        'reservationStartDate': dropoff,
-                        'reservationEndDate': pickup,
-                      });
 
                       // add reservation document to user's reservations
 
-                      FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(widget.uid)
-                          .collection('reservations')
-                          .add({
-                        'userUid': widget.uid,
-                        'locker': lockerName,
-                        'cell': selectedCell,
-                        'baggageSize': baggageSize,
-                        'reservationStartDate': dropoff,
-                        'reservationEndDate': pickup,
-                        'reservationDuration': duration,
-                      });
+                      //DocumentReference reservationRef = await FirebaseFirestore
+                      //    .instance
+                      //    .collection('users')
+                      //    .doc(widget.uid)
+                      //    .collection('reservations')
+                      //    .add({
+                      //  'userUid': widget.uid,
+                      //  'locker': lockerName,
+                      //  'cell': selectedCell,
+                      //  'baggageSize': baggageSize,
+                      //  'reservationStartDate': dropoff,
+                      //  'reservationEndDate': pickup,
+                      //  'reservationDuration': duration,
+                      //});
+//
+                      //// Add bookedSlot document to the correspondent locker and cell
+                      //DocumentReference lockerRef = await FirebaseFirestore
+                      //    .instance
+                      //    .collection('lockers')
+                      //    .doc(lockerName)
+                      //    .collection('cells')
+                      //    .doc(selectedCell);
+//
+                      //for (String slot in reservedSlots) {
+                      //  await lockerRef
+                      //      .collection('bookedSlots')
+                      //      .doc(slot)
+                      //      .set({
+                      //    'locker': lockerName,
+                      //    'cell': selectedCell,
+                      //    'timeSlot': slot,
+                      //    'linkedReservation': reservationRef.id,
+                      //  });
+                      //}
 
-                      // Add bookedSlot document to the correspondent locker and cell
-                      DocumentReference lockerRef = await FirebaseFirestore
-                          .instance
-                          .collection('lockers')
-                          .doc(lockerName)
-                          .collection('cells')
-                          .doc(selectedCell);
+                      await FirebaseFirestore.instance
+                          .runTransaction((transaction) async {
+                        // Create the reservation document
+                        final reservationRef = FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(widget.uid)
+                            .collection('reservations')
+                            .doc();
 
-                      for (String slot in reservedSlots) {
-                        await lockerRef
-                            .collection('bookedSlots')
-                            .doc(slot)
-                            .set({
+                        final reservationData = {
+                          'userUid': widget.uid,
                           'locker': lockerName,
                           'cell': selectedCell,
-                          'timeSlot': slot,
-                        });
-                      }
+                          'baggageSize': baggageSize,
+                          'reservationStartDate': dropoff,
+                          'reservationEndDate': pickup,
+                          'reservationDuration': duration,
+                        };
+
+                        transaction.set(reservationRef, reservationData);
+
+                        // Add bookedSlot documents to the corresponding locker and cell
+                        final lockerRef = FirebaseFirestore.instance
+                            .collection('lockers')
+                            .doc(lockerName)
+                            .collection('cells')
+                            .doc(selectedCell);
+
+                        for (String slot in reservedSlots) {
+                          final bookedSlotRef =
+                              lockerRef.collection('bookedSlots').doc(slot);
+
+                          final bookedSlotData = {
+                            'locker': lockerName,
+                            'cell': selectedCell,
+                            'timeSlot': slot,
+                            'linkedReservation': reservationRef.id,
+                          };
+
+                          transaction.set(bookedSlotRef, bookedSlotData);
+                        }
+                      });
 
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text('Booking saved!'),

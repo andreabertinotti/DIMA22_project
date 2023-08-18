@@ -29,7 +29,6 @@ class CustomListItem extends StatelessWidget {
     required this.cell,
     required this.duration,
     required this.reservationId,
-    required this.onDelete,
     //required this.notificationSet,
     //required this.price,
     // required this.lockerImage
@@ -42,7 +41,6 @@ class CustomListItem extends StatelessWidget {
   final String cell;
   final int duration;
   final String reservationId;
-  final VoidCallback onDelete;
   //final bool notificationSet;
   //final int price;
   // final Widget lockerImage;
@@ -152,12 +150,10 @@ class CustomListItem extends StatelessWidget {
                             side: BorderSide(color: Colors.orange)))),
               ),
               ElevatedButton.icon(
-                onPressed: onDelete,
                 //TODO: if notifications are implemented, change delete and notif. buttons --> remove text (only icon buttons)
-                //onPressed: () {
-                //  //TODO: Delete booking on button press
-                //
-                //},
+                onPressed: () {
+                  //TODO: Delete booking on button press
+                },
                 style: ButtonStyle(
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
@@ -185,79 +181,43 @@ class _BookingsPageState extends State<BookingsPage> {
   final GlobalKey<ScaffoldMessengerState> _bookingMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
-  //void _deleteReservation(
-  //    String reservationId, User user, String locker, String cell) async {
-  //  try {
-  //    await FirebaseFirestore.instance
-  //        .collection('users')
-  //        .doc(user
-  //            .uid) // Assuming authService provides the currently logged-in user
-  //        .collection('reservations')
-  //        .doc(reservationId)
-  //        .delete();
+  //Future<List<Map<String, dynamic>>> fetchReservations(User user) async {
+  //  // Firestore query to fetch lockers
+  //  QuerySnapshot lockerSnapshot =
+  //      await FirebaseFirestore.instance.collection('lockers').get();
 //
-  //    QuerySnapshot bookedSlotSnapshot = await FirebaseFirestore.instance
-  //        .collection('lockers')
-  //        .doc(locker)
-  //        .collection('cells')
-  //        .doc(cell)
-  //        .collection('bookedSlots')
-  //        .where('linkedReservation', isEqualTo: reservationId)
-  //        .get();
+  //  List<Map<String, dynamic>> reservations = [];
 //
-  //    for (final bookedSlotDoc in bookedSlotSnapshot.docs) {
-  //      await bookedSlotDoc.reference.delete();
+  //  for (QueryDocumentSnapshot lockerDoc in lockerSnapshot.docs) {
+  //    // Firestore query to fetch cells within the locker
+  //    QuerySnapshot cellSnapshot =
+  //        await lockerDoc.reference.collection('cells').get();
+//
+  //    for (QueryDocumentSnapshot cellDoc in cellSnapshot.docs) {
+  //      // Firestore query to fetch reservations within the cell
+  //      QuerySnapshot reservationSnapshot =
+  //          await cellDoc.reference.collection('reservations').get();
+//
+  //      for (QueryDocumentSnapshot reservationDoc in reservationSnapshot.docs) {
+  //        // Check if the document exists and is not empty
+  //        if (reservationDoc.exists && reservationDoc.data() != null) {
+  //          Map<String, dynamic> reservationData =
+  //              reservationDoc.data()! as Map<String, dynamic>;
+//
+  //          // Check if the userUID matches the UID of the logged-in user
+  //          if (reservationData.containsKey('userUid') &&
+  //              reservationData['userUid'] == user.uid) {
+  //            //print(user.uid + ' --- ' + reservationData['userUid']);
+  //            //print('ADDED');
+  //            reservations.add(reservationData);
+  //          }
+  //        }
+  //      }
   //    }
-//
-  //    // Show a success message using ScaffoldMessenger
-  //    _bookingMessengerKey.currentState?.showSnackBar(
-  //      SnackBar(content: Text('Reservation deleted successfully')),
-  //    );
-  //  } catch (error) {
-  //    // Show an error message using ScaffoldMessenger
-  //    _bookingMessengerKey.currentState?.showSnackBar(
-  //      SnackBar(content: Text('Failed to delete reservation')),
-  //    );
   //  }
+//
+  //  return reservations;
   //}
-
-  void _deleteReservation(
-      String reservationId, User user, String locker, String cell) async {
-    try {
-      await FirebaseFirestore.instance.runTransaction((transaction) async {
-        // Delete the reservation document
-        final reservationRef = FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .collection('reservations')
-            .doc(reservationId);
-        transaction.delete(reservationRef);
-
-        // Query and delete the related bookedSlots documents
-        final bookedSlotQuery = FirebaseFirestore.instance
-            .collection('lockers')
-            .doc(locker)
-            .collection('cells')
-            .doc(cell)
-            .collection('bookedSlots')
-            .where('linkedReservation', isEqualTo: reservationId);
-        final bookedSlotSnapshot = await bookedSlotQuery.get();
-        for (final bookedSlotDoc in bookedSlotSnapshot.docs) {
-          transaction.delete(bookedSlotDoc.reference);
-        }
-      });
-
-      // Show a success message using ScaffoldMessenger
-      _bookingMessengerKey.currentState?.showSnackBar(
-        SnackBar(content: Text('Reservation deleted successfully')),
-      );
-    } catch (error) {
-      // Show an error message using ScaffoldMessenger
-      _bookingMessengerKey.currentState?.showSnackBar(
-        SnackBar(content: Text('Failed to delete reservation')),
-      );
-    }
-  }
 
   Future<List<Map<String, dynamic>>> fetchReservations(User user) async {
     //QuerySnapshot reservationSnapshot = await FirebaseFirestore.instance
@@ -389,11 +349,6 @@ class _BookingsPageState extends State<BookingsPage> {
                               cell: cell,
                               locker: locker,
                               reservationId: reservationId,
-                              onDelete: () => _deleteReservation(
-                                  reservationId,
-                                  user,
-                                  locker,
-                                  cell), // Pass a callback to delete
                               //notificationSet: snapshot.data![index]['notificationSet'],
                               //price: snapshot.data![index]['price'],
                             )
