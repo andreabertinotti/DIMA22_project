@@ -25,6 +25,9 @@ class CustomListItem extends StatelessWidget {
     required this.dropOff,
     required this.pickUp,
     required this.baggageSize,
+    required this.locker,
+    required this.cell,
+    required this.duration,
     //required this.notificationSet,
     //required this.price,
     // required this.lockerImage
@@ -33,6 +36,9 @@ class CustomListItem extends StatelessWidget {
   final DateTime dropOff;
   final DateTime pickUp;
   final String baggageSize;
+  final String locker;
+  final String cell;
+  final int duration;
   //final bool notificationSet;
   //final int price;
   // final Widget lockerImage;
@@ -52,7 +58,8 @@ class CustomListItem extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors.red), // TODO: insert locker image or map instead of a solid color
+                      color: Colors
+                          .red), // TODO: insert locker image or map instead of a solid color
                 ),
               ),
               Container(
@@ -71,26 +78,34 @@ class CustomListItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Duration: ", // TODO: implementare durata prenotazione
+                      // used 'intl' package for date format
+                      "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(pickUp)}",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
-                      "Baggage size: $baggageSize",
+                      "Duration: $duration hours",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    //Text(
+                    //  "Baggage size: $baggageSize",
+                    //  style: TextStyle(
+                    //    fontSize: 18,
+                    //  ),
+                    //),
+                    Text(
+                      "Cell: $cell (baggage size: $baggageSize)",
                       style: TextStyle(
                         fontSize: 18,
                       ),
                     ),
                     Text(
-                      "Locker cell: ",
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(
-                      "Price: ",//€$price",     //TODO:add price
+                      "Price: ", //€$price",     //TODO:add price
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -109,41 +124,48 @@ class CustomListItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton.icon(
-              // TODO: Open the edit booking page when the button is pressed
+                // TODO: Open the edit booking page when the button is pressed
                 onPressed: () {
                   //Navigator.push(context,MaterialPageRoute(
-                          //builder: (context) => const EditBooking()));
+                  //builder: (context) => const EditBooking()));
                 },
-                icon: Icon(Icons.edit, color: Colors.white,),
-                label: Text("Edit booking", style: TextStyle(fontSize: 18, color: Colors.white),),
-                style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  backgroundColor:MaterialStateProperty.all<Color>(Colors.orange),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                      side: BorderSide(color: Colors.orange)
-                    )
-                  )
+                icon: Icon(
+                  Icons.edit,
+                  color: Colors.white,
                 ),
+                label: Text(
+                  "Edit booking",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+                style: ButtonStyle(
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.orange),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                            side: BorderSide(color: Colors.orange)))),
               ),
-              ElevatedButton.icon(    //TODO: if notifications are implemented, change delete and notif. buttons --> remove text (only icon buttons)
+              ElevatedButton.icon(
+                //TODO: if notifications are implemented, change delete and notif. buttons --> remove text (only icon buttons)
                 onPressed: () {
                   //TODO: Delete booking on button press
                 },
                 style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                      side: BorderSide(color: Colors.orange)
-                    )
-                  )
-                ),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.orange),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                            side: BorderSide(color: Colors.orange)))),
                 icon: Icon(Icons.delete, color: Colors.white),
-                label:
-                    Text("Delete booking", style: TextStyle(fontSize: 18, color: Colors.white),),
+                label: Text(
+                  "Delete booking",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
               ),
             ],
           ),
@@ -234,21 +256,22 @@ class _BookingsPageState extends State<BookingsPage> {
                     color: Colors.white,
                   ),
                 ),
-                actions: [                //TODO: valutare se fare aggiunta prenotazione su tab in basso
+                actions: [
+                  //TODO: valutare se fare aggiunta prenotazione su tab in basso
                   TextButton.icon(
-                    onPressed: () {
-                      Navigator.push(context,
-                        MaterialPageRoute(
-                          builder: (context) => EditBooking(uid: snapshot.data!.uid)
-                        )
-                      );
-                    }, 
-                    icon: Icon(Icons.add, color: Colors.white,), 
-                    label: Text(
-                      "Add booking", 
-                      style: TextStyle(color: Colors.white, fontSize: 17)
-                    )
-                  )
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    EditBooking(uid: snapshot.data!.uid)));
+                      },
+                      icon: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      label: Text("Add booking",
+                          style: TextStyle(color: Colors.white, fontSize: 17)))
                 ],
               ),
               body: FutureBuilder<List<Map<String, dynamic>>>(
@@ -274,23 +297,45 @@ class _BookingsPageState extends State<BookingsPage> {
                     return ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
+                        final String locker = snapshot.data![index]['locker'];
+                        final String cell = snapshot.data![index]['cell'];
+                        final DateTime dropOff = snapshot.data![index]
+                                ['reservationStartDate']
+                            .toDate();
+                        final DateTime pickUp = snapshot.data![index]
+                                ['reservationEndDate']
+                            .toDate();
+                        final String baggageSize =
+                            snapshot.data![index]['baggageSize'];
+                        final int duration =
+                            snapshot.data![index]['reservationDuration'];
                         // Create a CustomListItem using the data retrieved from Firestore
                         return ExpansionTile(
-                          title: Text("Inserire Nome locker da DB", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                          subtitle: Text("Indirizzo locker da inserire da DB", style: TextStyle(fontSize: 18),),
+                          title: Text("Reservation @$locker",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20)),
+                          subtitle: Text(
+                            "from ${DateFormat('dd/MM/yyyy').format(dropOff)}",
+                            style: TextStyle(fontSize: 18),
+                          ),
                           textColor: Colors.orange,
                           iconColor: Colors.orange,
                           leading: CircleAvatar(
                             backgroundColor: Colors.orange,
-                            child: Text("${index+1}", style: TextStyle(color: Colors.white, fontSize: 20),),
+                            child: Text(
+                              "${index + 1}",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
                           ),
                           children: <Widget>[
                             CustomListItem(
-                              dropOff: snapshot.data![index]['reservationStartDate']
-                                  .toDate(),
-                              pickUp: snapshot.data![index]['reservationEndDate']
-                                  .toDate(),
-                              baggageSize: snapshot.data![index]['baggageSize'],
+                              dropOff: dropOff,
+                              pickUp: pickUp,
+                              baggageSize: baggageSize,
+                              duration: duration,
+                              cell: cell,
+                              locker: locker,
                               //notificationSet: snapshot.data![index]['notificationSet'],
                               //price: snapshot.data![index]['price'],
                             )

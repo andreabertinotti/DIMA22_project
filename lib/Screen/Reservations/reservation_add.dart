@@ -146,6 +146,8 @@ class _EditBookingState extends State<EditBooking> {
                     setState(() {
                       dropoff = DateTime(
                           newDate.year, newDate.month, newDate.day, 12, 0);
+                      pickup =
+                          dropoff.add(Duration(hours: duration, minutes: -1));
                       availabilityChecked = false;
                       occupied_cells = [];
                     });
@@ -189,133 +191,133 @@ class _EditBookingState extends State<EditBooking> {
   }
 
   // Widget to build the Pick-up date and time fields
-  Padding buildPickUpField() {
-    // (Continued in next comment)
-    return Padding(
-      padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Pick-up:",
-            style: TextStyle(
-              fontSize: 15,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 6,
-                child: ElevatedButton.icon(
-                  onPressed: () async {
-                    DateTime? newDate = await showDatePicker(
-                      context: context,
-                      initialDate: pickup,
-                      firstDate: DateTime(2000),
-                      lastDate: DateTime(2100),
-                      builder: (context, child) {
-                        return Theme(
-                          // Date picker theme customization
-                          data: Theme.of(context).copyWith(
-                            colorScheme: ColorScheme.light(
-                              primary: Colors.orange,
-                              onPrimary: Colors.white,
-                              onSurface: Colors.black,
-                            ),
-                            textButtonTheme: TextButtonThemeData(
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.orange,
-                              ),
-                            ),
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
-
-                    if (newDate == null) {
-                      return;
-                    } // Do not save the date if the "cancel" button is pressed
-
-                    // TODO: Update pickup time and date in the database
-                    else {
-                      setState(() {
-                        // Save the date if the "OK" button is pressed
-                        pickup = DateTime(newDate.year, newDate.month,
-                            newDate.day, pickup.hour, pickup.minute);
-                        availabilityChecked = false;
-                        occupied_cells = [];
-                      });
-                    }
-                  },
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                  label: Text(DateFormat('dd/MM/yyyy').format(pickup),
-                      style: TextStyle(color: Colors.black, fontSize: 18)),
-                  icon:
-                      Icon(Icons.calendar_month_outlined, color: Colors.black),
-                ),
-              ),
-              Container(
-                // Space between buttons
-                width: 15,
-              ),
-              Expanded(
-                flex: 4,
-                child: ElevatedButton.icon(
-                    onPressed: () async {
-                      TimeOfDay? newTime = await showTimePicker(
-                        context: context,
-                        initialTime: pickupTime,
-                        initialEntryMode: TimePickerEntryMode.inputOnly,
-                        builder: (context, child) {
-                          return Theme(
-                            // Time picker theme customization
-                            data: Theme.of(context).copyWith(
-                              colorScheme: ColorScheme.light(
-                                onSurface: Colors.orange,
-                                primary: Colors.orange,
-                                onPrimary: Colors.white,
-                              ),
-                              textButtonTheme: TextButtonThemeData(
-                                style: TextButton.styleFrom(
-                                  foregroundColor: Colors.orange,
-                                ),
-                              ),
-                            ),
-                            child: child!,
-                          );
-                        },
-                      );
-                      if (newTime == null) {
-                        return;
-                      } // Do not save the time if the "cancel" button is pressed
-                      else {
-                        setState(() {
-                          // Save the time if the "OK" button is pressed
-                          pickup = DateTime(pickup.year, pickup.month,
-                              pickup.day, newTime.hour, newTime.minute);
-                          pickupTime = newTime;
-                          availabilityChecked = false;
-                          occupied_cells = [];
-                        });
-                      }
-                    },
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                    label: Text(
-                      DateFormat('HH:mm').format(pickup),
-                      style: TextStyle(color: Colors.black, fontSize: 18),
-                    ),
-                    icon: Icon(Icons.access_time, color: Colors.black)),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
+  //Padding buildPickUpField() {
+  //  // (Continued in next comment)
+  //  return Padding(
+  //    padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+  //    child: Column(
+  //      crossAxisAlignment: CrossAxisAlignment.start,
+  //      children: [
+  //        Text(
+  //          "Pick-up:",
+  //          style: TextStyle(
+  //            fontSize: 15,
+  //          ),
+  //        ),
+  //        Row(
+  //          mainAxisAlignment: MainAxisAlignment.start,
+  //          children: [
+  //            Expanded(
+  //              flex: 6,
+  //              child: ElevatedButton.icon(
+  //                onPressed: () async {
+  //                  DateTime? newDate = await showDatePicker(
+  //                    context: context,
+  //                    initialDate: pickup,
+  //                    firstDate: DateTime(2000),
+  //                    lastDate: DateTime(2100),
+  //                    builder: (context, child) {
+  //                      return Theme(
+  //                        // Date picker theme customization
+  //                        data: Theme.of(context).copyWith(
+  //                          colorScheme: ColorScheme.light(
+  //                            primary: Colors.orange,
+  //                            onPrimary: Colors.white,
+  //                            onSurface: Colors.black,
+  //                          ),
+  //                          textButtonTheme: TextButtonThemeData(
+  //                            style: TextButton.styleFrom(
+  //                              foregroundColor: Colors.orange,
+  //                            ),
+  //                          ),
+  //                        ),
+  //                        child: child!,
+  //                      );
+  //                    },
+  //                  );
+//
+  //                  if (newDate == null) {
+  //                    return;
+  //                  } // Do not save the date if the "cancel" button is pressed
+//
+  //                  // TODO: Update pickup time and date in the database
+  //                  else {
+  //                    setState(() {
+  //                      // Save the date if the "OK" button is pressed
+  //                      pickup = DateTime(newDate.year, newDate.month,
+  //                          newDate.day, pickup.hour, pickup.minute);
+  //                      availabilityChecked = false;
+  //                      occupied_cells = [];
+  //                    });
+  //                  }
+  //                },
+  //                style:
+  //                    ElevatedButton.styleFrom(backgroundColor: Colors.white),
+  //                label: Text(DateFormat('dd/MM/yyyy').format(pickup),
+  //                    style: TextStyle(color: Colors.black, fontSize: 18)),
+  //                icon:
+  //                    Icon(Icons.calendar_month_outlined, color: Colors.black),
+  //              ),
+  //            ),
+  //            Container(
+  //              // Space between buttons
+  //              width: 15,
+  //            ),
+  //            Expanded(
+  //              flex: 4,
+  //              child: ElevatedButton.icon(
+  //                  onPressed: () async {
+  //                    TimeOfDay? newTime = await showTimePicker(
+  //                      context: context,
+  //                      initialTime: pickupTime,
+  //                      initialEntryMode: TimePickerEntryMode.inputOnly,
+  //                      builder: (context, child) {
+  //                        return Theme(
+  //                          // Time picker theme customization
+  //                          data: Theme.of(context).copyWith(
+  //                            colorScheme: ColorScheme.light(
+  //                              onSurface: Colors.orange,
+  //                              primary: Colors.orange,
+  //                              onPrimary: Colors.white,
+  //                            ),
+  //                            textButtonTheme: TextButtonThemeData(
+  //                              style: TextButton.styleFrom(
+  //                                foregroundColor: Colors.orange,
+  //                              ),
+  //                            ),
+  //                          ),
+  //                          child: child!,
+  //                        );
+  //                      },
+  //                    );
+  //                    if (newTime == null) {
+  //                      return;
+  //                    } // Do not save the time if the "cancel" button is pressed
+  //                    else {
+  //                      setState(() {
+  //                        // Save the time if the "OK" button is pressed
+  //                        pickup = DateTime(pickup.year, pickup.month,
+  //                            pickup.day, newTime.hour, newTime.minute);
+  //                        pickupTime = newTime;
+  //                        availabilityChecked = false;
+  //                        occupied_cells = [];
+  //                      });
+  //                    }
+  //                  },
+  //                  style:
+  //                      ElevatedButton.styleFrom(backgroundColor: Colors.white),
+  //                  label: Text(
+  //                    DateFormat('HH:mm').format(pickup),
+  //                    style: TextStyle(color: Colors.black, fontSize: 18),
+  //                  ),
+  //                  icon: Icon(Icons.access_time, color: Colors.black)),
+  //            ),
+  //          ],
+  //        )
+  //      ],
+  //    ),
+  //  );
+  //}
 
   Padding buildAvailabilityButton() {
     List<String> targetSlots =
@@ -354,10 +356,10 @@ class _EditBookingState extends State<EditBooking> {
                     );
                   },
                   style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.grey.shade300),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.grey.shade300),
                   ),
                   child: Text("Select a locker"),
                 )
@@ -416,10 +418,10 @@ class _EditBookingState extends State<EditBooking> {
                     );
                   },
                   style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green.shade400),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.green.shade400),
                   ),
                   child: Text("Check availability"),
                 ),
@@ -485,10 +487,10 @@ class _EditBookingState extends State<EditBooking> {
                     );
                   },
                   style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.grey.shade300),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.grey.shade300),
                   ),
                   child: Text("Fill other fields"),
                 )
@@ -516,15 +518,15 @@ class _EditBookingState extends State<EditBooking> {
                         );
                       },
                       style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.orange),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18),
-                                    side: BorderSide(color: Colors.orange)))),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.orange),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18),
+                                      side: BorderSide(color: Colors.orange)))),
                       child: Text("NO CELLS AVAILABLE"),
                     )
                   : cellDropdown),
@@ -553,12 +555,15 @@ class _EditBookingState extends State<EditBooking> {
               fontSize: 15,
             ),
           ),
-          SizedBox(width: 15,),
+          SizedBox(
+            width: 15,
+          ),
           DropdownButton<int>(
             value: duration,
             onChanged: (int? newValue) {
               setState(() {
                 duration = newValue!;
+                pickup = dropoff.add(Duration(hours: duration, minutes: -1));
                 availabilityChecked = false;
                 occupied_cells = [];
               });
@@ -715,7 +720,7 @@ class _EditBookingState extends State<EditBooking> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(                                       
+              Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
                 child: Container(
                   width: double.infinity,
@@ -735,7 +740,7 @@ class _EditBookingState extends State<EditBooking> {
                   buildCellField(),
                 ],
               ),
-              
+
               //buildNotificationField(),
               Divider(
                 thickness: 1,
@@ -743,12 +748,14 @@ class _EditBookingState extends State<EditBooking> {
                 indent: 20,
                 endIndent: 20,
               ),
-              Padding(                                               //TODO: togli commento
+              Padding(
+                //TODO: togli commento
                 padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("${baggageSize == 'Select a size' ? "Baggage deposit" : "$baggageSize baggage deposit"}"),
+                    Text(
+                        "${baggageSize == 'Select a size' ? "Baggage deposit" : "$baggageSize baggage deposit"}"),
                     Text(
                         "€6,99") // TODO: assign each size a price and automate price calculation
                   ],
@@ -796,7 +803,7 @@ class _EditBookingState extends State<EditBooking> {
                         ));
                         return;
                       }
-                      
+
                       if (baggageSize == 'Select a size') {
                         // Show error message for baggage size
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -827,7 +834,8 @@ class _EditBookingState extends State<EditBooking> {
                           .doc(lockerName)
                           .collection('cells')
                           .doc(selectedCell)
-                          .collection('reservations')   //.collection('cellReservations')
+                          .collection(
+                              'cellReservations') //.collection('reservations')
                           .add({
                         'userUid': widget.uid,
                         'locker': lockerName,
@@ -850,6 +858,7 @@ class _EditBookingState extends State<EditBooking> {
                         'baggageSize': baggageSize,
                         'reservationStartDate': dropoff,
                         'reservationEndDate': pickup,
+                        'reservationDuration': duration,
                       });
 
                       // Add bookedSlot document to the correspondent locker and cell
@@ -872,10 +881,9 @@ class _EditBookingState extends State<EditBooking> {
                       }
 
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                              'Booking saved!'),
-                              backgroundColor: Colors.green,
-                        ));
+                        content: Text('Booking saved!'),
+                        backgroundColor: Colors.green,
+                      ));
 
                       Navigator.of(context).pop();
                     },

@@ -46,7 +46,8 @@ class _MenuState extends State<Menu> {
             snapshot.data == null ||
             snapshot.data!.docs.isEmpty) {
           return Center(
-            child: Text('No data available.'),
+            child: Text(
+                'You still have still haven\'t completed your profile! \n Go to profile page to complete it!.'),
           );
         }
 
@@ -86,7 +87,7 @@ class _MenuState extends State<Menu> {
                         backgroundColor: Colors.orange,
                         child: Center(
                             child: Text(
-                          "${userData['name'][0] ?? ''}${userData['surname'][0] ?? ''}", //Initials on user image, //TODO: retrieve user initials from db
+                          "${userData['name'][0] ?? ''}${userData['surname'][0] ?? ''}",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 40,
@@ -95,7 +96,7 @@ class _MenuState extends State<Menu> {
                       ),
                     ),
                     Positioned(
-                        left: 20, //TODO: retrieve person name from db
+                        left: 20,
                         top: 30,
                         child: Text(
                             'Welcome\n${userData['name'] ?? ''} ${userData['surname'] ?? ''}',
