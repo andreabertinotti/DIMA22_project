@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pro/Models/user_model.dart';
-import 'package:pro/Screen/Reservations/reservations_history.dart';
 import 'package:pro/Services/auth_service.dart';
 import 'package:provider/provider.dart'; // package used to edit date format
 import 'package:pro/Screen/menu.dart';
@@ -12,11 +11,12 @@ import 'package:pro/Utils/wrapper.dart';
 import 'package:pro/Screen/Reservations/reservation_add.dart';
 
 // A stateful widget representing the bookings page.
-class BookingsPage extends StatefulWidget {
-  const BookingsPage({super.key});
+class ReservationsHistoryPage extends StatefulWidget {
+  const ReservationsHistoryPage({super.key});
 
   @override
-  State<BookingsPage> createState() => _BookingsPageState();
+  State<ReservationsHistoryPage> createState() =>
+      _ReservationsHistoryPageState();
 }
 
 // A custom list item widget that displays booking information.
@@ -182,7 +182,7 @@ class CustomListItem extends StatelessWidget {
   }
 }
 
-class _BookingsPageState extends State<BookingsPage> {
+class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
   final GlobalKey<ScaffoldMessengerState> _bookingMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
@@ -270,8 +270,6 @@ class _BookingsPageState extends State<BookingsPage> {
         .collection('users')
         .doc(user.uid)
         .collection('reservations')
-        .where('reservationEndDate',
-            isGreaterThan: Timestamp.fromDate(currentTime))
         .get();
 
     List<Map<String, dynamic>> reservations = [];
@@ -317,7 +315,7 @@ class _BookingsPageState extends State<BookingsPage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    ReservationsHistoryPage()));
+                                    EditBooking(uid: snapshot.data!.uid)));
                       },
                       icon: Icon(
                         Icons.history,
