@@ -189,42 +189,6 @@ class _BookingsPageState extends State<BookingsPage> {
   final GlobalKey<ScaffoldMessengerState> _bookingMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
-  //void _deleteReservation(
-  //    String reservationId, User user, String locker, String cell) async {
-  //  try {
-  //    await FirebaseFirestore.instance
-  //        .collection('users')
-  //        .doc(user
-  //            .uid) // Assuming authService provides the currently logged-in user
-  //        .collection('reservations')
-  //        .doc(reservationId)
-  //        .delete();
-//
-  //    QuerySnapshot bookedSlotSnapshot = await FirebaseFirestore.instance
-  //        .collection('lockers')
-  //        .doc(locker)
-  //        .collection('cells')
-  //        .doc(cell)
-  //        .collection('bookedSlots')
-  //        .where('linkedReservation', isEqualTo: reservationId)
-  //        .get();
-//
-  //    for (final bookedSlotDoc in bookedSlotSnapshot.docs) {
-  //      await bookedSlotDoc.reference.delete();
-  //    }
-//
-  //    // Show a success message using ScaffoldMessenger
-  //    _bookingMessengerKey.currentState?.showSnackBar(
-  //      SnackBar(content: Text('Reservation deleted successfully')),
-  //    );
-  //  } catch (error) {
-  //    // Show an error message using ScaffoldMessenger
-  //    _bookingMessengerKey.currentState?.showSnackBar(
-  //      SnackBar(content: Text('Failed to delete reservation')),
-  //    );
-  //  }
-  //}
-
   void _deleteReservation(
       String reservationId, User user, String locker, String cell) async {
     try {
@@ -265,10 +229,7 @@ class _BookingsPageState extends State<BookingsPage> {
 
   Future<List<Map<String, dynamic>>> fetchReservations(User user) async {
     final DateTime currentTime = DateTime.now();
-    //QuerySnapshot reservationSnapshot = await FirebaseFirestore.instance
-    //    .collectionGroup('reservations')
-    //    .where('userUid', isEqualTo: user.uid)
-    //    .get();
+
     QuerySnapshot reservationSnapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
@@ -290,6 +251,26 @@ class _BookingsPageState extends State<BookingsPage> {
     }
 
     return reservations;
+  }
+
+  Stream<List<Map<String, dynamic>>> fetchReservationsLive(User user) {
+    final DateTime currentTime = DateTime.now();
+
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('reservations')
+        .where('reservationEndDate',
+            isGreaterThan: Timestamp.fromDate(currentTime))
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((reservationDoc) {
+        Map<String, dynamic> reservationData =
+            reservationDoc.data()! as Map<String, dynamic>;
+        reservationData['id'] = reservationDoc.id;
+        return reservationData;
+      }).toList();
+    });
   }
 
   @override
@@ -345,17 +326,14 @@ class _BookingsPageState extends State<BookingsPage> {
                           style: TextStyle(color: Colors.white, fontSize: 17))),
                 ],
               ),
-              body: FutureBuilder<List<Map<String, dynamic>>>(
-                future: fetchReservations(user!),
+              body: StreamBuilder<List<Map<String, dynamic>>>(
+                stream: fetchReservationsLive(user!),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
                   } else if (snapshot.hasError) {
-                    print(user.uid);
-                    print(snapshot);
-
                     return Center(
                       child: Text("Error loading data."),
                     );
