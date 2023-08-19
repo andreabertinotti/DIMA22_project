@@ -325,7 +325,7 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
                     );
                   } else if (snapshot.data!.isEmpty) {
                     return Center(
-                      child: Text("No booking found!",
+                      child: Text("Booking history is empty!",
                           style: TextStyle(fontSize: 20)),
                     );
                   } else {
