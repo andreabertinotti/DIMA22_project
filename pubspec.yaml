@@ -82,6 +82,9 @@ flutter:
     - assets/images/Leonardo-locker-image.png
     - assets/images/Centrale-locker-image.png
     - assets/images/Garibaldi-locker-image.png
+    - assets/images/Duomo-locker-image.png
+    - assets/images/Bovisa-locker-image.png
+    - assets/images/Darsena-locker-image.png
      
 
   # An image asset can refer to one or more resolution-specific "variants", see
