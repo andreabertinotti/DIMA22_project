@@ -50,7 +50,6 @@ class CustomListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('assets/images/$locker-locker-image.png');
     return Column(
       children: [
         Container(
