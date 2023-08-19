@@ -50,6 +50,7 @@ class CustomListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('assets/images/$locker-locker-image.png');
     return Column(
       children: [
         Container(
@@ -63,8 +64,11 @@ class CustomListItem extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: Colors
-                          .red), // TODO: insert locker image or map instead of a solid color
+                    image: DecorationImage(
+                      image: AssetImage('images/$locker-locker-image.png'),
+                      fit: BoxFit.cover, // Adjust the fit as needed
+                    ),
+                  ),
                 ),
               ),
               Container(

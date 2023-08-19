@@ -128,52 +128,52 @@ class CustomListItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton.icon(
-                // TODO: Open the edit booking page when the button is pressed
-                onPressed: () {
-                  //Navigator.push(context,MaterialPageRoute(
-                  //builder: (context) => const EditBooking()));
-                },
-                icon: Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                ),
-                label: Text(
-                  "Edit booking",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-                style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.orange),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            side: BorderSide(color: Colors.orange)))),
-              ),
-              ElevatedButton.icon(
-                onPressed: onDelete,
-                //TODO: if notifications are implemented, change delete and notif. buttons --> remove text (only icon buttons)
-                //onPressed: () {
-                //  //TODO: Delete booking on button press
-                //
-                //},
-                style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.orange),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            side: BorderSide(color: Colors.orange)))),
-                icon: Icon(Icons.delete, color: Colors.white),
-                label: Text(
-                  "Delete booking",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-              ),
+              //ElevatedButton.icon(
+              //  // TODO: Open the edit booking page when the button is pressed
+              //  onPressed: () {
+              //    //Navigator.push(context,MaterialPageRoute(
+              //    //builder: (context) => const EditBooking()));
+              //  },
+              //  icon: Icon(
+              //    Icons.edit,
+              //    color: Colors.white,
+              //  ),
+              //  label: Text(
+              //    "Edit booking",
+              //    style: TextStyle(fontSize: 18, color: Colors.white),
+              //  ),
+              //  style: ButtonStyle(
+              //      foregroundColor:
+              //          MaterialStateProperty.all<Color>(Colors.white),
+              //      backgroundColor:
+              //          MaterialStateProperty.all<Color>(Colors.orange),
+              //      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              //          RoundedRectangleBorder(
+              //              borderRadius: BorderRadius.circular(18),
+              //              side: BorderSide(color: Colors.orange)))),
+              //),
+              //ElevatedButton.icon(
+              //  onPressed: onDelete,
+              //  //TODO: if notifications are implemented, change delete and notif. buttons --> remove text (only icon buttons)
+              //  //onPressed: () {
+              //  //  //TODO: Delete booking on button press
+              //  //
+              //  //},
+              //  style: ButtonStyle(
+              //      foregroundColor:
+              //          MaterialStateProperty.all<Color>(Colors.white),
+              //      backgroundColor:
+              //          MaterialStateProperty.all<Color>(Colors.orange),
+              //      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              //          RoundedRectangleBorder(
+              //              borderRadius: BorderRadius.circular(18),
+              //              side: BorderSide(color: Colors.orange)))),
+              //  icon: Icon(Icons.delete, color: Colors.white),
+              //  label: Text(
+              //    "Delete booking",
+              //    style: TextStyle(fontSize: 18, color: Colors.white),
+              //  ),
+              //),
             ],
           ),
         )
@@ -302,43 +302,12 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
                 backgroundColor: Colors.orange,
                 foregroundColor: Colors.white,
                 title: const Text(
-                  'My Reservations',
+                  'Reservations history',
                   style: TextStyle(
                     color: Colors.white,
                   ),
                 ),
-                actions: [
-                  //TODO: valutare se fare aggiunta prenotazione su tab in basso
-                  TextButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    EditBooking(uid: snapshot.data!.uid)));
-                      },
-                      icon: Icon(
-                        Icons.history,
-                        color: Colors.white,
-                      ),
-                      label: Text("History",
-                          style: TextStyle(color: Colors.white, fontSize: 17))),
-
-                  TextButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    EditBooking(uid: snapshot.data!.uid)));
-                      },
-                      icon: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                      label: Text("Add booking",
-                          style: TextStyle(color: Colors.white, fontSize: 17))),
-                ],
+                actions: [],
               ),
               body: FutureBuilder<List<Map<String, dynamic>>>(
                 future: fetchReservations(user!),
