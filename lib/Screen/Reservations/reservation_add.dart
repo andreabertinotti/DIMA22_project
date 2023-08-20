@@ -241,48 +241,72 @@ class _EditBookingState extends State<EditBooking> {
                 )
               : ElevatedButton(
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Check availability"),
-                          content: Text(
-                              "Do you want to check for availability in the selected date and locker?"),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () async {
-                                QuerySnapshot querySnapshot =
-                                    await FirebaseFirestore.instance
-                                        .collectionGroup('bookedSlots')
-                                        .where('locker', isEqualTo: lockerName)
-                                        .where('timeSlot', whereIn: targetSlots)
-                                        .get();
+                    DateTime currentDate = DateTime.now();
+                    if (dropoff.isBefore(currentDate)) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Invalid Date"),
+                            content: Text(
+                                "You can't make a reservation in the past!"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("OK"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Check availability"),
+                            content: Text(
+                                "Do you want to check for availability in the selected date and locker?"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () async {
+                                  QuerySnapshot querySnapshot =
+                                      await FirebaseFirestore.instance
+                                          .collectionGroup('bookedSlots')
+                                          .where('locker',
+                                              isEqualTo: lockerName)
+                                          .where('timeSlot',
+                                              whereIn: targetSlots)
+                                          .get();
 
-                                for (QueryDocumentSnapshot bookedSlotSnap
-                                    in querySnapshot.docs) {
-                                  occupied_cells.add(bookedSlotSnap['cell']);
-                                }
-                                occupied_cells =
-                                    occupied_cells.toSet().toList();
+                                  for (QueryDocumentSnapshot bookedSlotSnap
+                                      in querySnapshot.docs) {
+                                    occupied_cells.add(bookedSlotSnap['cell']);
+                                  }
+                                  occupied_cells =
+                                      occupied_cells.toSet().toList();
 
-                                setState(() {
-                                  availabilityChecked = true;
-                                  selectedCell = 'Select a cell';
-                                  available_cells = all_cells
-                                      .toSet()
-                                      .difference(occupied_cells.toSet())
-                                      .toList();
-                                  print('available cells: ' +
-                                      available_cells.toString());
-                                });
-                                Navigator.of(context).pop();
-                              },
-                              child: Text("Confirm"),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                                  setState(() {
+                                    availabilityChecked = true;
+                                    selectedCell = 'Select a cell';
+                                    available_cells = all_cells
+                                        .toSet()
+                                        .difference(occupied_cells.toSet())
+                                        .toList();
+                                    print('available cells: ' +
+                                        available_cells.toString());
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("Confirm"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
                   style: ButtonStyle(
                     foregroundColor:
