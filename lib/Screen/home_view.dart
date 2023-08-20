@@ -94,7 +94,7 @@ class _HomeViewState extends State<HomeView> {
                     position: latLng,
                     infoWindow: InfoWindow(
                         title: document['lockerName'],
-                        snippet: document['lockerFare'].toString() + '€/hour'),
+                        snippet: document['lockerFee'].toString() + '€'),
                     onTap: () => MediaQuery.of(context).size.width < 800
                         ? _showBottomSheet(document)
                         : showDialog(
@@ -137,82 +137,84 @@ class _HomeViewState extends State<HomeView> {
         context: context,
         builder: (BuildContext context) {
           return Container(
-            margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
-            height: 240,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Divider(thickness: 3, indent: 150, endIndent: 150,),
-                Container(
-                  margin: EdgeInsets.only(top: 15, left: 15),
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${document['lockerName']} locker",
-                        style: const TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 15),
-                        child: Text(
-                          "Address: ${document['lockerAddress']}",
-                          style: const TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 15),
-                        child: Text(
-                          "Price per hour: ${document['lockerFare'].toString()}€",
-                          style: const TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                    ],
+              margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
+              height: 240,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Divider(
+                    thickness: 3,
+                    indent: 150,
+                    endIndent: 150,
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 25),
-                  child: ElevatedButton(
-                    onPressed: (){
-                      Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => 
-                          Wrapper(widget: EditLockerBooking(document))
-                        )
-                      );
-                    }, 
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                          side: BorderSide(color: Colors.orange)
-                        )
-                      )
+                  Container(
+                    margin: EdgeInsets.only(top: 15, left: 15),
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${document['lockerName']} locker",
+                          style: const TextStyle(
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 15),
+                          child: Text(
+                            "Address: ${document['lockerAddress']}",
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 15),
+                          child: Text(
+                            "Locker fee: ${document['lockerFee'].toString()} €",
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    child: Text("Book this locker".toUpperCase())
                   ),
-                ),
-                map.containsKey("urls") == true
-                    ? Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: ImageView(map: map),
-                      )
-                    : Container(),
-              ],
-            )
+                  Padding(
+                    padding: EdgeInsets.only(top: 25),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Wrapper(
+                                      widget: EditLockerBooking(document))));
+                        },
+                        style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.orange),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                    side: BorderSide(color: Colors.orange)))),
+                        child: Text("Book this locker".toUpperCase())),
+                  ),
+                  map.containsKey("urls") == true
+                      ? Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: ImageView(map: map),
+                        )
+                      : Container(),
+                ],
+              )
 
-
-            /* ListView(
+              /* ListView(
               shrinkWrap: true,
               children: [
                 Container(
@@ -300,7 +302,7 @@ class _HomeViewState extends State<HomeView> {
                     : Container(),
               ],
             ), */
-          );
+              );
         });
   }
 
