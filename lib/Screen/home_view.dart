@@ -114,7 +114,7 @@ class _HomeViewState extends State<HomeView> {
               });
 
               currentLocation == null
-                  ? initial_location = LatLng(45.478436, 9.226619)
+                  ? initial_location = LatLng(45.482831, 9.194336)
                   : initial_location = LatLng(
                       currentLocation!.latitude!, currentLocation!.longitude!);
 
@@ -122,7 +122,7 @@ class _HomeViewState extends State<HomeView> {
                 myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,
                 initialCameraPosition:
-                    CameraPosition(target: initial_location, zoom: 13),
+                    CameraPosition(target: initial_location, zoom: 12.8),
                 markers: markers,
               );
             },
