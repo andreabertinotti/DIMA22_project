@@ -1,5 +1,6 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
+import "package:flutter/rendering.dart";
 import "package:intl/intl.dart";
 import "package:pro/Models/user_model.dart";
 import 'package:provider/provider.dart';
@@ -35,6 +36,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
   //String lockerName = 'Select a locker';
   String baggageSize = 'Select a size';
   String selectedCell = 'Select a cell';
+  String serviceLockerName = '';
   int duration = 0;
   bool availabilityChecked = false;
   bool bookingAuthorized = false;
@@ -48,21 +50,22 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
   List available_cells = [];
 
   String cellFare = ''; // Initialize with an empty string
-  String lockerFee = ''; // Initialize with an empty string
+  //String lockerFee = ''; // Initialize with an empty string
 
 // Update cell fare
   void _updateCellFare() async {
-    cellFare = await retrieveCellFare(
-        widget.document['lockerName'], selectedCell, duration);
+    print(serviceLockerName);
+    cellFare =
+        await retrieveCellFare(serviceLockerName, selectedCell, duration);
     setState(() {});
   }
 
 // Update locker fee
-  void _updateLockerFee() async {
-    lockerFee = await retrieveLockerFee(widget.document['lockerName']);
-    setState(() {});
-  }
-
+  // void _updateLockerFee() async {
+  //   lockerFee = await retrieveLockerFee(widget.document['lockerName']);
+  //   setState(() {});
+  // }
+//
   Future<String> retrieveCellFare(
       String locker, String cell, int duration) async {
     if (!bookingAuthorized) {
@@ -85,12 +88,12 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
     if (locker == 'Select a locker') {
       return '';
     }
-    DocumentSnapshot lockerSnapshot = await FirebaseFirestore.instance
-        .collection('lockers')
-        .doc(locker)
-        .get();
+    //DocumentSnapshot lockerSnapshot = await FirebaseFirestore.instance
+    //    .collection('lockers')
+    //    .doc(locker)
+    //    .get();
 
-    String fee = lockerSnapshot['lockerFee'].toStringAsFixed(2);
+    String fee = '0'; //lockerSnapshot['lockerFee'].toString();
     String renderedFee = '$fee€';
     return renderedFee;
   }
@@ -359,9 +362,9 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
 
           // Call the auxiliary functions to update fee state variables
           _updateCellFare();
-          _updateLockerFee();
+          //_updateLockerFee();
           //print(widget.document['lockerName'] + selectedCell);
-          print('locker fee: ' + lockerFee);
+
           print('cell fare: ' + cellFare);
         });
       },
@@ -617,6 +620,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
   // Widget to build the entire screen
   @override
   Widget build(BuildContext context) {
+    serviceLockerName = widget.document['lockerName'];
     final authService = Provider.of<AuthService>(context);
     String lockerName = widget.document['lockerName'];
     return StreamBuilder<User?>(
@@ -675,19 +679,19 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                             endIndent: 20,
                           ),
 
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [Text("Locker fee:"), Text(lockerFee)],
-                            ),
-                          ),
+                          //Padding(
+                          //  padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+                          //  child: Row(
+                          //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //    children: [Text("Locker fee:"), Text(lockerFee)],
+                          //  ),
+                          //),
                           Padding(
                             padding: EdgeInsets.fromLTRB(20, 10, 20, 15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Cell price:",
+                                Text("Price to pay:",
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                                 Text(cellFare,

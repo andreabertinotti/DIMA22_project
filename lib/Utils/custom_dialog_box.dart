@@ -137,16 +137,16 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 ),
               ),
 
-              Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: Text(
-                  "Locker fee: ${widget.document['lockerFee'].toString()}€",
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
+              //Padding(
+              //  padding: EdgeInsets.only(top: 10),
+              //  child: Text(
+              //    "Locker fee: ${widget.document['lockerFee'].toString()}€",
+              //    style: const TextStyle(
+              //      fontSize: 14,
+              //      fontWeight: FontWeight.w400,
+              //    ),
+              //  ),
+              //),
               Padding(
                 padding: EdgeInsets.only(top: 5),
                 child: Text(

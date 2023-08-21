@@ -170,16 +170,16 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 15),
-                          child: Text(
-                            "Locker fee: ${document['lockerFee'].toString()}€",
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
+                        //Padding(
+                        //  padding: EdgeInsets.only(top: 15),
+                        //  child: Text(
+                        //    "Locker fee: ${document['lockerFee'].toString()}€",
+                        //    style: const TextStyle(
+                        //      fontSize: 14,
+                        //      fontWeight: FontWeight.w400,
+                        //    ),
+                        //  ),
+                        //),
                         Padding(
                           padding: EdgeInsets.only(top: 10),
                           child: Text(
