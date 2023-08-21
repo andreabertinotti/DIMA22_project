@@ -9,7 +9,7 @@ import 'package:pro/Services/auth_service.dart';
 import 'package:provider/provider.dart'; // package used to edit date format
 import 'package:pro/Screen/menu.dart';
 import 'package:pro/Utils/wrapper.dart';
-import 'package:pro/Screen/Reservations/reservation_add.dart';
+import 'package:pro/Screen/Reservations/reservation_add copy.dart';
 
 // A stateful widget representing the bookings page.
 class BookingsPage extends StatefulWidget {
@@ -64,7 +64,8 @@ class CustomListItem extends StatelessWidget {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/images/$locker-locker-image.png'),
+                      image:
+                          AssetImage('assets/images/$locker-locker-image.png'),
                       fit: BoxFit.cover, // Adjust the fit as needed
                     ),
                   ),
