@@ -143,7 +143,13 @@ class _MenuState extends State<Menu> {
                             actions: [
                               TextButton(
                                 onPressed: () {
-                                  //TODO: send problem report to db
+                                  FirebaseFirestore.instance
+                                      .collection('reports')
+                                      .add({
+                                    'userUid': getCurrentUserUid(),
+                                    'locker': descriptionController.text,
+                                    'timestamp': DateTime.now(),
+                                  });
                                   Navigator.of(context).pop();
                                   print(descriptionController.text);
                                 },
@@ -286,7 +292,13 @@ class _MenuState extends State<Menu> {
                             actions: [
                               TextButton(
                                 onPressed: () {
-                                  //TODO: send problem report to db
+                                  FirebaseFirestore.instance
+                                      .collection('reports')
+                                      .add({
+                                    'userUid': getCurrentUserUid(),
+                                    'locker': descriptionController.text,
+                                    'timestamp': DateTime.now(),
+                                  });
                                   Navigator.of(context).pop();
                                   print(descriptionController.text);
                                 },
@@ -424,7 +436,13 @@ class _MenuState extends State<Menu> {
                           actions: [
                             TextButton(
                               onPressed: () {
-                                //TODO: send problem report to db
+                                FirebaseFirestore.instance
+                                    .collection('reports')
+                                    .add({
+                                  'userUid': getCurrentUserUid(),
+                                  'locker': descriptionController.text,
+                                  'timestamp': DateTime.now(),
+                                });
                                 Navigator.of(context).pop();
                                 print(descriptionController.text);
                               },
