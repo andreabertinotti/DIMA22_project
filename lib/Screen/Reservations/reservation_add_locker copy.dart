@@ -90,7 +90,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
         .doc(locker)
         .get();
 
-    String fee = lockerSnapshot['lockerFee'].toString();
+    String fee = lockerSnapshot['lockerFee'].toStringAsFixed(2);
     String renderedFee = '$fee€';
     return renderedFee;
   }

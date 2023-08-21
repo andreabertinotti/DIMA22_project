@@ -92,9 +92,9 @@ class _HomeViewState extends State<HomeView> {
                   markers.add(Marker(
                     markerId: MarkerId(document.id),
                     position: latLng,
-                    infoWindow: InfoWindow(
-                        title: document['lockerName'],
-                        snippet: document['lockerFee'].toString() + '€'),
+                    //infoWindow: InfoWindow(
+                    //    title: document['lockerName'],
+                    //    snippet: document['lockerFee'].toString() + '€'),
                     onTap: () => MediaQuery.of(context).size.width < 800
                         ? _showBottomSheet(document)
                         : showDialog(
@@ -148,7 +148,7 @@ class _HomeViewState extends State<HomeView> {
                     endIndent: 150,
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 15, left: 15),
+                    margin: EdgeInsets.only(top: 5, left: 15),
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,12 +156,12 @@ class _HomeViewState extends State<HomeView> {
                         Text(
                           "${document['lockerName']} locker",
                           style: const TextStyle(
-                            fontSize: 35,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 15),
+                          padding: EdgeInsets.only(top: 10),
                           child: Text(
                             "Address: ${document['lockerAddress']}",
                             style: const TextStyle(
@@ -173,9 +173,29 @@ class _HomeViewState extends State<HomeView> {
                         Padding(
                           padding: EdgeInsets.only(top: 15),
                           child: Text(
-                            "Locker fee: ${document['lockerFee'].toString()} €",
+                            "Locker fee: ${document['lockerFee'].toString()}€",
                             style: const TextStyle(
-                              fontSize: 17,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text(
+                            "Small cell fare: ${document['smallCellFare'].toString()}€/hour",
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text(
+                            "Large cell fare: ${document['largeCellFare'].toString()}€/hour",
+                            style: const TextStyle(
+                              fontSize: 14,
                               fontWeight: FontWeight.w400,
                             ),
                           ),

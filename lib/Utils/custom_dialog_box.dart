@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pro/Utils/image_view.dart';
 import 'package:pro/Utils/wrapper.dart';
 
-import '../Screen/Reservations/reservation_add_locker.dart';
+import '../Screen/Reservations/reservation_add_locker copy.dart';
 import 'constants.dart';
 
 class CustomDialogBox extends StatefulWidget {
@@ -62,47 +62,58 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
               ),
 
               ///// MAYBE ADD A MARGIN TO THE ROWS BELOW
-
-              Row(
-                children: [
-                  const Text(
-                    "Locker's name: ",
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                    ),
+              ///
+              Padding(
+                padding: EdgeInsets.only(top: 0),
+                child: Text(
+                  "${widget.document['lockerName'].toString()} locker",
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Text(
-                    widget.document['lockerName'],
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
+                ),
               ),
 
-              Row(
-                children: [
-                  const Text(
-                    "euro/hour: ",
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    widget.document['lockerFare'].toString(),
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
+              //Row(
+              //  children: [
+              //    const Text(
+              //      "Locker's name: ",
+              //      style: TextStyle(
+              //        fontSize: 17,
+              //        fontWeight: FontWeight.w600,
+              //      ),
+              //    ),
+              //    Text(
+              //      widget.document['lockerName'],
+              //      style: const TextStyle(
+              //        fontSize: 17,
+              //        fontWeight: FontWeight.w400,
+              //      ),
+              //    ),
+              //  ],
+              //),
+
+              // Row(
+              //   children: [
+              //     const Text(
+              //       "euro/hour: ",
+              //       style: TextStyle(
+              //         fontSize: 17,
+              //         fontWeight: FontWeight.w600,
+              //       ),
+              //     ),
+              //     Text(
+              //       widget.document['lockerFare'].toString(),
+              //       style: const TextStyle(
+              //         fontSize: 17,
+              //         fontWeight: FontWeight.w400,
+              //       ),
+              //     ),
+              //   ],
+              // ),
 
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -110,7 +121,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                       "Address: ",
                       style: TextStyle(
                         fontSize: 17,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     Expanded(
@@ -125,6 +136,40 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   ],
                 ),
               ),
+
+              Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: Text(
+                  "Locker fee: ${widget.document['lockerFee'].toString()}€",
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Text(
+                  "Small cell fare: ${widget.document['smallCellFare'].toString()}€/hour",
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
+                child: Text(
+                  "Large cell fare: ${widget.document['largeCellFare'].toString()}€/hour",
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              //],
+              // ),
+              // ),
 
               widget.map.containsKey("urls") == true
                   ? ImageView(
