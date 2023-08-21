@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:pro/Utils/image_view.dart';
 import 'package:pro/Utils/wrapper.dart';
@@ -28,51 +30,112 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
         insetPadding: EdgeInsets.fromLTRB(
             0,
             0,
-            MediaQuery.of(context).size.width / 1.75,
-            MediaQuery.of(context).size.height / 1.6),
+            MediaQuery.of(context).size.width / 2,            //TODO: check these values and fix dimensions of the box
+            MediaQuery.of(context).size.height / 1.5),
         shape: RoundedRectangleBorder(
           side: const BorderSide(color: Colors.black, width: 1),
           borderRadius: BorderRadius.circular(Constants.padding),
         ),
         child: Container(
           margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-          child: ListView(
-            shrinkWrap: true,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                margin: const EdgeInsets.all(5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    MaterialButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => Wrapper(
-                                    widget:
-                                        EditLockerBooking(widget.document)))));
-                      },
-                      color: Color(0xFFFF9800),
-                      textColor: Colors.white,
-                      child: const Text("Create a reservation"),
-                    ),
-                  ],
-                ),
-              ),
-
-              ///// MAYBE ADD A MARGIN TO THE ROWS BELOW
-              ///
-              Padding(
-                padding: EdgeInsets.only(top: 0),
-                child: Text(
-                  "${widget.document['lockerName'].toString()} locker",
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 10, left: 5, top: 15),
+                        child: Text(
+                          "${widget.document['lockerName'].toString()} locker",
+                          style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Address: ${widget.document['lockerAddress'].toString()}",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Text(
+                          "Locker fee: ${widget.document['lockerFee'].toString()}€",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 5, left: 5),
+                        child: Text(
+                          "Small cell fare: ${widget.document['smallCellFare'].toString()}€/hour",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(5, 5, 0, 10),
+                        child: Text(
+                          "Large cell fare: ${widget.document['largeCellFare'].toString()}€/hour",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(width: 50,),
+                  Container(
+                    margin: EdgeInsets.only(top: 15),
+                    height: 135,
+                    width: 135,
+                    decoration: BoxDecoration(color: Colors.red),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,MaterialPageRoute(
+                      builder: ((context) => Wrapper( widget:EditLockerBooking(widget.document)))
+                    ));
+                  }, 
+                  style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.orange),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                    side: BorderSide(color: Colors.orange)))),
+                  child: Text("Book this locker".toUpperCase())
                 ),
               ),
+              
 
               //Row(
               //  children: [
@@ -112,61 +175,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
               //   ],
               // ),
 
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Address: ",
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        widget.document['lockerAddress'],
-                        style: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              //Padding(
-              //  padding: EdgeInsets.only(top: 10),
-              //  child: Text(
-              //    "Locker fee: ${widget.document['lockerFee'].toString()}€",
-              //    style: const TextStyle(
-              //      fontSize: 14,
-              //      fontWeight: FontWeight.w400,
-              //    ),
-              //  ),
-              //),
-              Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Text(
-                  "Small cell fare: ${widget.document['smallCellFare'].toString()}€/hour",
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
-                child: Text(
-                  "Large cell fare: ${widget.document['largeCellFare'].toString()}€/hour",
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
+              
               //],
               // ),
               // ),
