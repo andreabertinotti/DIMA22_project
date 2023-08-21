@@ -44,7 +44,7 @@ class _EditBookingState extends State<EditBooking> {
   List available_cells = [];
 
   String cellFare = ''; // Initialize with an empty string
-  String lockerFee = ''; // Initialize with an empty string
+  //String lockerFee = ''; // Initialize with an empty string
 
 // Update cell fare
   void _updateCellFare() async {
@@ -53,10 +53,10 @@ class _EditBookingState extends State<EditBooking> {
   }
 
 // Update locker fee
-  void _updateLockerFee() async {
-    lockerFee = await retrieveLockerFee(lockerName);
-    setState(() {});
-  }
+  // void _updateLockerFee() async {
+  //   lockerFee = await retrieveLockerFee(lockerName);
+  //   setState(() {});
+  // }
 
   Future<String> retrieveCellFare(
       String locker, String cell, int duration) async {
@@ -76,19 +76,19 @@ class _EditBookingState extends State<EditBooking> {
     return renderedFare;
   }
 
-  Future<String> retrieveLockerFee(String locker) async {
-    if (locker == 'Select a locker') {
-      return '';
-    }
-    DocumentSnapshot lockerSnapshot = await FirebaseFirestore.instance
-        .collection('lockers')
-        .doc(locker)
-        .get();
-
-    String fee = lockerSnapshot['lockerFee'].toString();
-    String renderedFee = '$fee€';
-    return renderedFee;
-  }
+  //Future<String> retrieveLockerFee(String locker) async {
+  //  if (locker == 'Select a locker') {
+  //    return '';
+  //  }
+  //  //DocumentSnapshot lockerSnapshot = await FirebaseFirestore.instance
+  //  //    .collection('lockers')
+  //  //    .doc(locker)
+  //  //    .get();
+//
+  //  String fee = '0'; //lockerSnapshot['lockerFee'].toString();
+  //  String renderedFee = '$fee€';
+  //  return renderedFee;
+  //}
 
   // Method to get the list of items to be shown in the baggage size dropdown menu
   List<DropdownMenuItem<String>> get dropdownSizes {
@@ -362,9 +362,9 @@ class _EditBookingState extends State<EditBooking> {
 
           // Call the auxiliary functions to update fee state variables
           _updateCellFare();
-          _updateLockerFee();
+          // _updateLockerFee();
           //print(lockerName + selectedCell);
-          print('locker fee: ' + lockerFee);
+
           print('cell fare: ' + cellFare);
         });
       },
@@ -631,19 +631,19 @@ class _EditBookingState extends State<EditBooking> {
                 endIndent: 20,
               ),
 
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text("Locker fee:"), Text(lockerFee)],
-                ),
-              ),
+              //Padding(
+              //  padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+              //  child: Row(
+              //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //    children: [Text("Locker fee:"), Text(lockerFee)],
+              //  ),
+              //),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 10, 20, 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Cell price:",
+                    Text("Price to pay:",
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     Text(cellFare,
                         style: TextStyle(fontWeight: FontWeight.bold))
