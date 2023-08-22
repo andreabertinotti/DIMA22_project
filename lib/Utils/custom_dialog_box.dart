@@ -27,11 +27,12 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
     return Align(
       alignment: Alignment.topLeft,
       child: Dialog(
-        insetPadding: EdgeInsets.fromLTRB(
-            0,
-            0,
-            MediaQuery.of(context).size.width / 2,            //TODO: check these values and fix dimensions of the box
-            MediaQuery.of(context).size.height / 1.5),
+         insetPadding: EdgeInsets.fromLTRB(
+            MediaQuery.of(context).size.height * 0.5,
+            MediaQuery.of(context).size.height * 0.32,
+            MediaQuery.of(context).size.height * 0.5,            //TODO: check these values and fix dimensions of the box
+            MediaQuery.of(context).size.height * 0.32
+          ),
         shape: RoundedRectangleBorder(
           side: const BorderSide(color: Colors.black, width: 1),
           borderRadius: BorderRadius.circular(Constants.padding),
@@ -40,16 +41,17 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
           margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //mainAxisSize: MainAxisSize.min,
             children: [
               Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(bottom: 10, left: 5, top: 15),
+                        padding: EdgeInsets.only(bottom: 10, left: 15, top: 15),
                         child: Text(
                           "${widget.document['lockerName'].toString()} locker",
                           style: const TextStyle(
@@ -59,7 +61,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(5, 5, 0, 5),
+                        padding: const EdgeInsets.fromLTRB(15, 5, 0, 5),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -74,7 +76,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 5),
+                        padding: EdgeInsets.only(left: 15),
                         child: Text(
                           "Locker fee: ${widget.document['lockerFee'].toString()}€",
                           style: const TextStyle(
@@ -84,7 +86,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 5, left: 5),
+                        padding: EdgeInsets.only(top: 5, left: 15),
                         child: Text(
                           "Small cell fare: ${widget.document['smallCellFare'].toString()}€/hour",
                           style: const TextStyle(
@@ -94,7 +96,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(5, 5, 0, 10),
+                        padding: EdgeInsets.fromLTRB(15, 5, 0, 10),
                         child: Text(
                           "Large cell fare: ${widget.document['largeCellFare'].toString()}€/hour",
                           style: const TextStyle(
@@ -105,13 +107,12 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                       ),
                     ],
                   ),
-                  SizedBox(width: 50,),
                   Container(
-                    margin: EdgeInsets.only(top: 15),
+                    margin: EdgeInsets.only(top: 15, right: 15),
                     height: 135,
-                    width: 135,
+                    width: 155,
                     decoration: BoxDecoration(color: Colors.red),
-                  ),
+                  )
                 ],
               ),
               Padding(
@@ -135,50 +136,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   child: Text("Book this locker".toUpperCase())
                 ),
               ),
-              
-
-              //Row(
-              //  children: [
-              //    const Text(
-              //      "Locker's name: ",
-              //      style: TextStyle(
-              //        fontSize: 17,
-              //        fontWeight: FontWeight.w600,
-              //      ),
-              //    ),
-              //    Text(
-              //      widget.document['lockerName'],
-              //      style: const TextStyle(
-              //        fontSize: 17,
-              //        fontWeight: FontWeight.w400,
-              //      ),
-              //    ),
-              //  ],
-              //),
-
-              // Row(
-              //   children: [
-              //     const Text(
-              //       "euro/hour: ",
-              //       style: TextStyle(
-              //         fontSize: 17,
-              //         fontWeight: FontWeight.w600,
-              //       ),
-              //     ),
-              //     Text(
-              //       widget.document['lockerFare'].toString(),
-              //       style: const TextStyle(
-              //         fontSize: 17,
-              //         fontWeight: FontWeight.w400,
-              //       ),
-              //     ),
-              //   ],
-              // ),
-
-              
-              //],
-              // ),
-              // ),
 
               widget.map.containsKey("urls") == true
                   ? ImageView(
