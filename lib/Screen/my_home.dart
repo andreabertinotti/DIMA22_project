@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pro/Screen/Reservations/reservations_list.dart';
+import 'package:pro/Screen/Reservations/reservations_list_tablet.dart';
 import 'package:pro/Screen/Reservations/reservations_screen.dart';
 import 'package:pro/Screen/User/user_profile_existence_check.dart';
 import 'package:pro/Screen/menu.dart';
@@ -55,9 +56,7 @@ class _MyHomeState extends State<MyHome> {
     ),
 
     //Wrapper manages the login screen, if usr is not logged, login-screen is returned, else the specific widget
-    //Wrapper(widget: SocialScreen()),
-    //Wrapper(widget: ChatHome()),
-    Wrapper(widget: BookingsPage()),
+    Wrapper(widget: ReservationsScreen()),
     //BookingWrapper(),
     //Wrapper(widget: ReservationsScreen()),
     Wrapper(widget: ProfileCheckScreen()),
