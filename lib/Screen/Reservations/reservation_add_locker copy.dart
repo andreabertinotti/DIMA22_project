@@ -281,7 +281,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text("OK"),
+                          child: Text("OK", style: TextStyle(color: Colors.orange),),
                         ),
                       ],
                     );
@@ -323,7 +323,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                             });
                             Navigator.of(context).pop();
                           },
-                          child: Text("Confirm"),
+                          child: Text("Confirm", style: TextStyle(color: Colors.orange),),
                         ),
                       ],
                     );
@@ -399,7 +399,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text("OK"),
+                              child: Text("OK", style: TextStyle(color: Colors.orange),),
                             ),
                           ],
                         );
@@ -430,7 +430,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text("OK"),
+                                  child: Text("OK", style: TextStyle(color: Colors.orange),),
                                 ),
                               ],
                             );

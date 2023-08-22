@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:pro/Screen/Reservations/reservation_add_locker_tablet.dart';
 import 'package:pro/Utils/image_view.dart';
 import 'package:pro/Utils/wrapper.dart';
 
@@ -120,7 +121,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(context,MaterialPageRoute(
-                      builder: ((context) => Wrapper( widget:EditLockerBooking(widget.document)))
+                      builder: ((context) => Wrapper( widget:AddLockerBookingTablet(widget.document)))
                     ));
                   }, 
                   style: ButtonStyle(

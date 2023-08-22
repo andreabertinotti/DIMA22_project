@@ -10,6 +10,7 @@ import 'package:provider/provider.dart'; // package used to edit date format
 import 'package:pro/Screen/menu.dart';
 import 'package:pro/Utils/wrapper.dart';
 import 'package:pro/Screen/Reservations/reservation_add copy.dart';
+import 'package:pro/Screen/Reservations/reservation_add_tablet.dart';
 
 // A stateful widget representing the bookings page.
 class BookingsPage extends StatefulWidget {
@@ -295,7 +296,6 @@ class _BookingsPageState extends State<BookingsPage> {
                   ),
                 ),
                 actions: [
-                  //TODO: valutare se fare aggiunta prenotazione su tab in basso
                   TextButton.icon(
                       onPressed: () {
                         Navigator.push(
@@ -313,7 +313,13 @@ class _BookingsPageState extends State<BookingsPage> {
 
                   TextButton.icon(
                       onPressed: () {
+                        MediaQuery.of(context).size.width > 600 ? 
                         Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    AddBookingTablet(uid: snapshot.data!.uid)))
+                        : Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
