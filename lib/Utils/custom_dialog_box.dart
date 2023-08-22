@@ -6,6 +6,7 @@ import 'package:pro/Utils/image_view.dart';
 import 'package:pro/Utils/wrapper.dart';
 
 import '../Screen/Reservations/reservation_add_locker copy.dart';
+import 'bookingLockerWrapper_horizontalView.dart';
 import 'constants.dart';
 
 class CustomDialogBox extends StatefulWidget {
@@ -28,12 +29,12 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
     return Align(
       alignment: Alignment.topLeft,
       child: Dialog(
-         insetPadding: EdgeInsets.fromLTRB(
+        insetPadding: EdgeInsets.fromLTRB(
             MediaQuery.of(context).size.height * 0.5,
             MediaQuery.of(context).size.height * 0.32,
-            MediaQuery.of(context).size.height * 0.5,            //TODO: check these values and fix dimensions of the box
-            MediaQuery.of(context).size.height * 0.32
-          ),
+            MediaQuery.of(context).size.height *
+                0.5, //TODO: check these values and fix dimensions of the box
+            MediaQuery.of(context).size.height * 0.32),
         shape: RoundedRectangleBorder(
           side: const BorderSide(color: Colors.black, width: 1),
           borderRadius: BorderRadius.circular(Constants.padding),
@@ -119,25 +120,26 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
               Padding(
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(context,MaterialPageRoute(
-                      builder: ((context) => Wrapper( widget:AddLockerBookingTablet(widget.document)))
-                    ));
-                  }, 
-                  style: ButtonStyle(
-                            foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.orange),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) =>
+                                  BookingLockerHorizontalWrapper(
+                                      (widget.document)))));
+                    },
+                    style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.orange),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18),
                                     side: BorderSide(color: Colors.orange)))),
-                  child: Text("Book this locker".toUpperCase())
-                ),
+                    child: Text("Book this locker".toUpperCase())),
               ),
-
               widget.map.containsKey("urls") == true
                   ? ImageView(
                       map: widget.map,

@@ -11,8 +11,10 @@ import "../../Services/auth_service.dart";
 
 class AddLockerBookingTablet extends StatefulWidget {
   final dynamic document;
+  final String uid;
 
-  const AddLockerBookingTablet(this.document, {Key? key}) : super(key: key);
+  const AddLockerBookingTablet(this.document, {Key? key, required this.uid})
+      : super(key: key);
 
   @override
   _AddLockerBookingTabState createState() => _AddLockerBookingTabState();
@@ -161,8 +163,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
 
     return Padding(
       padding: EdgeInsets.fromLTRB(
-        MediaQuery.of(context).size.width * 0.03, MediaQuery.of(context).size.width * 0.02, 
-        MediaQuery.of(context).size.width * 0.03, 0),
+          MediaQuery.of(context).size.width * 0.03,
+          MediaQuery.of(context).size.width * 0.02,
+          MediaQuery.of(context).size.width * 0.03,
+          0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -261,8 +265,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
         generateReservedSlots(dropoff, dropoffTime.hour, duration);
     return Padding(
       padding: EdgeInsets.fromLTRB(
-        MediaQuery.of(context).size.width * 0.03, MediaQuery.of(context).size.width * 0.03, 
-        MediaQuery.of(context).size.width * 0.03, MediaQuery.of(context).size.width * 0.05),
+          MediaQuery.of(context).size.width * 0.03,
+          MediaQuery.of(context).size.width * 0.03,
+          MediaQuery.of(context).size.width * 0.03,
+          MediaQuery.of(context).size.width * 0.05),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -289,7 +295,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text("OK", style: TextStyle(color: Colors.orange),),
+                          child: Text(
+                            "OK",
+                            style: TextStyle(color: Colors.orange),
+                          ),
                         ),
                       ],
                     );
@@ -331,7 +340,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                             });
                             Navigator.of(context).pop();
                           },
-                          child: Text("Confirm", style: TextStyle(color: Colors.orange),),
+                          child: Text(
+                            "Confirm",
+                            style: TextStyle(color: Colors.orange),
+                          ),
                         ),
                       ],
                     );
@@ -344,7 +356,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
               backgroundColor:
                   MaterialStateProperty.all<Color>(Colors.green.shade400),
             ),
-            child: Text("Check availability", style: TextStyle(fontSize: 20),),
+            child: Text(
+              "Check availability",
+              style: TextStyle(fontSize: 20),
+            ),
           ),
         ],
       ),
@@ -382,8 +397,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
     //print(availabilityChecked);
     return Padding(
       padding: EdgeInsets.fromLTRB(
-        MediaQuery.of(context).size.width * 0.03, MediaQuery.of(context).size.width * 0.03, 
-        MediaQuery.of(context).size.width * 0.03, MediaQuery.of(context).size.width * 0.05),
+          MediaQuery.of(context).size.width * 0.03,
+          MediaQuery.of(context).size.width * 0.03,
+          MediaQuery.of(context).size.width * 0.03,
+          MediaQuery.of(context).size.width * 0.05),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -410,7 +427,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text("OK", style: TextStyle(color: Colors.orange),),
+                              child: Text(
+                                "OK",
+                                style: TextStyle(color: Colors.orange),
+                              ),
                             ),
                           ],
                         );
@@ -423,7 +443,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.grey.shade300),
                   ),
-                  child: Text("Fill other fields", style: TextStyle(fontSize: 20),),
+                  child: Text(
+                    "Fill other fields",
+                    style: TextStyle(fontSize: 20),
+                  ),
                 )
               : (available_cells.length ==
                       1 // case in which it contains only 'Select a cell'
@@ -441,7 +464,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text("OK", style: TextStyle(color: Colors.orange),),
+                                  child: Text(
+                                    "OK",
+                                    style: TextStyle(color: Colors.orange),
+                                  ),
                                 ),
                               ],
                             );
@@ -458,7 +484,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18),
                                       side: BorderSide(color: Colors.orange)))),
-                      child: Text("NO CELLS AVAILABLE", style: TextStyle(fontSize: 20),),
+                      child: Text(
+                        "NO CELLS AVAILABLE",
+                        style: TextStyle(fontSize: 20),
+                      ),
                     )
                   : cellDropdown),
         ],
@@ -477,8 +506,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
 
     return Padding(
       padding: EdgeInsets.fromLTRB(
-        MediaQuery.of(context).size.width * 0.03, MediaQuery.of(context).size.width * 0.02, 
-        MediaQuery.of(context).size.width * 0.03, 0),
+          MediaQuery.of(context).size.width * 0.03,
+          MediaQuery.of(context).size.width * 0.02,
+          MediaQuery.of(context).size.width * 0.03,
+          0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -529,8 +560,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
   Padding buildSizeField() {
     return Padding(
       padding: EdgeInsets.fromLTRB(
-        MediaQuery.of(context).size.width * 0.03, MediaQuery.of(context).size.width * 0.02, 
-        MediaQuery.of(context).size.width * 0.03, 0),
+          MediaQuery.of(context).size.width * 0.03,
+          MediaQuery.of(context).size.width * 0.02,
+          MediaQuery.of(context).size.width * 0.03,
+          0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -606,9 +639,11 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
   Padding buildLockerAddressField() {
     String lockerName = widget.document['lockerName'];
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-        MediaQuery.of(context).size.width * 0.03, MediaQuery.of(context).size.width * 0.05, 
-        MediaQuery.of(context).size.width * 0.03, 0),
+        padding: EdgeInsets.fromLTRB(
+            MediaQuery.of(context).size.width * 0.03,
+            MediaQuery.of(context).size.width * 0.05,
+            MediaQuery.of(context).size.width * 0.03,
+            0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -641,269 +676,204 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
     serviceLockerName = widget.document['lockerName'];
     final authService = Provider.of<AuthService>(context);
     String lockerName = widget.document['lockerName'];
-    return StreamBuilder<User?>(
-        stream: authService.user,
-        builder: (_, AsyncSnapshot<User?> snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            final User? user = snapshot.data;
-
-            return user == null
-                ? Container(
-                    child: Scaffold(
-                        body: Center(child: Text("You have to be logged in!"))),
-                  )
-                : ScaffoldMessenger(
-                    key: _bookingKey,
-                    child: Scaffold(
-                      appBar: AppBar(
-                        backgroundColor: Colors.orange,
-                        title: const Text(
-                          'Add a new reservation',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      body: Row(
+    return ScaffoldMessenger(
+      key: _bookingKey,
+      child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.orange,
+            title: const Text(
+              'Add a new reservation',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          body: Row(
+            children: [
+              Flexible(
+                  child: Column(
+                children: [
+                  buildLockerAddressField(),
+                  buildDropOffField(),
+                  //buildPickUpField(), // Create fields through external methods above
+                  buildDurationField(),
+                  buildSizeField(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildAvailabilityButton(),
+                      buildCellField(),
+                    ],
+                  ),
+                  //buildNotificationField(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Flexible(
-                            child: Column(
-                              children: [
-                                buildLockerAddressField(),
-                                buildDropOffField(),
-                                //buildPickUpField(), // Create fields through external methods above
-                                buildDurationField(),
-                                buildSizeField(),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    buildAvailabilityButton(),
-                                    buildCellField(),
-                                  ],
-                                ),
-                                //buildNotificationField(),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        ElevatedButton(
-                                          style: ButtonStyle(
-                                              foregroundColor:
-                                                  MaterialStateProperty.all<Color>(
-                                                      Colors.white),
-                                              backgroundColor:
-                                                  MaterialStateProperty.all<Color>(
-                                                      Colors.orange),
-                                              shape: MaterialStateProperty.all<
-                                                      RoundedRectangleBorder>(
-                                                  RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(18),
-                                                      side: BorderSide(
-                                                          color: Colors.orange)))),
-                                          onPressed: () async {
-                                            // Check for valid selections in dropdowns and date/time fields
-                                            //if (lockerName == 'Select a locker') {
-                                            //  // Show error message for locker name
-                                            //  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                            //    content: Text('Please select a locker'),
-                                            //  ));
-                                            //  return;
-                                            //}
+                          ElevatedButton(
+                            style: ButtonStyle(
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.white),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.orange),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(18),
+                                        side:
+                                            BorderSide(color: Colors.orange)))),
+                            onPressed: () async {
+                              if (baggageSize == 'Select a size') {
+                                // Show error message for baggage size
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text('Please select a baggage size'),
+                                ));
+                                return;
+                              }
 
-                                            if (baggageSize == 'Select a size') {
-                                              // Show error message for baggage size
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content:
-                                                    Text('Please select a baggage size'),
-                                              ));
-                                              return;
-                                            }
+                              if (bookingAuthorized == false) {
+                                // Show error message for locker name
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(
+                                      'Please complete your reservation before saving it!'),
+                                ));
+                                return;
+                              }
 
-                                            if (bookingAuthorized == false) {
-                                              // Show error message for locker name
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: Text(
-                                                    'Please complete your reservation before saving it!'),
-                                              ));
-                                              return;
-                                            }
+                              // Generate reserved slots
+                              List<String> reservedSlots =
+                                  generateReservedSlots(
+                                      dropoff, dropoffTime.hour, duration);
 
-                                            // Generate reserved slots
-                                            List<String> reservedSlots =
-                                                generateReservedSlots(
-                                                    dropoff, dropoffTime.hour, duration);
+                              await FirebaseFirestore.instance
+                                  .runTransaction((transaction) async {
+                                // Create the reservation document
+                                final reservationRef = FirebaseFirestore
+                                    .instance
+                                    .collection('users')
+                                    .doc(widget.uid)
+                                    .collection('reservations')
+                                    .doc();
 
-                                            // Add data to Firestore when all validations pass
-                                            // Create a reference to the parent reservation document
+                                final reservationData = {
+                                  'userUid': widget.uid,
+                                  'locker': lockerName,
+                                  'cell': selectedCell,
+                                  'baggageSize': baggageSize,
+                                  'reservationStartDate': dropoff,
+                                  'reservationEndDate': pickup,
+                                  'reservationDuration': duration,
+                                };
 
-                                            // add reservation document to user's reservations
+                                transaction.set(
+                                    reservationRef, reservationData);
 
-                                            //DocumentReference reservationRef = await FirebaseFirestore
-                                            //    .instance
-                                            //    .collection('users')
-                                            //    .doc(widget.uid)
-                                            //    .collection('reservations')
-                                            //    .add({
-                                            //  'userUid': widget.uid,
-                                            //  'locker': lockerName,
-                                            //  'cell': selectedCell,
-                                            //  'baggageSize': baggageSize,
-                                            //  'reservationStartDate': dropoff,
-                                            //  'reservationEndDate': pickup,
-                                            //  'reservationDuration': duration,
-                                            //});
-                                            //
-                                            //// Add bookedSlot document to the correspondent locker and cell
-                                            //DocumentReference lockerRef = await FirebaseFirestore
-                                            //    .instance
-                                            //    .collection('lockers')
-                                            //    .doc(lockerName)
-                                            //    .collection('cells')
-                                            //    .doc(selectedCell);
-                                            //
-                                            //for (String slot in reservedSlots) {
-                                            //  await lockerRef
-                                            //      .collection('bookedSlots')
-                                            //      .doc(slot)
-                                            //      .set({
-                                            //    'locker': lockerName,
-                                            //    'cell': selectedCell,
-                                            //    'timeSlot': slot,
-                                            //    'linkedReservation': reservationRef.id,
-                                            //  });
-                                            //}
+                                // Add bookedSlot documents to the corresponding locker and cell
+                                final lockerRef = FirebaseFirestore.instance
+                                    .collection('lockers')
+                                    .doc(lockerName)
+                                    .collection('cells')
+                                    .doc(selectedCell);
 
-                                            await FirebaseFirestore.instance
-                                                .runTransaction((transaction) async {
-                                              // Create the reservation document
-                                              final reservationRef = FirebaseFirestore
-                                                  .instance
-                                                  .collection('users')
-                                                  .doc(user.uid)
-                                                  .collection('reservations')
-                                                  .doc();
+                                for (String slot in reservedSlots) {
+                                  final bookedSlotRef = lockerRef
+                                      .collection('bookedSlots')
+                                      .doc(slot);
 
-                                              final reservationData = {
-                                                'userUid': user.uid,
-                                                'locker': lockerName,
-                                                'cell': selectedCell,
-                                                'baggageSize': baggageSize,
-                                                'reservationStartDate': dropoff,
-                                                'reservationEndDate': pickup,
-                                                'reservationDuration': duration,
-                                              };
+                                  final bookedSlotData = {
+                                    'locker': lockerName,
+                                    'cell': selectedCell,
+                                    'timeSlot': slot,
+                                    'linkedReservation': reservationRef.id,
+                                  };
 
-                                              transaction.set(
-                                                  reservationRef, reservationData);
+                                  transaction.set(
+                                      bookedSlotRef, bookedSlotData);
+                                }
+                              });
 
-                                              // Add bookedSlot documents to the corresponding locker and cell
-                                              final lockerRef = FirebaseFirestore.instance
-                                                  .collection('lockers')
-                                                  .doc(lockerName)
-                                                  .collection('cells')
-                                                  .doc(selectedCell);
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text('Booking saved!'),
+                                backgroundColor: Colors.green,
+                              ));
 
-                                              for (String slot in reservedSlots) {
-                                                final bookedSlotRef = lockerRef
-                                                    .collection('bookedSlots')
-                                                    .doc(slot);
-
-                                                final bookedSlotData = {
-                                                  'locker': lockerName,
-                                                  'cell': selectedCell,
-                                                  'timeSlot': slot,
-                                                  'linkedReservation': reservationRef.id,
-                                                };
-
-                                                transaction.set(
-                                                    bookedSlotRef, bookedSlotData);
-                                              }
-                                            });
-
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                              content: Text('Booking saved!'),
-                                              backgroundColor: Colors.green,
-                                            ));
-
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text("save booking".toUpperCase(),
-                                              style: TextStyle(fontSize: 18)),
-                                        ),
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        // Display message with info about notification, prices, luggage sizes when "?" button is pressed
-                                        // TODO: add prices into tooltip message
-                                        Tooltip(
-                                          message:
-                                              "\nSmall baggage: up to 60x40x25 cm\nLarge baggages: up to 80x55x40 cm\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n\nNotifications are sent to the user's device\none hour before the chosen pick-up time\n",
-                                          triggerMode: TooltipTriggerMode.tap,
-                                          textStyle: TextStyle(
-                                              fontSize: 17, color: Colors.white),
-                                          textAlign: TextAlign.center,
-                                          showDuration: Duration(seconds: 10),
-                                          child: Container(
-                                            width: 36,
-                                            height: 36,
-                                            decoration: BoxDecoration(
-                                                color: Colors.red,
-                                                shape: BoxShape.circle),
-                                            child: Center(
-                                                child: Text("?",
-                                                    style: TextStyle(
-                                                        fontSize: 25,
-                                                        color: Colors.white))),
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            )
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("save booking".toUpperCase(),
+                                style: TextStyle(fontSize: 18)),
                           ),
-                          Flexible(
+                          SizedBox(
+                            width: 15,
+                          ),
+                          // Display message with info about notification, prices, luggage sizes when "?" button is pressed
+                          // TODO: add prices into tooltip message
+                          Tooltip(
+                            message:
+                                "\nSmall baggage: up to 60x40x25 cm\nLarge baggages: up to 80x55x40 cm\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n\nNotifications are sent to the user's device\none hour before the chosen pick-up time\n",
+                            triggerMode: TooltipTriggerMode.tap,
+                            textStyle:
+                                TextStyle(fontSize: 17, color: Colors.white),
+                            textAlign: TextAlign.center,
+                            showDuration: Duration(seconds: 10),
                             child: Container(
+                              width: 36,
+                              height: 36,
                               decoration: BoxDecoration(
-                                color: Colors.orange[100],
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey,
-                                    blurRadius: 15.0, // soften the shadow
-                                    spreadRadius: 5.0, //extend the shadow
-                                    offset: Offset(
-                                      5.0, // Move to right 5  horizontally
-                                      5.0, // Move to bottom 5 Vertically
-                                    ),
-                                  )
-                                ],
-                              ),
-                              child: Column(
-                                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(top: 30, bottom: 20),
-                                    width: MediaQuery.of(context).size.width * 0.4,
-                                    height: MediaQuery.of(context).size.width * 0.3,
-                                    decoration: BoxDecoration(color: Colors.red),
-                                  ),
-                                  Divider(
-                                    thickness: 1,
-                                    color: Colors.black,
-                                    indent: MediaQuery.of(context).size.width * 0.035,
-                                    endIndent: MediaQuery.of(context).size.width * 0.035,
-                                  ),
-                                  Column(
-                                    children: [
-                                      /* Padding(                                       //TODO: layout prezzi preso da reservation_add_tablet.dart (da sistemare)
+                                  color: Colors.red, shape: BoxShape.circle),
+                              child: Center(
+                                  child: Text("?",
+                                      style: TextStyle(
+                                          fontSize: 25, color: Colors.white))),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              )),
+              Flexible(
+                  child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.orange[100],
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 15.0, // soften the shadow
+                      spreadRadius: 5.0, //extend the shadow
+                      offset: Offset(
+                        5.0, // Move to right 5  horizontally
+                        5.0, // Move to bottom 5 Vertically
+                      ),
+                    )
+                  ],
+                ),
+                child: Column(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 30, bottom: 20),
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(color: Colors.red),
+                    ),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.black,
+                      indent: MediaQuery.of(context).size.width * 0.035,
+                      endIndent: MediaQuery.of(context).size.width * 0.035,
+                    ),
+                    Column(
+                      children: [
+                        /* Padding(                                       //TODO: layout prezzi preso da reservation_add_tablet.dart (da sistemare)
                                         padding: EdgeInsets.symmetric(
                                           horizontal: MediaQuery.of(context).size.width * 0.035, 
                                           vertical: MediaQuery.of(context).size.width * 0.01,
@@ -944,44 +914,43 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                                           ],
                                         ),
                                       ), */
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(20, 10, 20, 15),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("Price to pay:",
-                                                style:
-                                                    TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                                            Text(cellFare,
-                                                style:
-                                                    TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
-                                          ],
-                                        ),
-                                      ),
-                                      //Padding(
-                                      //  padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                                      //  child: Row(
-                                      //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      //    children: [Text("Locker fee:"), Text(lockerFee)],
-                                      //  ),
-                                      //),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
-                          )
-                        ],
-                      )
-                    ),
-                  );
-          } else {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          }
-        });
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20, 10, 20, 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Price to pay:",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18)),
+                              Text(cellFare,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18))
+                            ],
+                          ),
+                        ),
+                        //Padding(
+                        //  padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+                        //  child: Row(
+                        //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //    children: [Text("Locker fee:"), Text(lockerFee)],
+                        //  ),
+                        //),
+                      ],
+                    )
+                  ],
+                ),
+              ))
+            ],
+          )),
+    );
+    //    } else {
+    //      return const Scaffold(
+    //        body: Center(
+    //          child: CircularProgressIndicator(),
+    //        ),
+    //      );
+    //    }
   }
 }
