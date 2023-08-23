@@ -362,8 +362,6 @@ class _EditBookingState extends State<EditBooking> {
 
           // Call the auxiliary functions to update fee state variables
           _updateCellFare();
-          // _updateLockerFee();
-          //print(lockerName + selectedCell);
 
           print('cell fare: ' + cellFare);
         });
@@ -511,44 +509,6 @@ class _EditBookingState extends State<EditBooking> {
     return reservedSlots;
   }
 
-  // Widget to build the Baggage Size field
-  Padding buildSizeField() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(20, 0, 20, 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            "Baggage size:",
-            style: TextStyle(
-              fontSize: 15,
-            ),
-          ),
-          Container(
-            //Space between text and dropdown
-            width: 15,
-          ),
-          SizedBox(
-              width: 200,
-              child: DropdownButton<String>(
-                hint: const Text("Select baggage size"),
-                value: baggageSize,
-                icon: const Icon(Icons.keyboard_arrow_down),
-                style: TextStyle(fontSize: 18, color: Colors.black),
-                onChanged: (String? newValue) {
-                  // This is called when the user selects an item.
-                  setState(() {
-                    baggageSize = newValue!; //TODO: change also db value
-                  });
-                },
-                items: dropdownSizes,
-                isExpanded: true,
-              ))
-        ],
-      ),
-    );
-  }
-
   // Widget to build the Locker Address field
   Padding buildLockerAddressField() {
     return Padding(
@@ -612,9 +572,8 @@ class _EditBookingState extends State<EditBooking> {
               ),
               buildLockerAddressField(),
               buildDropOffField(),
-              //buildPickUpField(), // Create fields through external methods above
               buildDurationField(),
-              buildSizeField(),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
