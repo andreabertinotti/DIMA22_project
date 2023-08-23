@@ -13,7 +13,6 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-//TODO: retrieve user data from db
 class _ProfilePageState extends State<ProfilePage> {
 // Method to get the current user UID
   String? getCurrentUserUid() {
@@ -107,7 +106,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 25, right: 25, top: 25),
+                margin: MediaQuery.of(context).size.width > 600 
+                      ? EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2, right: MediaQuery.of(context).size.width * 0.2, top: 25)
+                      : EdgeInsets.only(left: 25, right: 25, top: 25),
                 padding: EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2)))),
                 child: Row(
@@ -124,7 +125,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 25, right: 25, top: 10),
+                margin: MediaQuery.of(context).size.width > 600 
+                      ? EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2, right: MediaQuery.of(context).size.width * 0.2, top: 25)
+                      : EdgeInsets.only(left: 25, right: 25, top: 25),
                 padding: EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2)))),
                 child: Row(
@@ -141,7 +144,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 25, right: 25, top: 10),
+                margin: MediaQuery.of(context).size.width > 600 
+                      ? EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2, right: MediaQuery.of(context).size.width * 0.2, top: 25)
+                      : EdgeInsets.only(left: 25, right: 25, top: 25),
                 padding: EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2)))),
                 child: Row(
@@ -158,7 +163,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 25, right: 25, top: 10),
+                margin: MediaQuery.of(context).size.width > 600 
+                      ? EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2, right: MediaQuery.of(context).size.width * 0.2, top: 25)
+                      : EdgeInsets.only(left: 25, right: 25, top: 25),
                 padding: EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2)))),
                 child: Row(
