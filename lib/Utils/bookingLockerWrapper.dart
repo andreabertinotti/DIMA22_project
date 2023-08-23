@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../Models/user_model.dart';
 import '../Services/auth_service.dart';
 import '../Screen/login_screen.dart';
-import '../Screen/Reservations/reservation_add_locker copy.dart';
+import '../Screen/Reservations/reservation_add_locker.dart';
 
 //Wrapper used to open the EditBooking page since it needs the userId as a parameter
 

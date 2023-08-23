@@ -5,7 +5,7 @@ import 'package:pro/Screen/Reservations/reservation_add_locker_tablet.dart';
 import 'package:pro/Utils/image_view.dart';
 import 'package:pro/Utils/wrapper.dart';
 
-import '../Screen/Reservations/reservation_add_locker copy.dart';
+import '../Screen/Reservations/reservation_add_locker.dart';
 import 'bookingLockerWrapper_horizontalView.dart';
 import 'constants.dart';
 
