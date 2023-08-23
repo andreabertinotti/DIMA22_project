@@ -506,7 +506,8 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                               padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.07),
                               child: ElevatedButton.icon(
                                 onPressed: (){
-
+                                  _deleteReservation(_reservationId, user, _locker, _cell);
+                                  setState(() { _tapped = false; });
                                 }, 
                                 style: ButtonStyle(
                                     foregroundColor:
@@ -524,7 +525,6 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                 ),
                               ),
                             )
-                            
                         ],
                       ),
                     )
