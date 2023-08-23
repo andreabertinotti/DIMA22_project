@@ -274,7 +274,9 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(20),
+                      padding: MediaQuery.of(context).size.width > 600 
+                      ? EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2, right: MediaQuery.of(context).size.width * 0.2, top: 25, bottom: 45)
+                      : EdgeInsets.only(left: 25, right: 25, top: 25, bottom: 35),
                       child: Column(
                         children: [
                           buildNameField(), //Insert all the fields through methods defined above
