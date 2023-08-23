@@ -85,7 +85,6 @@ class _MyHomeState extends State<MyHome> {
             child: _widgetOptions.elementAt(_selectedIndex),
           ),
 
-          // TO BE CHANGED: in the bottom bar we have 3 buttons: home, social, chat, host
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
@@ -93,26 +92,11 @@ class _MyHomeState extends State<MyHome> {
                 backgroundColor: Colors.orange,
                 label: 'Home',
               ),
-              //BottomNavigationBarItem(
-              //  icon: Icon(Icons.group),
-              //  backgroundColor: Colors.black,
-              //  label: 'Social',
-              //),
-              //BottomNavigationBarItem(
-              //  icon: Icon(Icons.send),
-              //  backgroundColor: Colors.black,
-              //  label: 'Chat',
-              //),
               BottomNavigationBarItem(
                 icon: Icon(Icons.menu_book),
                 backgroundColor: Colors.orange,
                 label: 'My Reservations',
               ),
-              /* BottomNavigationBarItem(
-                icon: Icon(Icons.add),
-                backgroundColor: Colors.orange,
-                label: 'Add Reservations',
-              ), */
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
                 backgroundColor: Colors.orange,
