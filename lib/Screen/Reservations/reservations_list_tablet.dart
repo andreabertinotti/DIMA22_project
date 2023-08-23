@@ -7,8 +7,6 @@ import 'package:pro/Models/user_model.dart';
 import 'package:pro/Screen/Reservations/reservations_history.dart';
 import 'package:pro/Services/auth_service.dart';
 import 'package:provider/provider.dart'; // package used to edit date format
-import 'package:pro/Screen/menu.dart';
-import 'package:pro/Utils/wrapper.dart';
 import 'package:pro/Screen/Reservations/reservation_add.dart';
 import 'package:pro/Screen/Reservations/reservation_add_tablet.dart';
 
@@ -195,7 +193,7 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
   String _cell = "";
   DateTime _dropOff = DateTime.now();
   DateTime _pickUp = DateTime.now();
-  String _baggageSize = "";
+  //String _baggageSize = "";
   int _duration = 0;
   String _reservationId = "";
   bool _tapped = false;
@@ -378,8 +376,8 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                 final DateTime pickUp = snapshot.data![index]
                                         ['reservationEndDate']
                                     .toDate();
-                                final String baggageSize =
-                                    snapshot.data![index]['baggageSize'];
+                                //final String baggageSize =
+                                //    snapshot.data![index]['baggageSize'];
                                 final int duration = snapshot.data![index]
                                     ['reservationDuration'];
                                 final String reservationId =
@@ -409,7 +407,7 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                       _cell = cell;
                                       _dropOff = dropOff;
                                       _pickUp = pickUp;
-                                      _baggageSize = baggageSize;
+                                      //_baggageSize = baggageSize;
                                       _duration = duration;
                                       _reservationId = reservationId;
                                       _tapped = true;
@@ -552,13 +550,13 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Text(
-                                                        "Baggage size: $_baggageSize",
-                                                        style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        )),
+                                                    //Text(
+                                                    //    "Baggage size: $_baggageSize",
+                                                    //    style: TextStyle(
+                                                    //      fontSize: 20,
+                                                    //      fontWeight:
+                                                    //          FontWeight.w400,
+                                                    //    )),
                                                     Text("Price: ",
                                                         style: TextStyle(
                                                             fontSize: 20,

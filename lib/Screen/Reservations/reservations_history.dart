@@ -6,8 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:pro/Models/user_model.dart';
 import 'package:pro/Services/auth_service.dart';
 import 'package:provider/provider.dart'; // package used to edit date format
-import 'package:pro/Screen/menu.dart';
-import 'package:pro/Utils/wrapper.dart';
 
 // A stateful widget representing the bookings page.
 class ReservationsHistoryPage extends StatefulWidget {
@@ -24,7 +22,7 @@ class CustomListItem extends StatelessWidget {
     super.key,
     required this.dropOff,
     required this.pickUp,
-    required this.baggageSize,
+    //required this.baggageSize,
     required this.locker,
     required this.cell,
     required this.duration,
@@ -37,7 +35,7 @@ class CustomListItem extends StatelessWidget {
 
   final DateTime dropOff;
   final DateTime pickUp;
-  final String baggageSize;
+  //final String baggageSize;
   final String locker;
   final String cell;
   final int duration;
@@ -94,7 +92,7 @@ class CustomListItem extends StatelessWidget {
                     //  ),
                     //),
                     Text(
-                      "Cell: $cell (baggage size: $baggageSize)",
+                      "Cell: $cell",
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -123,7 +121,7 @@ class HistoryListTile extends StatelessWidget {
       {super.key,
       required this.dropOff,
       required this.pickUp,
-      required this.baggageSize,
+      //required this.baggageSize,
       required this.locker,
       required this.cell,
       required this.duration,
@@ -133,7 +131,7 @@ class HistoryListTile extends StatelessWidget {
 
   final DateTime dropOff;
   final DateTime pickUp;
-  final String baggageSize;
+  //final String baggageSize;
   final String locker;
   final String cell;
   final int duration;
@@ -186,13 +184,13 @@ class HistoryListTile extends StatelessWidget {
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 5, left: 15),
-                  child: Text(
-                    "Baggage size: $baggageSize",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.only(top: 5, left: 15),
+                //   child: Text(
+                //     "Baggage size: $baggageSize",
+                //     style: TextStyle(fontSize: 16),
+                //   ),
+                // ),
               ],
             )
           ],
@@ -321,8 +319,8 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
                         final DateTime pickUp = snapshot.data![index]
                                 ['reservationEndDate']
                             .toDate();
-                        final String baggageSize =
-                            snapshot.data![index]['baggageSize'];
+                        //   final String baggageSize =
+                        //       snapshot.data![index]['baggageSize'];
                         final int duration =
                             snapshot.data![index]['reservationDuration'];
                         final String reservationId =
@@ -332,7 +330,7 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
                         return HistoryListTile(
                           dropOff: dropOff,
                           pickUp: pickUp,
-                          baggageSize: baggageSize,
+                          //   baggageSize: baggageSize,
                           locker: locker,
                           cell: cell,
                           duration: duration,

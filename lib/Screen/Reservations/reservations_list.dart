@@ -24,7 +24,7 @@ class CustomListItem extends StatelessWidget {
     super.key,
     required this.dropOff,
     required this.pickUp,
-    required this.baggageSize,
+    //required this.baggageSize,
     required this.locker,
     required this.cell,
     required this.duration,
@@ -37,7 +37,7 @@ class CustomListItem extends StatelessWidget {
 
   final DateTime dropOff;
   final DateTime pickUp;
-  final String baggageSize;
+  //final String baggageSize;
   final String locker;
   final String cell;
   final int duration;
@@ -107,7 +107,7 @@ class CustomListItem extends StatelessWidget {
                     //  ),
                     //),
                     Text(
-                      "Cell: $cell (baggage size: $baggageSize)",
+                      "Cell: $cell",
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -355,8 +355,8 @@ class _BookingsPageState extends State<BookingsPage> {
                         final DateTime pickUp = snapshot.data![index]
                                 ['reservationEndDate']
                             .toDate();
-                        final String baggageSize =
-                            snapshot.data![index]['baggageSize'];
+                        //final String baggageSize =
+                        //    snapshot.data![index]['baggageSize'];
                         final int duration =
                             snapshot.data![index]['reservationDuration'];
                         final String reservationId =
@@ -385,7 +385,7 @@ class _BookingsPageState extends State<BookingsPage> {
                             CustomListItem(
                               dropOff: dropOff,
                               pickUp: pickUp,
-                              baggageSize: baggageSize,
+                              //baggageSize: baggageSize,
                               duration: duration,
                               cell: cell,
                               locker: locker,
