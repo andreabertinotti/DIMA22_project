@@ -19,7 +19,6 @@ class _EditBookingState extends State<EditBooking> {
       false; // Indicates whether the application is still loading content
 
   // Default values for the reservation details, to be changed with booking data from the database
-  //String dropdownValue = "Small"; // Default baggage size
   bool isNotificationActive =
       false; // Whether the notification is active or not
   DateTime dropoff = DateTime.now(); // Default drop-off date and time
@@ -29,7 +28,6 @@ class _EditBookingState extends State<EditBooking> {
   TimeOfDay pickupTime =
       TimeOfDay(hour: 23, minute: 59); // Default pick-up time
   String lockerName = 'Select a locker';
-  //String baggageSize = 'Select a size';
   String selectedCell = 'Select a cell';
   int duration = 0;
   bool availabilityChecked = false;
@@ -74,31 +72,6 @@ class _EditBookingState extends State<EditBooking> {
     String fare = (cellFare * duration).toStringAsFixed(2);
     String renderedFare = '$fare€';
     return renderedFare;
-  }
-
-  //Future<String> retrieveLockerFee(String locker) async {
-  //  if (locker == 'Select a locker') {
-  //    return '';
-  //  }
-  //  //DocumentSnapshot lockerSnapshot = await FirebaseFirestore.instance
-  //  //    .collection('lockers')
-  //  //    .doc(locker)
-  //  //    .get();
-//
-  //  String fee = '0'; //lockerSnapshot['lockerFee'].toString();
-  //  String renderedFee = '$fee€';
-  //  return renderedFee;
-  //}
-
-  // Method to get the list of items to be shown in the baggage size dropdown menu
-  List<DropdownMenuItem<String>> get dropdownSizes {
-    List<DropdownMenuItem<String>> menuSizes = [
-      DropdownMenuItem(value: 'Select a size', child: Text('Select a size')),
-      DropdownMenuItem(value: "Small", child: Text("Small")),
-      //DropdownMenuItem(value: "Medium", child: Text("Medium")),
-      DropdownMenuItem(value: "Large", child: Text("Large")),
-    ];
-    return menuSizes;
   }
 
   List<DropdownMenuItem<String>> get dropdownLockers {
@@ -231,16 +204,16 @@ class _EditBookingState extends State<EditBooking> {
               fontSize: 15,
             ),
           ),
-          lockerName == 'Select a locker'
+          (lockerName == 'Select a locker' || duration == 0)
               ? ElevatedButton(
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text("Please select the locker."),
+                          title: Text("Please fill the information above."),
                           content: Text(
-                              "You need to select the locker before checking availability."),
+                              "You need to select the locker, date and a valid duration before checking availability."),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
@@ -259,7 +232,7 @@ class _EditBookingState extends State<EditBooking> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.grey.shade300),
                   ),
-                  child: Text("Select a locker"),
+                  child: Text("Fill the form"),
                 )
               : ElevatedButton(
                   onPressed: () {
@@ -317,8 +290,8 @@ class _EditBookingState extends State<EditBooking> {
                                         .toSet()
                                         .difference(occupied_cells.toSet())
                                         .toList();
-                                    print('available cells: ' +
-                                        available_cells.toString());
+                                    //print('available cells: ' +
+                                    //    available_cells.toString());
                                   });
                                   Navigator.of(context).pop();
                                 },
@@ -363,7 +336,7 @@ class _EditBookingState extends State<EditBooking> {
           // Call the auxiliary functions to update fee state variables
           _updateCellFare();
 
-          print('cell fare: ' + cellFare);
+          //print('cell fare: ' + cellFare);
         });
       },
       items: dropdownCells,
@@ -496,7 +469,7 @@ class _EditBookingState extends State<EditBooking> {
 
   List<String> generateReservedSlots(
       DateTime dropoffDate, int dropoffHour, int duration) {
-    print(dropoffHour);
+    //print(dropoffHour);
     List<String> reservedSlots = [];
 
     for (int i = 0; i < duration; i++) {

@@ -53,16 +53,6 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
   }
   */
 
-  // Method to get the list of items to be shown in the baggage size dropdown menu
-  List<DropdownMenuItem<String>> get dropdownSizes {
-    List<DropdownMenuItem<String>> menuSizes = [
-      DropdownMenuItem(value: 'Select a size', child: Text('Select a size')),
-      DropdownMenuItem(value: "Small", child: Text("Small")),
-      DropdownMenuItem(value: "Large", child: Text("Large")),
-    ];
-    return menuSizes;
-  }
-
   List<DropdownMenuItem<String>> get dropdownLockers {
     List<DropdownMenuItem<String>> menuLockers = [
       DropdownMenuItem(
@@ -221,18 +211,16 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.width * 0.005),
-          lockerName == 'Select a locker'
+          (lockerName == 'Select a locker' || duration == 0)
               ? ElevatedButton(
                   onPressed: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text(
-                            "Please select the locker",
-                          ),
+                          title: Text("Please fill the information above."),
                           content: Text(
-                              "You need to select the locker before checking availability."),
+                              "You need to select the locker, date and a valid duration before checking availability."),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
@@ -255,7 +243,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                         MaterialStateProperty.all<Color>(Colors.grey.shade300),
                   ),
                   child: Text(
-                    "Select a locker",
+                    "Fill the form",
                     style: TextStyle(fontSize: 20),
                   ),
                 )
@@ -318,8 +306,8 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                                         .toSet()
                                         .difference(occupied_cells.toSet())
                                         .toList();
-                                    print('available cells: ' +
-                                        available_cells.toString());
+                                    //     print('available cells: ' +
+                                    //         available_cells.toString());
                                   });
                                   Navigator.of(context).pop();
                                 },
@@ -520,7 +508,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
 
   List<String> generateReservedSlots(
       DateTime dropoffDate, int dropoffHour, int duration) {
-    print(dropoffHour);
+    // print(dropoffHour);
     List<String> reservedSlots = [];
 
     for (int i = 0; i < duration; i++) {

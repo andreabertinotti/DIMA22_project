@@ -25,7 +25,6 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
       false; // Indicates whether the application is still loading content
 
   // Default values for the reservation details, to be changed with booking data from the database
-  //String dropdownValue = "Small"; // Default baggage size
   bool isNotificationActive =
       false; // Whether the notification is active or not
   DateTime dropoff = DateTime.now(); // Default drop-off date and time
@@ -35,7 +34,6 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
   TimeOfDay pickupTime =
       TimeOfDay(hour: 23, minute: 59); // Default pick-up time
   //String lockerName = 'Select a locker';
-  //String baggageSize = 'Select a size';
   String selectedCell = 'Select a cell';
   String serviceLockerName = '';
   int duration = 0;
@@ -55,7 +53,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
 
 // Update cell fare
   void _updateCellFare() async {
-    print(serviceLockerName);
+    //print(serviceLockerName);
     cellFare =
         await retrieveCellFare(serviceLockerName, selectedCell, duration);
     setState(() {});
@@ -106,31 +104,6 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
     getUser(); // Call the method to retrieve booking details from the database
   }
   */
-
-  // Method to get the list of items to be shown in the baggage size dropdown menu
-  List<DropdownMenuItem<String>> get dropdownSizes {
-    List<DropdownMenuItem<String>> menuSizes = [
-      DropdownMenuItem(value: 'Select a size', child: Text('Select a size')),
-      DropdownMenuItem(value: "Small", child: Text("Small")),
-      //DropdownMenuItem(value: "Medium", child: Text("Medium")),
-      DropdownMenuItem(value: "Large", child: Text("Large")),
-    ];
-    return menuSizes;
-  }
-
-  //List<DropdownMenuItem<String>> get dropdownLockers {
-  //  List<DropdownMenuItem<String>> menuLockers = [
-  //    DropdownMenuItem(
-  //        value: 'Select a locker', child: Text('Select a locker')),
-  //    DropdownMenuItem(value: "locker1", child: Text("Leonardo")),
-  //    DropdownMenuItem(value: "locker2", child: Text("Duomo")),
-  //    DropdownMenuItem(value: "locker3", child: Text("Bovisa")),
-  //    DropdownMenuItem(value: "locker4", child: Text("Centrale")),
-  //    DropdownMenuItem(value: "locker5", child: Text("Garibaldi")),
-  //    DropdownMenuItem(value: "locker6", child: Text("Darsena")),
-  //  ];
-  //  return menuLockers;
-  //}
 
   /*
   // Method to retrieve booking details from the database
@@ -266,85 +239,119 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
               fontSize: 15,
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              DateTime currentDate = DateTime.now();
-              if (dropoff.isBefore(currentDate)) {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text("Invalid Date"),
-                      content:
-                          Text("You can't make a reservation in the past!"),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            "OK",
-                            style: TextStyle(color: Colors.orange),
-                          ),
-                        ),
-                      ],
+          (duration == 0)
+              ? ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Please fill the information above."),
+                          content: Text(
+                              "You need to select the date and a valid duration before checking availability."),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("OK"),
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
-                );
-              } else {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text("Check availability"),
-                      content: Text(
-                          "Do you want to check for availability in the selected date and locker?"),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () async {
-                            QuerySnapshot querySnapshot =
-                                await FirebaseFirestore.instance
-                                    .collectionGroup('bookedSlots')
-                                    .where('locker', isEqualTo: lockerName)
-                                    .where('timeSlot', whereIn: targetSlots)
-                                    .get();
+                  style: ButtonStyle(
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.grey.shade300),
+                  ),
+                  child: Text("Fill the form"),
+                )
+              : ElevatedButton(
+                  onPressed: () {
+                    DateTime currentDate = DateTime.now();
+                    if (dropoff.isBefore(currentDate)) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Invalid Date"),
+                            content: Text(
+                                "You can't make a reservation in the past!"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  "OK",
+                                  style: TextStyle(color: Colors.orange),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Check availability"),
+                            content: Text(
+                                "Do you want to check for availability in the selected date and locker?"),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () async {
+                                  QuerySnapshot querySnapshot =
+                                      await FirebaseFirestore.instance
+                                          .collectionGroup('bookedSlots')
+                                          .where('locker',
+                                              isEqualTo: lockerName)
+                                          .where('timeSlot',
+                                              whereIn: targetSlots)
+                                          .get();
 
-                            for (QueryDocumentSnapshot bookedSlotSnap
-                                in querySnapshot.docs) {
-                              occupied_cells.add(bookedSlotSnap['cell']);
-                            }
-                            occupied_cells = occupied_cells.toSet().toList();
+                                  for (QueryDocumentSnapshot bookedSlotSnap
+                                      in querySnapshot.docs) {
+                                    occupied_cells.add(bookedSlotSnap['cell']);
+                                  }
+                                  occupied_cells =
+                                      occupied_cells.toSet().toList();
 
-                            setState(() {
-                              availabilityChecked = true;
-                              selectedCell = 'Select a cell';
-                              available_cells = all_cells
-                                  .toSet()
-                                  .difference(occupied_cells.toSet())
-                                  .toList();
-                              print('available cells: ' +
-                                  available_cells.toString());
-                            });
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            "Confirm",
-                            style: TextStyle(color: Colors.orange),
-                          ),
-                        ),
-                      ],
-                    );
+                                  setState(() {
+                                    availabilityChecked = true;
+                                    selectedCell = 'Select a cell';
+                                    available_cells = all_cells
+                                        .toSet()
+                                        .difference(occupied_cells.toSet())
+                                        .toList();
+                                    //  print('available cells: ' +
+                                    //      available_cells.toString());
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  "Confirm",
+                                  style: TextStyle(color: Colors.orange),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
-                );
-              }
-            },
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.green.shade400),
-            ),
-            child: Text("Check availability"),
-          ),
+                  style: ButtonStyle(
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.green.shade400),
+                  ),
+                  child: Text("Check availability"),
+                ),
         ],
       ),
     );
@@ -372,7 +379,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
           //_updateLockerFee();
           //print(widget.document['lockerName'] + selectedCell);
 
-          print('cell fare: ' + cellFare);
+          //    print('cell fare: ' + cellFare);
         });
       },
       items: dropdownCells,
@@ -511,7 +518,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
 
   List<String> generateReservedSlots(
       DateTime dropoffDate, int dropoffHour, int duration) {
-    print(dropoffHour);
+    // print(dropoffHour);
     List<String> reservedSlots = [];
 
     for (int i = 0; i < duration; i++) {
