@@ -556,48 +556,6 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
     return reservedSlots;
   }
 
-  // Widget to build the Baggage Size field
-  Padding buildSizeField() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(
-          MediaQuery.of(context).size.width * 0.03,
-          MediaQuery.of(context).size.width * 0.02,
-          MediaQuery.of(context).size.width * 0.03,
-          0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            "Baggage size:",
-            style: TextStyle(
-              fontSize: 15,
-            ),
-          ),
-          Container(
-            //Space between text and dropdown
-            width: MediaQuery.of(context).size.width * 0.02,
-          ),
-          SizedBox(
-              width: 200,
-              child: DropdownButton<String>(
-                hint: const Text("Select baggage size"),
-                value: baggageSize,
-                icon: const Icon(Icons.keyboard_arrow_down),
-                style: TextStyle(fontSize: 20, color: Colors.black),
-                onChanged: (String? newValue) {
-                  // This is called when the user selects an item.
-                  setState(() {
-                    baggageSize = newValue!; //TODO: change also db value
-                  });
-                },
-                items: dropdownSizes,
-                isExpanded: true,
-              ))
-        ],
-      ),
-    );
-  }
-
   /*
   // Widget to build the Notification field
   Padding buildNotificationField() {
@@ -695,9 +653,8 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                 children: [
                   buildLockerAddressField(),
                   buildDropOffField(),
-                  //buildPickUpField(), // Create fields through external methods above
                   buildDurationField(),
-                  buildSizeField(),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
