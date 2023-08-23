@@ -296,23 +296,8 @@ class _BookingsPageState extends State<BookingsPage> {
                   ),
                 ),
                 actions: [
-                  TextButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ReservationsHistoryPage()));
-                      },
-                      icon: Icon(
-                        Icons.history,
-                        color: Colors.white,
-                      ),
-                      label: Text("History",
-                          style: TextStyle(color: Colors.white, fontSize: 17))),
-
-                  TextButton.icon(
-                      onPressed: () {
+                  IconButton(
+                    onPressed: () {
                         MediaQuery.of(context).size.width > 600 ? 
                         Navigator.push(
                             context,
@@ -324,13 +309,25 @@ class _BookingsPageState extends State<BookingsPage> {
                             MaterialPageRoute(
                                 builder: (context) =>
                                     EditBooking(uid: snapshot.data!.uid)));
-                      },
-                      icon: Icon(
+                      }, 
+                    icon: Icon(
                         Icons.add,
                         color: Colors.white,
                       ),
-                      label: Text("Add booking",
-                          style: TextStyle(color: Colors.white, fontSize: 17))),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ReservationsHistoryPage()));
+                      }, 
+                    icon: Icon(
+                        Icons.history,
+                        color: Colors.white,
+                      ),
+                  ),
                 ],
               ),
               body: StreamBuilder<List<Map<String, dynamic>>>(
@@ -370,7 +367,7 @@ class _BookingsPageState extends State<BookingsPage> {
 
                         // Create a CustomListItem using the data retrieved from Firestore
                         return ExpansionTile(
-                          title: Text("Reservation @ locker $locker",
+                          title: Text("Reservation @ $locker",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20)),
                           subtitle: Text(

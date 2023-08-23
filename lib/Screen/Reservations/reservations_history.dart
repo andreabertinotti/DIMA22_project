@@ -58,15 +58,6 @@ class CustomListItem extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              AspectRatio(
-                aspectRatio: 1,
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: Colors
-                          .red), // TODO: insert locker image or map instead of a solid color
-                ),
-              ),
               Container(
                 alignment: Alignment.centerLeft,
                 margin: EdgeInsets.only(left: 10),
@@ -109,75 +100,97 @@ class CustomListItem extends StatelessWidget {
                         fontSize: 18,
                       ),
                     ),
-                    Text(
+                    /* Text(
                       "Price: ", //€$price",     //TODO:add price
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.orange,
                       ),
-                    ),
+                    ) */
                   ],
                 ),
               ),
             ],
           ),
         ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              //ElevatedButton.icon(
-              //  // TODO: Open the edit booking page when the button is pressed
-              //  onPressed: () {
-              //    //Navigator.push(context,MaterialPageRoute(
-              //    //builder: (context) => const EditBooking()));
-              //  },
-              //  icon: Icon(
-              //    Icons.edit,
-              //    color: Colors.white,
-              //  ),
-              //  label: Text(
-              //    "Edit booking",
-              //    style: TextStyle(fontSize: 18, color: Colors.white),
-              //  ),
-              //  style: ButtonStyle(
-              //      foregroundColor:
-              //          MaterialStateProperty.all<Color>(Colors.white),
-              //      backgroundColor:
-              //          MaterialStateProperty.all<Color>(Colors.orange),
-              //      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              //          RoundedRectangleBorder(
-              //              borderRadius: BorderRadius.circular(18),
-              //              side: BorderSide(color: Colors.orange)))),
-              //),
-              //ElevatedButton.icon(
-              //  onPressed: onDelete,
-              //  //TODO: if notifications are implemented, change delete and notif. buttons --> remove text (only icon buttons)
-              //  //onPressed: () {
-              //  //  //TODO: Delete booking on button press
-              //  //
-              //  //},
-              //  style: ButtonStyle(
-              //      foregroundColor:
-              //          MaterialStateProperty.all<Color>(Colors.white),
-              //      backgroundColor:
-              //          MaterialStateProperty.all<Color>(Colors.orange),
-              //      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              //          RoundedRectangleBorder(
-              //              borderRadius: BorderRadius.circular(18),
-              //              side: BorderSide(color: Colors.orange)))),
-              //  icon: Icon(Icons.delete, color: Colors.white),
-              //  label: Text(
-              //    "Delete booking",
-              //    style: TextStyle(fontSize: 18, color: Colors.white),
-              //  ),
-              //),
-            ],
-          ),
-        )
       ],
+    );
+  }
+}
+
+class HistoryListTile extends StatelessWidget {
+  const HistoryListTile({
+    super.key,
+    required this.dropOff,
+    required this.pickUp,
+    required this.baggageSize,
+    required this.locker,
+    required this.cell,
+    required this.duration,
+    required this.reservationId,
+    required this.onDelete,
+    required this.tileIndex
+  });
+
+  final DateTime dropOff;
+  final DateTime pickUp;
+  final String baggageSize;
+  final String locker;
+  final String cell;
+  final int duration;
+  final String reservationId;
+  final VoidCallback onDelete;
+  final int tileIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.only(top: 15, bottom: 15),
+      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey.shade300))),
+      child: Row(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: CircleAvatar(
+              backgroundColor: Colors.orange,
+              child: Text(
+                "$tileIndex",
+                style:
+                    TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 15),
+                child: Text(
+                  "Reservation @ locker $locker",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: 20,
+                    color: Colors.orange,
+                  )
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5, left: 15),
+                child: Text("Deposited: ${DateFormat('dd/MM/yyyy, HH:mm').format(dropOff)}", style: TextStyle(fontSize: 16),),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5, left: 15),
+                child: Text("Picked-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(pickUp)}", style: TextStyle(fontSize: 16),),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5, left: 15),
+                child: Text("Baggage size: $baggageSize", style: TextStyle(fontSize: 16),),
+              ),
+            ],
+          )
+        ],
+      )
     );
   }
 }
@@ -185,42 +198,6 @@ class CustomListItem extends StatelessWidget {
 class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
   final GlobalKey<ScaffoldMessengerState> _bookingMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
-
-  //void _deleteReservation(
-  //    String reservationId, User user, String locker, String cell) async {
-  //  try {
-  //    await FirebaseFirestore.instance
-  //        .collection('users')
-  //        .doc(user
-  //            .uid) // Assuming authService provides the currently logged-in user
-  //        .collection('reservations')
-  //        .doc(reservationId)
-  //        .delete();
-//
-  //    QuerySnapshot bookedSlotSnapshot = await FirebaseFirestore.instance
-  //        .collection('lockers')
-  //        .doc(locker)
-  //        .collection('cells')
-  //        .doc(cell)
-  //        .collection('bookedSlots')
-  //        .where('linkedReservation', isEqualTo: reservationId)
-  //        .get();
-//
-  //    for (final bookedSlotDoc in bookedSlotSnapshot.docs) {
-  //      await bookedSlotDoc.reference.delete();
-  //    }
-//
-  //    // Show a success message using ScaffoldMessenger
-  //    _bookingMessengerKey.currentState?.showSnackBar(
-  //      SnackBar(content: Text('Reservation deleted successfully')),
-  //    );
-  //  } catch (error) {
-  //    // Show an error message using ScaffoldMessenger
-  //    _bookingMessengerKey.currentState?.showSnackBar(
-  //      SnackBar(content: Text('Failed to delete reservation')),
-  //    );
-  //  }
-  //}
 
   void _deleteReservation(
       String reservationId, User user, String locker, String cell) async {
@@ -283,7 +260,6 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
         reservations.add(reservationData);
       }
     }
-
     return reservations;
   }
 
@@ -348,42 +324,16 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
                             snapshot.data![index]['id'];
 
                         // Create a CustomListItem using the data retrieved from Firestore
-                        return ExpansionTile(
-                          title: Text("Reservation @ locker $locker",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20)),
-                          subtitle: Text(
-                            "from ${DateFormat('dd/MM/yyyy').format(dropOff)}",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          textColor: Colors.orange,
-                          iconColor: Colors.orange,
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.orange,
-                            child: Text(
-                              "${index + 1}",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                          ),
-                          children: <Widget>[
-                            CustomListItem(
-                              dropOff: dropOff,
-                              pickUp: pickUp,
-                              baggageSize: baggageSize,
-                              duration: duration,
-                              cell: cell,
-                              locker: locker,
-                              reservationId: reservationId,
-                              onDelete: () => _deleteReservation(
-                                  reservationId,
-                                  user,
-                                  locker,
-                                  cell), // Pass a callback to delete
-                              //notificationSet: snapshot.data![index]['notificationSet'],
-                              //price: snapshot.data![index]['price'],
-                            )
-                          ],
+                        return HistoryListTile(
+                          dropOff: dropOff, 
+                          pickUp: pickUp, 
+                          baggageSize: baggageSize, 
+                          locker: locker, 
+                          cell: cell, 
+                          duration: duration, 
+                          reservationId: reservationId, 
+                          onDelete: (){}, 
+                          tileIndex: index + 1,
                         );
                       },
                     );
