@@ -43,13 +43,52 @@ class _EditBookingState extends State<EditBooking> {
   List occupied_cells = [];
   List available_cells = [];
 
-  /*
-  @override
-  void initState() {
-    super.initState();
-    getUser(); // Call the method to retrieve booking details from the database
+  String cellFare = ''; // Initialize with an empty string
+  //String lockerFee = ''; // Initialize with an empty string
+
+// Update cell fare
+  void _updateCellFare() async {
+    cellFare = await retrieveCellFare(lockerName, selectedCell, duration);
+    setState(() {});
   }
-  */
+
+// Update locker fee
+  // void _updateLockerFee() async {
+  //   lockerFee = await retrieveLockerFee(lockerName);
+  //   setState(() {});
+  // }
+
+  Future<String> retrieveCellFare(
+      String locker, String cell, int duration) async {
+    if (!bookingAuthorized) {
+      return '';
+    }
+    DocumentSnapshot cellSnapshot = await FirebaseFirestore.instance
+        .collection('lockers')
+        .doc(locker)
+        .collection('cells')
+        .doc(cell)
+        .get();
+
+    double cellFare = cellSnapshot['cellFare'] as double;
+    String fare = (cellFare * duration).toStringAsFixed(2);
+    String renderedFare = '$fare€';
+    return renderedFare;
+  }
+
+  //Future<String> retrieveLockerFee(String locker) async {
+  //  if (locker == 'Select a locker') {
+  //    return '';
+  //  }
+  //  //DocumentSnapshot lockerSnapshot = await FirebaseFirestore.instance
+  //  //    .collection('lockers')
+  //  //    .doc(locker)
+  //  //    .get();
+//
+  //  String fee = '0'; //lockerSnapshot['lockerFee'].toString();
+  //  String renderedFee = '$fee€';
+  //  return renderedFee;
+  //}
 
   // Method to get the list of items to be shown in the baggage size dropdown menu
   List<DropdownMenuItem<String>> get dropdownSizes {
@@ -75,23 +114,6 @@ class _EditBookingState extends State<EditBooking> {
     ];
     return menuLockers;
   }
-
-  /*
-  // Method to retrieve booking details from the database
-  getUser() async {
-    // Page starts loading content
-    setState(() {
-      isLoading = true;
-    });
-
-    // TODO: Retrieve booking details from the database
-
-    // Page ends loading content
-    setState(() {
-      isLoading = false;
-    });
-  }
-  */
 
   // Widget to build the Drop-off date and time fields
   Padding buildDropOffField() {
@@ -224,7 +246,7 @@ class _EditBookingState extends State<EditBooking> {
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text("OK", style: TextStyle(color: Colors.orange),),
+                              child: Text("OK"),
                             ),
                           ],
                         );
@@ -255,7 +277,7 @@ class _EditBookingState extends State<EditBooking> {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text("OK", style: TextStyle(color: Colors.orange),),
+                                child: Text("OK"),
                               ),
                             ],
                           );
@@ -300,7 +322,7 @@ class _EditBookingState extends State<EditBooking> {
                                   });
                                   Navigator.of(context).pop();
                                 },
-                                child: Text("Confirm", style: TextStyle(color: Colors.orange),),
+                                child: Text("Confirm"),
                               ),
                             ],
                           );
@@ -331,18 +353,25 @@ class _EditBookingState extends State<EditBooking> {
 
     Widget cellDropdown = DropdownButton<String>(
       value: selectedCell,
-      onChanged: (String? newValue) {
+      onChanged: (String? newValue) async {
         setState(() {
           selectedCell = newValue!;
           selectedCell == 'Select a cell'
               ? bookingAuthorized = false
               : bookingAuthorized = true;
+
+          // Call the auxiliary functions to update fee state variables
+          _updateCellFare();
+          // _updateLockerFee();
+          //print(lockerName + selectedCell);
+
+          print('cell fare: ' + cellFare);
         });
       },
       items: dropdownCells,
       style: TextStyle(color: Colors.black, fontSize: 18),
     );
-    //print(availabilityChecked);
+
     return Padding(
       padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
       child: Column(
@@ -370,7 +399,7 @@ class _EditBookingState extends State<EditBooking> {
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text("OK", style: TextStyle(color: Colors.orange),),
+                              child: Text("OK"),
                             ),
                           ],
                         );
@@ -401,7 +430,7 @@ class _EditBookingState extends State<EditBooking> {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text("OK", style: TextStyle(color: Colors.orange),),
+                                  child: Text("OK"),
                                 ),
                               ],
                             );
@@ -520,44 +549,6 @@ class _EditBookingState extends State<EditBooking> {
     );
   }
 
-  /*
-  // Widget to build the Notification field
-  Padding buildNotificationField() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        SizedBox(
-          width: 180,
-          child: Text(
-            "Send notification one hour before pick-up time:",
-            maxLines: 3,
-            style: TextStyle(
-              fontSize: 15,
-            ),
-          ),
-        ),
-        Container(
-          //Space between text and checkbox
-          width: 15,
-        ),
-        Transform.scale(
-            scale: 1.5,
-            // Display checkbox to choose notification preference
-            child: Checkbox(
-              checkColor: Colors.white,
-              activeColor: Colors.orange,
-              value: isNotificationActive,
-              onChanged: (bool? value) {
-                setState(() {
-                  isNotificationActive = value!; //TODO: change value on db
-                });
-              },
-            ))
-      ]),
-    );
-  }
-  */
-
   // Widget to build the Locker Address field
   Padding buildLockerAddressField() {
     return Padding(
@@ -639,38 +630,27 @@ class _EditBookingState extends State<EditBooking> {
                 indent: 20,
                 endIndent: 20,
               ),
-              Padding(
-                //TODO: togli commento
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                        "${baggageSize == 'Select a size' ? "Baggage deposit" : "$baggageSize baggage deposit"}"),
-                    Text(
-                        "€6,99") // TODO: assign each size a price and automate price calculation
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text("Service fee"), Text("€2,00")],
-                ),
-              ),
+
+              //Padding(
+              //  padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+              //  child: Row(
+              //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //    children: [Text("Locker fee:"), Text(lockerFee)],
+              //  ),
+              //),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 10, 20, 15),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Total price",
+                    Text("Price to pay:",
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text("€${5.99 + 2.00}",
+                    Text(cellFare,
                         style: TextStyle(fontWeight: FontWeight.bold))
                   ],
                 ),
               ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -715,46 +695,6 @@ class _EditBookingState extends State<EditBooking> {
                       // Generate reserved slots
                       List<String> reservedSlots = generateReservedSlots(
                           dropoff, dropoffTime.hour, duration);
-
-                      // Add data to Firestore when all validations pass
-                      // Create a reference to the parent reservation document
-
-                      // add reservation document to user's reservations
-
-                      //DocumentReference reservationRef = await FirebaseFirestore
-                      //    .instance
-                      //    .collection('users')
-                      //    .doc(widget.uid)
-                      //    .collection('reservations')
-                      //    .add({
-                      //  'userUid': widget.uid,
-                      //  'locker': lockerName,
-                      //  'cell': selectedCell,
-                      //  'baggageSize': baggageSize,
-                      //  'reservationStartDate': dropoff,
-                      //  'reservationEndDate': pickup,
-                      //  'reservationDuration': duration,
-                      //});
-//
-                      //// Add bookedSlot document to the correspondent locker and cell
-                      //DocumentReference lockerRef = await FirebaseFirestore
-                      //    .instance
-                      //    .collection('lockers')
-                      //    .doc(lockerName)
-                      //    .collection('cells')
-                      //    .doc(selectedCell);
-//
-                      //for (String slot in reservedSlots) {
-                      //  await lockerRef
-                      //      .collection('bookedSlots')
-                      //      .doc(slot)
-                      //      .set({
-                      //    'locker': lockerName,
-                      //    'cell': selectedCell,
-                      //    'timeSlot': slot,
-                      //    'linkedReservation': reservationRef.id,
-                      //  });
-                      //}
 
                       await FirebaseFirestore.instance
                           .runTransaction((transaction) async {

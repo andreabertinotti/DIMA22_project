@@ -18,7 +18,9 @@ class BookingWrapper extends StatelessWidget {
       builder: (_, AsyncSnapshot<User?> snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           final User? user = snapshot.data;
-          return user == null ? LoginScreen() : EditBooking(uid: snapshot.data!.uid);
+          return user == null
+              ? LoginScreen()
+              : EditBooking(uid: snapshot.data!.uid);
         } else {
           return const Scaffold(
             body: Center(

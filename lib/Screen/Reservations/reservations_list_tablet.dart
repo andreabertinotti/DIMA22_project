@@ -9,7 +9,7 @@ import 'package:pro/Services/auth_service.dart';
 import 'package:provider/provider.dart'; // package used to edit date format
 import 'package:pro/Screen/menu.dart';
 import 'package:pro/Utils/wrapper.dart';
-import 'package:pro/Screen/Reservations/reservation_add copy.dart';
+import 'package:pro/Screen/Reservations/reservation_add.dart';
 import 'package:pro/Screen/Reservations/reservation_add_tablet.dart';
 
 // A stateful widget representing the bookings page.
@@ -190,7 +190,7 @@ class CustomListItem extends StatelessWidget {
 class _TabletBookingsPageState extends State<TabletBookingsPage> {
   final GlobalKey<ScaffoldMessengerState> _bookingMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
-  
+
   String _locker = "";
   String _cell = "";
   DateTime _dropOff = DateTime.now();
@@ -295,243 +295,324 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
           return ScaffoldMessenger(
             key: _bookingMessengerKey,
             child: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.orange,
-                foregroundColor: Colors.white,
-                title: const Text(
-                  'My Reservations',
-                  style: TextStyle(
-                    color: Colors.white,
+                appBar: AppBar(
+                  backgroundColor: Colors.orange,
+                  foregroundColor: Colors.white,
+                  title: const Text(
+                    'My Reservations',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
+                  actions: [
+                    TextButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ReservationsHistoryPage()));
+                        },
+                        icon: Icon(
+                          Icons.history,
+                          color: Colors.white,
+                        ),
+                        label: Text("History",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 17))),
+                    TextButton.icon(
+                        onPressed: () {
+                          MediaQuery.of(context).size.width > 600
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddBookingTablet(
+                                          uid: snapshot.data!.uid)))
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EditBooking(
+                                          uid: snapshot.data!.uid)));
+                        },
+                        icon: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        label: Text("Add booking",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 17))),
+                  ],
                 ),
-                actions: [
-                  TextButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ReservationsHistoryPage()));
-                      },
-                      icon: Icon(
-                        Icons.history,
-                        color: Colors.white,
-                      ),
-                      label: Text("History",
-                          style: TextStyle(color: Colors.white, fontSize: 17))),
+                body: Row(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: StreamBuilder<List<Map<String, dynamic>>>(
+                        stream: fetchReservationsLive(user!),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text("Error loading data."),
+                            );
+                          } else if (snapshot.data!.isEmpty) {
+                            return Center(
+                              child: Text("No booking found!",
+                                  style: TextStyle(fontSize: 20)),
+                            );
+                          } else {
+                            return ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                final String locker =
+                                    snapshot.data![index]['locker'];
+                                final String cell =
+                                    snapshot.data![index]['cell'];
+                                final DateTime dropOff = snapshot.data![index]
+                                        ['reservationStartDate']
+                                    .toDate();
+                                final DateTime pickUp = snapshot.data![index]
+                                        ['reservationEndDate']
+                                    .toDate();
+                                final String baggageSize =
+                                    snapshot.data![index]['baggageSize'];
+                                final int duration = snapshot.data![index]
+                                    ['reservationDuration'];
+                                final String reservationId =
+                                    snapshot.data![index]['id'];
 
-                  TextButton.icon(
-                      onPressed: () {
-                        MediaQuery.of(context).size.width > 600 ? 
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    AddBookingTablet(uid: snapshot.data!.uid)))
-                        : Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    EditBooking(uid: snapshot.data!.uid)));
-                      },
-                      icon: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                      label: Text("Add booking",
-                          style: TextStyle(color: Colors.white, fontSize: 17))),
-                ],
-              ),
-              body: Row(
-                children: [
-                  Expanded(
-                    flex: 4,
-                    child: StreamBuilder<List<Map<String, dynamic>>>(
-                      stream: fetchReservationsLive(user!),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Center(
-                            child: Text("Error loading data."),
-                          );
-                        } else if (snapshot.data!.isEmpty) {
-                          return Center(
-                            child: Text("No booking found!",
-                                style: TextStyle(fontSize: 20)),
-                          );
-                        } else {
-                          return ListView.builder(
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              final String locker = snapshot.data![index]['locker'];
-                              final String cell = snapshot.data![index]['cell'];
-                              final DateTime dropOff = snapshot.data![index]
-                                      ['reservationStartDate']
-                                  .toDate();
-                              final DateTime pickUp = snapshot.data![index]
-                                      ['reservationEndDate']
-                                  .toDate();
-                              final String baggageSize =
-                                  snapshot.data![index]['baggageSize'];
-                              final int duration =
-                                  snapshot.data![index]['reservationDuration'];
-                              final String reservationId =
-                                  snapshot.data![index]['id'];
-
-                              // Create a CustomListItem using the data retrieved from Firestore
-                              return ListTile(
-                                title: Text("Reservation @ locker $locker",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold, fontSize: 20)),
-                                subtitle: Text(
-                                  "from ${DateFormat('dd/MM/yyyy').format(dropOff)}",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                leading: CircleAvatar(
-                                  backgroundColor: Colors.orange,
-                                  child: Text(
-                                    "${index + 1}",
-                                    style:
-                                        TextStyle(color: Colors.white, fontSize: 20),
+                                // Create a CustomListItem using the data retrieved from Firestore
+                                return ListTile(
+                                  title: Text("Reservation @ locker $locker",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20)),
+                                  subtitle: Text(
+                                    "from ${DateFormat('dd/MM/yyyy').format(dropOff)}",
+                                    style: TextStyle(fontSize: 18),
                                   ),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    _locker = locker;
-                                    _cell = cell;
-                                    _dropOff = dropOff;
-                                    _pickUp = pickUp;
-                                    _baggageSize = baggageSize;
-                                    _duration = duration;
-                                    _reservationId = reservationId;
-                                    _tapped = true;
-                                  });
-                                  /* print("locker: $locker");
+                                  leading: CircleAvatar(
+                                    backgroundColor: Colors.orange,
+                                    child: Text(
+                                      "${index + 1}",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      _locker = locker;
+                                      _cell = cell;
+                                      _dropOff = dropOff;
+                                      _pickUp = pickUp;
+                                      _baggageSize = baggageSize;
+                                      _duration = duration;
+                                      _reservationId = reservationId;
+                                      _tapped = true;
+                                    });
+                                    /* print("locker: $locker");
                                   print("dropoff: ${dropOff.toString()}");
                                   print("pickup: ${pickUp.toString()}");
                                   print("cell: $cell");
                                   print("size: $baggageSize");
                                   print("Duration: $duration"); */
-                                },
-                              );
-                            },
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    flex: 6,
-                    child: Container(
-                      decoration: BoxDecoration(color: Colors.orange[100]),
-                      child: _tapped == false 
-                      ? Center(
-                        child: Text("Please tap on a reservation to show details"), //TODO: display app logo instead of text
-                      ) 
-                      : Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                            Container(
-                              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.07),
-                              decoration: BoxDecoration(color: Colors.red),
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              height: MediaQuery.of(context).size.width * 0.2,
-                            ),
-                            SizedBox(
-                              width: double.infinity,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                      MediaQuery.of(context).size.width * 0.075, MediaQuery.of(context).size.width * 0.035, 
-                                      MediaQuery.of(context).size.width * 0.075, 0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Drop-off: ${DateFormat('dd/MM/yyyy, HH:mm').format(_dropOff)}",
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                                        ),
-                                        Text(
-                                          "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(_pickUp)}",
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                                        )
-                                      ],
-                                    )
-                                  ),  
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                      MediaQuery.of(context).size.width * 0.075, MediaQuery.of(context).size.width * 0.01, 
-                                      MediaQuery.of(context).size.width * 0.075, 0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Duration: $_duration hours",
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400,)
-                                        ),
-                                        Text(
-                                          "Cell: $_cell",
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400,)
-                                        ),
-                                      ],
-                                    ) 
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                      MediaQuery.of(context).size.width * 0.075, MediaQuery.of(context).size.width * 0.01, 
-                                      MediaQuery.of(context).size.width * 0.075, 0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Baggage size: $_baggageSize",
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400,)
-                                        ),
-                                        Text(
-                                          "Price: ",
-                                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.orange[700])
-                                        ),
-                                      ],
-                                    ) 
-                                  ),
-                                ],
-                              )
-                            ),  
-                            Padding(
-                              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.07),
-                              child: ElevatedButton.icon(
-                                onPressed: (){
-                                  _deleteReservation(_reservationId, user, _locker, _cell);
-                                  setState(() { _tapped = false; });
-                                }, 
-                                style: ButtonStyle(
-                                    foregroundColor:
-                                        MaterialStateProperty.all<Color>(Colors.white),
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(Colors.orange),
-                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18),
-                                            side: BorderSide(color: Colors.orange)))),
-                                icon: Icon(Icons.delete, color: Colors.white),
-                                label: Text(
-                                  "Delete booking",
-                                  style: TextStyle(fontSize: 18, color: Colors.white),
-                                ),
-                              ),
-                            )
-                        ],
+                                  },
+                                );
+                              },
+                            );
+                          }
+                        },
                       ),
-                    )
-                  )
-                ],
-              )
-            ),
+                    ),
+                    Expanded(
+                        flex: 6,
+                        child: Container(
+                          decoration: BoxDecoration(color: Colors.orange[100]),
+                          child: _tapped == false
+                              ? Center(
+                                  child: Text(
+                                      "Please tap on a reservation to show details"), //TODO: display app logo instead of text
+                                )
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                          top: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.07),
+                                      decoration:
+                                          BoxDecoration(color: Colors.red),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.2,
+                                    ),
+                                    SizedBox(
+                                        width: double.infinity,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                                padding:
+                                                    EdgeInsets.fromLTRB(
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.075,
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.035,
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.075,
+                                                        0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "Drop-off: ${DateFormat('dd/MM/yyyy, HH:mm').format(_dropOff)}",
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                    Text(
+                                                      "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(_pickUp)}",
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    )
+                                                  ],
+                                                )),
+                                            Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.075,
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.01,
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.075,
+                                                    0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                        "Duration: $_duration hours",
+                                                        style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        )),
+                                                    Text("Cell: $_cell",
+                                                        style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        )),
+                                                  ],
+                                                )),
+                                            Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.075,
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.01,
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.075,
+                                                    0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                        "Baggage size: $_baggageSize",
+                                                        style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        )),
+                                                    Text("Price: ",
+                                                        style: TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors
+                                                                .orange[700])),
+                                                  ],
+                                                )),
+                                          ],
+                                        )),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.07),
+                                      child: ElevatedButton.icon(
+                                        onPressed: () {
+                                          _deleteReservation(_reservationId,
+                                              user, _locker, _cell);
+                                          setState(() {
+                                            _tapped = false;
+                                          });
+                                        },
+                                        style: ButtonStyle(
+                                            foregroundColor:
+                                                MaterialStateProperty.all<Color>(
+                                                    Colors.white),
+                                            backgroundColor:
+                                                MaterialStateProperty.all<Color>(
+                                                    Colors.orange),
+                                            shape: MaterialStateProperty.all<
+                                                    RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(
+                                                        18),
+                                                    side: BorderSide(
+                                                        color: Colors.orange)))),
+                                        icon: Icon(Icons.delete,
+                                            color: Colors.white),
+                                        label: Text(
+                                          "Delete booking",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                        ))
+                  ],
+                )),
           );
         } else {
           return const Scaffold(
@@ -544,4 +625,3 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
     );
   }
 }
-

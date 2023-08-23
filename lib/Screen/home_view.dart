@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:pro/Screen/menu.dart';
-import 'package:pro/Utils/bookingWrapper.dart';
-import '../Social/create_post.dart';
 import '../Utils/bookingLockerWrapper.dart';
 import '../Utils/custom_dialog_box.dart';
 import '../Utils/image_view.dart';
