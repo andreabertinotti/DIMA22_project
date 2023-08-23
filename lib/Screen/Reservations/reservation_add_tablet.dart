@@ -31,7 +31,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
   TimeOfDay pickupTime =
       TimeOfDay(hour: 23, minute: 59); // Default pick-up time
   String lockerName = 'Select a locker';
-  String baggageSize = 'Select a size';
+//  String baggageSize = 'Select a size';
   String selectedCell = 'Select a cell';
   int duration = 0;
   bool availabilityChecked = false;
@@ -674,15 +674,15 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                                   return;
                                 }
 
-                                if (baggageSize == 'Select a size') {
-                                  // Show error message for baggage size
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content:
-                                        Text('Please select a baggage size'),
-                                  ));
-                                  return;
-                                }
+                                //  if (baggageSize == 'Select a size') {
+                                //    // Show error message for baggage size
+                                //    ScaffoldMessenger.of(context)
+                                //        .showSnackBar(SnackBar(
+                                //      content:
+                                //          Text('Please select a baggage size'),
+                                //    ));
+                                //    return;
+                                //  }
 
                                 if (bookingAuthorized == false) {
                                   // Show error message for locker name
@@ -753,7 +753,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                                     'userUid': widget.uid,
                                     'locker': lockerName,
                                     'cell': selectedCell,
-                                    'baggageSize': baggageSize,
+                                    // 'baggageSize': baggageSize,
                                     'reservationStartDate': dropoff,
                                     'reservationEndDate': pickup,
                                     'reservationDuration': duration,
@@ -870,19 +870,19 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                               vertical:
                                   MediaQuery.of(context).size.width * 0.01,
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${baggageSize == 'Select a size' ? "Baggage deposit" : "$baggageSize baggage deposit"}",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                Text(
-                                  "€6,99",
-                                  style: TextStyle(fontSize: 18),
-                                ) // TODO: assign each size a price and automate price calculation
-                              ],
-                            ),
+                            //  child: Row(
+                            //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //    children: [
+                            //      Text(
+                            //        "${baggageSize == 'Select a size' ? "Baggage deposit" : "$baggageSize baggage deposit"}",
+                            //        style: TextStyle(fontSize: 18),
+                            //      ),
+                            //      Text(
+                            //        "€6,99",
+                            //        style: TextStyle(fontSize: 18),
+                            //      ) // TODO: assign each size a price and automate price calculation
+                            //    ],
+                            //  ),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(

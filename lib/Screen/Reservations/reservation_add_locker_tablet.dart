@@ -38,7 +38,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
   TimeOfDay pickupTime =
       TimeOfDay(hour: 23, minute: 59); // Default pick-up time
   //String lockerName = 'Select a locker';
-  String baggageSize = 'Select a size';
+  // String baggageSize = 'Select a size';
   String selectedCell = 'Select a cell';
   String serviceLockerName = '';
   int duration = 0;
@@ -685,14 +685,14 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                                         side:
                                             BorderSide(color: Colors.orange)))),
                             onPressed: () async {
-                              if (baggageSize == 'Select a size') {
-                                // Show error message for baggage size
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text('Please select a baggage size'),
-                                ));
-                                return;
-                              }
+                              //  if (baggageSize == 'Select a size') {
+                              //    // Show error message for baggage size
+                              //    ScaffoldMessenger.of(context)
+                              //        .showSnackBar(SnackBar(
+                              //      content: Text('Please select a baggage size'),
+                              //    ));
+                              //    return;
+                              //  }
 
                               if (bookingAuthorized == false) {
                                 // Show error message for locker name
@@ -723,7 +723,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                                   'userUid': widget.uid,
                                   'locker': lockerName,
                                   'cell': selectedCell,
-                                  'baggageSize': baggageSize,
+                                  // 'baggageSize': baggageSize,
                                   'reservationStartDate': dropoff,
                                   'reservationEndDate': pickup,
                                   'reservationDuration': duration,
