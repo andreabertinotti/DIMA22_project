@@ -59,7 +59,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.orange,
+          backgroundColor: Color(0xFFFF9800),
           foregroundColor: Colors.white,
           title: const Text(
             'Milan Baggage keeper', //Change app name (?)
