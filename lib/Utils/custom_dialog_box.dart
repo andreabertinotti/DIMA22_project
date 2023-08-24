@@ -126,7 +126,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                           MaterialPageRoute(
                               builder: ((context) =>
                                   BookingLockerHorizontalWrapper(
-                                      (widget.document)))));
+                                      (widget.document))))).then((_) {
+                        Navigator.of(context)
+                            .pop(); // Close the dialog box after returning from BookingLockerHorizontalWrapper
+                      });
                     },
                     style: ButtonStyle(
                         foregroundColor:
