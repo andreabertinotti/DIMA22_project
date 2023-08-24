@@ -207,10 +207,14 @@ class _HomeViewState extends State<HomeView> {
                     child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      BookingLockerWrapper((document))));
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          BookingLockerWrapper((document))))
+                              .then((_) {
+                            Navigator.of(context)
+                                .pop(); // Close the dialog box after returning from BookingLockerWrapper
+                          });
                         },
                         style: ButtonStyle(
                             foregroundColor:
@@ -231,97 +235,7 @@ class _HomeViewState extends State<HomeView> {
                         )
                       : Container(),
                 ],
-              )
-
-              /* ListView(
-              shrinkWrap: true,
-              children: [
-                Container(
-                  margin: const EdgeInsets.all(5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      MaterialButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Wrapper(
-                                      widget: EditLockerBooking(document))));
-                        },
-                        color: Colors.orange,
-                        textColor: Colors.white,
-                        child: const Text("Create a reservation"),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "Locker's name: ",
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      document['lockerName'],
-                      style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "euro/hour: ",
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      document['lockerFare'].toString(),
-                      style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Address: ",
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        document['lockerAddress'],
-                        style: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                map.containsKey("urls") == true
-                    ? Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: ImageView(map: map),
-                      )
-                    : Container(),
-              ],
-            ), */
-              );
+              ));
         });
   }
 
