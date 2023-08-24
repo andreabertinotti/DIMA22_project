@@ -168,6 +168,7 @@ class _EditBookingState extends State<EditBooking> {
               Expanded(
                 flex: 4,
                 child: DropdownButton<int>(
+                  icon: const Icon(Icons.access_time),
                   value: dropoffTime.hour,
                   onChanged: (int? newValue) {
                     setState(() {
