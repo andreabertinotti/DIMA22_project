@@ -444,8 +444,14 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                                   .size
                                                   .height *
                                               0.07),
-                                      decoration:
-                                          BoxDecoration(color: Colors.red),
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/$_locker-locker-image.png'),
+                                          fit: BoxFit
+                                              .cover, // Adjust the fit as needed
+                                        ),
+                                      ),
                                       width: MediaQuery.of(context).size.width *
                                           0.4,
                                       height:
