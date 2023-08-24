@@ -212,6 +212,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                 flex: 4,
                 child: DropdownButton<int>(
                   icon: const Icon(Icons.access_time),
+                  borderRadius: BorderRadius.circular(10),
                   value: dropoffTime.hour,
                   onChanged: (int? newValue) {
                     setState(() {
@@ -226,7 +227,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                   style: TextStyle(color: Colors.black, fontSize: 20),
                   isExpanded: true,
 
-                  //underline: Container(), // Remove the default underline
+                  underline: Container(), // Remove the default underline
                 ),
               ),
             ],
@@ -540,6 +541,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
             width: MediaQuery.of(context).size.width * 0.02,
           ),
           DropdownButton<int>(
+            borderRadius: BorderRadius.circular(10),
             value: duration,
             onChanged: (int? newValue) {
               setState(() {
@@ -552,6 +554,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
             items: dropdownDurations,
             style: TextStyle(color: Colors.black, fontSize: 20),
             menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
+            underline: Container(), // Remove the default underline
           ),
         ],
       ),

@@ -169,6 +169,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                 flex: 4,
                 child: DropdownButton<int>(
                   icon: const Icon(Icons.access_time),
+                  borderRadius: BorderRadius.circular(10),
                   value: dropoffTime.hour,
                   onChanged: (int? newValue) {
                     setState(() {
@@ -183,7 +184,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                   style: TextStyle(color: Colors.black, fontSize: 20),
                   isExpanded: true,
                   menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
-                  //underline: Container(), // Remove the default underline
+                  underline: Container(), // Remove the default underline
                 ),
               ),
             ],
@@ -489,6 +490,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
             width: MediaQuery.of(context).size.width * 0.02,
           ),
           DropdownButton<int>(
+            borderRadius: BorderRadius.circular(10),
             value: duration,
             onChanged: (int? newValue) {
               setState(() {
@@ -501,6 +503,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
             items: dropdownDurations,
             style: TextStyle(color: Colors.black, fontSize: 20),
             menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
+            underline: Container(), // Remove the default underline
           ),
         ],
       ),
@@ -580,6 +583,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
           SizedBox(
             width: double.infinity,
             child: DropdownButton<String>(
+              borderRadius: BorderRadius.circular(10),
               hint: Text('Select a locker'),
               value: lockerName,
               onChanged: (String? newValue) {
@@ -592,6 +596,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
               items: dropdownLockers,
               isExpanded: true,
               style: TextStyle(fontSize: 20, color: Colors.black),
+              underline: Container(), // Remove the default underline
             ),
           ),
         ],

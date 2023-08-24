@@ -169,6 +169,8 @@ class _EditBookingState extends State<EditBooking> {
                 flex: 4,
                 child: DropdownButton<int>(
                   icon: const Icon(Icons.access_time),
+                  borderRadius: BorderRadius.circular(10),
+
                   value: dropoffTime.hour,
                   onChanged: (int? newValue) {
                     setState(() {
@@ -451,6 +453,7 @@ class _EditBookingState extends State<EditBooking> {
             width: 15,
           ),
           DropdownButton<int>(
+            borderRadius: BorderRadius.circular(10),
             value: duration,
             onChanged: (int? newValue) {
               setState(() {
@@ -462,6 +465,7 @@ class _EditBookingState extends State<EditBooking> {
             },
             items: dropdownDurations,
             style: TextStyle(color: Colors.black, fontSize: 18),
+            underline: Container(), // Remove the default underline
           ),
         ],
       ),
@@ -499,6 +503,7 @@ class _EditBookingState extends State<EditBooking> {
           SizedBox(
             width: double.infinity,
             child: DropdownButton<String>(
+              borderRadius: BorderRadius.circular(10),
               hint: Text('Select a locker'),
               value: lockerName,
               onChanged: (String? newValue) {
