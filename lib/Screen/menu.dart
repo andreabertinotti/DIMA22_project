@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../Services/auth_service.dart';
 
@@ -20,6 +21,10 @@ class _MenuState extends State<Menu> {
   }
 
   TextEditingController descriptionController = TextEditingController();
+
+  Future<String> loadRulesText() async {
+    return await rootBundle.loadString('assets/texts/service_rules.txt');
+  }
 
   @override
   void initState() {
@@ -107,17 +112,32 @@ class _MenuState extends State<Menu> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Rules of the lockers service',
+                        'Terms of Use',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris posuere cursus magna, at commodo elit volutpat a. Maecenas ante felis, tempus ut feugiat nec, vestibulum non elit. Ut euismod consequat nisl, sit amet aliquam magna consectetur eu. In aliquam venenatis mi, quis facilisis mauris tempus sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut aliquam sed augue eget mollis. Ut fringilla ligula non nunc luctus, sit amet rutrum sem tempus. Nullam sit amet mauris varius, suscipit ante vel, commodo neque. Integer sed justo a dolor scelerisque dignissim id et magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                        textAlign: TextAlign.justify,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(
-                        height: 40,
+                          height:
+                              10), // Add some spacing between title and text
+                      FutureBuilder<String>(
+                        future: loadRulesText(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          }
+                          if (snapshot.hasError) {
+                            return Text("Error loading rules");
+                          }
+                          return Text(
+                            snapshot.data ?? "No rules available",
+                            textAlign: TextAlign.justify,
+                          );
+                        },
                       ),
+                      SizedBox(height: 20),
                     ],
                   ),
                 ),
@@ -256,17 +276,32 @@ class _MenuState extends State<Menu> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Rules of the lockers service',
+                        'Terms of Use',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris posuere cursus magna, at commodo elit volutpat a. Maecenas ante felis, tempus ut feugiat nec, vestibulum non elit. Ut euismod consequat nisl, sit amet aliquam magna consectetur eu. In aliquam venenatis mi, quis facilisis mauris tempus sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut aliquam sed augue eget mollis. Ut fringilla ligula non nunc luctus, sit amet rutrum sem tempus. Nullam sit amet mauris varius, suscipit ante vel, commodo neque. Integer sed justo a dolor scelerisque dignissim id et magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                        textAlign: TextAlign.justify,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(
-                        height: 40,
+                          height:
+                              10), // Add some spacing between title and text
+                      FutureBuilder<String>(
+                        future: loadRulesText(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          }
+                          if (snapshot.hasError) {
+                            return Text("Error loading rules");
+                          }
+                          return Text(
+                            snapshot.data ?? "No rules available",
+                            textAlign: TextAlign.justify,
+                          );
+                        },
                       ),
+                      SizedBox(height: 20),
                     ],
                   ),
                 ),
@@ -400,17 +435,31 @@ class _MenuState extends State<Menu> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Rules of the lockers service',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris posuere cursus magna, at commodo elit volutpat a. Maecenas ante felis, tempus ut feugiat nec, vestibulum non elit. Ut euismod consequat nisl, sit amet aliquam magna consectetur eu. In aliquam venenatis mi, quis facilisis mauris tempus sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut aliquam sed augue eget mollis. Ut fringilla ligula non nunc luctus, sit amet rutrum sem tempus. Nullam sit amet mauris varius, suscipit ante vel, commodo neque. Integer sed justo a dolor scelerisque dignissim id et magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                      textAlign: TextAlign.justify,
+                      'Terms of Use',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     SizedBox(
-                      height: 40,
+                        height: 10), // Add some spacing between title and text
+                    FutureBuilder<String>(
+                      future: loadRulesText(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        }
+                        if (snapshot.hasError) {
+                          return Text("Error loading rules");
+                        }
+                        return Text(
+                          snapshot.data ?? "No rules available",
+                          textAlign: TextAlign.justify,
+                        );
+                      },
                     ),
+                    SizedBox(height: 20),
                   ],
                 ),
               ),
