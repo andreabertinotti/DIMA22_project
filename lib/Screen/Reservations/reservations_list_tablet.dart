@@ -440,23 +440,34 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(
-                                          top: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.07),
+                                        top:
+                                            MediaQuery.of(context).size.height *
+                                                0.07,
+                                      ),
                                       decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/$_locker-locker-image.png'),
-                                          fit: BoxFit
-                                              .cover, // Adjust the fit as needed
+                                        border: Border.all(
+                                          color: Colors
+                                              .orange, // Choose your desired border color
+                                          width:
+                                              2.0, // Adjust the border width as needed
                                         ),
                                       ),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.4,
-                                      height:
-                                          MediaQuery.of(context).size.width *
-                                              0.2,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/$_locker-locker-image.png'),
+                                            fit: BoxFit
+                                                .cover, // Adjust the fit as needed
+                                          ),
+                                        ),
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.25,
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                                0.25,
+                                      ),
                                     ),
                                     SizedBox(
                                         width: double.infinity,

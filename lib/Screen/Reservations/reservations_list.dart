@@ -58,18 +58,22 @@ class CustomListItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               AspectRatio(
-                aspectRatio: 1,
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image:
-                          AssetImage('assets/images/$locker-locker-image.png'),
-                      fit: BoxFit.cover, // Adjust the fit as needed
+                  aspectRatio: 1,
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color:
+                            Colors.orange, // Choose your desired border color
+                        width: 2.0, // Adjust the border width as needed
+                      ),
+                      image: DecorationImage(
+                        image: AssetImage(
+                            'assets/images/$locker-locker-image.png'),
+                        fit: BoxFit.cover, // Adjust the fit as needed
+                      ),
                     ),
-                  ),
-                ),
-              ),
+                  )),
               Container(
                 alignment: Alignment.centerLeft,
                 margin: EdgeInsets.only(left: 10),
