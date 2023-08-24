@@ -4,8 +4,6 @@ import 'package:pro/Screen/Reservations/reservations_list.dart';
 import 'package:pro/Screen/Reservations/reservations_list_tablet.dart';
 import 'package:pro/Services/auth_service.dart';
 import 'package:provider/provider.dart';
-import 'package:pro/Screen/menu.dart';
-import 'package:pro/Utils/wrapper.dart';
 
 class ReservationsScreen extends StatefulWidget {
   const ReservationsScreen({Key? key}) : super(key: key);
@@ -24,10 +22,9 @@ class _ReservationsScreenState extends State<ReservationsScreen> {
         if (snapshot.connectionState == ConnectionState.active) {
           final User? user = snapshot.data;
           return Scaffold(
-            body: MediaQuery.of(context).size.width < 500
-                      ? BookingsPage()
-                      : TabletBookingsPage()
-          );
+              body: MediaQuery.of(context).size.width < 500
+                  ? BookingsPage()
+                  : TabletBookingsPage());
         } else {
           return const Scaffold(
             body: Center(

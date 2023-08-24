@@ -8,7 +8,6 @@ import 'package:pro/Screen/Reservations/reservations_history.dart';
 import 'package:pro/Services/auth_service.dart';
 import 'package:provider/provider.dart'; // package used to edit date format
 import 'package:pro/Screen/Reservations/reservation_add.dart';
-import 'package:pro/Screen/Reservations/reservation_add_tablet.dart';
 
 // A stateful widget representing the bookings page.
 class BookingsPage extends StatefulWidget {
@@ -312,10 +311,10 @@ class _BookingsPageState extends State<BookingsPage> {
                   ),
                   IconButton(
                     onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
                                   EditBooking(uid: snapshot.data!.uid)));
                     },
                     icon: Icon(

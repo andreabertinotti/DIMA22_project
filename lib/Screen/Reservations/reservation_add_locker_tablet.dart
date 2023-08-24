@@ -54,7 +54,6 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
   List available_cells = [];
 
   String cellFare = ''; // Initialize with an empty string
-  //String lockerFee = ''; // Initialize with an empty string
 
 // Update cell fare
   void _updateCellFare() async {
@@ -64,12 +63,6 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
     setState(() {});
   }
 
-// Update locker fee
-  // void _updateLockerFee() async {
-  //   lockerFee = await retrieveLockerFee(widget.document['lockerName']);
-  //   setState(() {});
-  // }
-//
   Future<String> retrieveCellFare(
       String locker, String cell, int duration) async {
     if (!bookingAuthorized) {
@@ -86,20 +79,6 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
     String fare = (cellFare * duration).toStringAsFixed(2);
     String renderedFare = '$fare€';
     return renderedFare;
-  }
-
-  Future<String> retrieveLockerFee(String locker) async {
-    if (locker == 'Select a locker') {
-      return '';
-    }
-    //DocumentSnapshot lockerSnapshot = await FirebaseFirestore.instance
-    //    .collection('lockers')
-    //    .doc(locker)
-    //    .get();
-
-    String fee = '0'; //lockerSnapshot['lockerFee'].toString();
-    String renderedFee = '$fee€';
-    return renderedFee;
   }
 
   /*
@@ -403,10 +382,6 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
 
           // Call the auxiliary functions to update fee state variables
           _updateCellFare();
-          //_updateLockerFee();
-          //print(widget.document['lockerName'] + selectedCell);
-
-          //     print('cell fare: ' + cellFare);
         });
       },
       items: dropdownCells,
@@ -717,9 +692,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                               if (bookingAuthorized == false) {
                                 // Show error message for locker name
                                 _bookingKey.currentState?.showSnackBar(SnackBar(
-                                    content: Text('Please complete your reservation before saving it!'),
-                                    backgroundColor: Colors.red,
-                                  ));
+                                  content: Text(
+                                      'Please complete your reservation before saving it!'),
+                                  backgroundColor: Colors.red,
+                                ));
                                 return;
                               }
 
@@ -815,9 +791,8 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                     ],
                   )
                 ],
-              )
-            ),
-            Flexible(
+              )),
+              Flexible(
                   child: Container(
                 decoration: BoxDecoration(
                   color: Colors.orange[100],
@@ -837,18 +812,17 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.045, bottom: MediaQuery.of(context).size.height * 0.075),
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.045,
+                          bottom: MediaQuery.of(context).size.height * 0.075),
                       width: MediaQuery.of(context).size.width * 0.3,
                       height: MediaQuery.of(context).size.width * 0.3,
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.orange, width: 3.0),
-                        image: DecorationImage(
-                          image: AssetImage(
-                            'assets/images/$lockerName-locker-image.png'
-                          ),
-                          fit: BoxFit.cover
-                        )
-                      ),
+                          border: Border.all(color: Colors.orange, width: 3.0),
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/images/$lockerName-locker-image.png'),
+                              fit: BoxFit.cover)),
                     ),
                     Divider(
                       thickness: 1,
@@ -900,31 +874,31 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                                         ),
                                       ), */
                         Padding(
-                            padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.035,
-                              right: MediaQuery.of(context).size.width * 0.035,
-                              top: MediaQuery.of(context).size.width * 0.025,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Service fee",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                Text(
-                                  "€2,00",
-                                  style: TextStyle(fontSize: 18),
-                                )
-                              ],
-                            ),
+                          padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.035,
+                            right: MediaQuery.of(context).size.width * 0.035,
+                            top: MediaQuery.of(context).size.width * 0.025,
                           ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Service fee",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Text(
+                                "€2,00",
+                                style: TextStyle(fontSize: 18),
+                              )
+                            ],
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(
-                                MediaQuery.of(context).size.width * 0.035,
-                                MediaQuery.of(context).size.width * 0.015,
-                                MediaQuery.of(context).size.width * 0.035,
-                                MediaQuery.of(context).size.width * 0.035),
+                              MediaQuery.of(context).size.width * 0.035,
+                              MediaQuery.of(context).size.width * 0.015,
+                              MediaQuery.of(context).size.width * 0.035,
+                              MediaQuery.of(context).size.width * 0.035),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -939,13 +913,6 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                             ],
                           ),
                         ),
-                        //Padding(
-                        //  padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                        //  child: Row(
-                        //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //    children: [Text("Locker fee:"), Text(lockerFee)],
-                        //  ),
-                        //),
                       ],
                     )
                   ],

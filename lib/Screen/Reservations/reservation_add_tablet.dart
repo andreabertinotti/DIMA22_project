@@ -45,6 +45,32 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
   List occupied_cells = [];
   List available_cells = [];
 
+  String cellFare = '';
+
+  // Update cell fare
+  void _updateCellFare() async {
+    cellFare = await retrieveCellFare(lockerName, selectedCell, duration);
+    setState(() {});
+  }
+
+  Future<String> retrieveCellFare(
+      String locker, String cell, int duration) async {
+    if (!bookingAuthorized) {
+      return '';
+    }
+    DocumentSnapshot cellSnapshot = await FirebaseFirestore.instance
+        .collection('lockers')
+        .doc(locker)
+        .collection('cells')
+        .doc(cell)
+        .get();
+
+    double cellFare = cellSnapshot['cellFare'] as double;
+    String fare = (cellFare * duration).toStringAsFixed(2);
+    String renderedFare = '$fare€';
+    return renderedFare;
+  }
+
   /*
   @override
   void initState() {
@@ -356,6 +382,8 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
           selectedCell == 'Select a cell'
               ? bookingAuthorized = false
               : bookingAuthorized = true;
+
+          _updateCellFare();
         });
       },
       items: dropdownCells,
@@ -661,27 +689,20 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                                 // Check for valid selections in dropdowns and date/time fields
                                 if (lockerName == 'Select a locker') {
                                   // Show error message for locker name
-                                  _addBookingKey.currentState?.showSnackBar(SnackBar(
+                                  _addBookingKey.currentState
+                                      ?.showSnackBar(SnackBar(
                                     content: Text('Please select a locker'),
                                     backgroundColor: Colors.red,
                                   ));
                                   return;
                                 }
 
-                                //  if (baggageSize == 'Select a size') {
-                                //    // Show error message for baggage size
-                                //    ScaffoldMessenger.of(context)
-                                //        .showSnackBar(SnackBar(
-                                //      content:
-                                //          Text('Please select a baggage size'),
-                                //    ));
-                                //    return;
-                                //  }
-
                                 if (bookingAuthorized == false) {
                                   // Show error message for locker name
-                                  _addBookingKey.currentState?.showSnackBar(SnackBar(
-                                    content: Text('Please complete your reservation before saving it!'),
+                                  _addBookingKey.currentState
+                                      ?.showSnackBar(SnackBar(
+                                    content: Text(
+                                        'Please complete your reservation before saving it!'),
                                     backgroundColor: Colors.red,
                                   ));
                                   return;
@@ -691,46 +712,6 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                                 List<String> reservedSlots =
                                     generateReservedSlots(
                                         dropoff, dropoffTime.hour, duration);
-
-                                // Add data to Firestore when all validations pass
-                                // Create a reference to the parent reservation document
-
-                                // add reservation document to user's reservations
-
-                                //DocumentReference reservationRef = await FirebaseFirestore
-                                //    .instance
-                                //    .collection('users')
-                                //    .doc(widget.uid)
-                                //    .collection('reservations')
-                                //    .add({
-                                //  'userUid': widget.uid,
-                                //  'locker': lockerName,
-                                //  'cell': selectedCell,
-                                //  'baggageSize': baggageSize,
-                                //  'reservationStartDate': dropoff,
-                                //  'reservationEndDate': pickup,
-                                //  'reservationDuration': duration,
-                                //});
-                                //
-                                //// Add bookedSlot document to the correspondent locker and cell
-                                //DocumentReference lockerRef = await FirebaseFirestore
-                                //    .instance
-                                //    .collection('lockers')
-                                //    .doc(lockerName)
-                                //    .collection('cells')
-                                //    .doc(selectedCell);
-                                //
-                                //for (String slot in reservedSlots) {
-                                //  await lockerRef
-                                //      .collection('bookedSlots')
-                                //      .doc(slot)
-                                //      .set({
-                                //    'locker': lockerName,
-                                //    'cell': selectedCell,
-                                //    'timeSlot': slot,
-                                //    'linkedReservation': reservationRef.id,
-                                //  });
-                                //}
 
                                 await FirebaseFirestore.instance
                                     .runTransaction((transaction) async {
@@ -842,20 +823,20 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.045, bottom: MediaQuery.of(context).size.height * 0.075),
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.045,
+                            bottom: MediaQuery.of(context).size.height * 0.075),
                         width: MediaQuery.of(context).size.width * 0.3,
                         height: MediaQuery.of(context).size.width * 0.3,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.orange, width: 3.0),
-                          image: DecorationImage(
-                            image: AssetImage(
-                              lockerName == 'Select a locker' 
-                              ? 'assets/images/app_logo.png'
-                              : 'assets/images/$lockerName-locker-image.png'
-                            ),
-                            fit: BoxFit.cover
-                          )
-                        ),
+                            border:
+                                Border.all(color: Colors.orange, width: 3.0),
+                            image: DecorationImage(
+                                image: AssetImage(lockerName ==
+                                        'Select a locker'
+                                    ? 'assets/images/app_logo.png'
+                                    : 'assets/images/$lockerName-locker-image.png'),
+                                fit: BoxFit.cover)),
                       ),
                       Divider(
                         thickness: 1,
@@ -916,11 +897,11 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Total price",
+                                Text("Price to pay:",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18)),
-                                Text("€${5.99 + 2.00}",
+                                Text(cellFare,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18))
