@@ -13,7 +13,7 @@ class EditBooking extends StatefulWidget {
 
 class _EditBookingState extends State<EditBooking> {
   // GlobalKey used to access the ScaffoldMessengerState for displaying a Snackbar
-  final GlobalKey<ScaffoldMessengerState> _bookingKey =
+  final GlobalKey<ScaffoldMessengerState> _addBookingKey =
       GlobalKey<ScaffoldMessengerState>();
   bool isLoading =
       false; // Indicates whether the application is still loading content
@@ -98,7 +98,7 @@ class _EditBookingState extends State<EditBooking> {
     });
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+      padding: EdgeInsets.fromLTRB(20, 15, 20, 5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -163,7 +163,7 @@ class _EditBookingState extends State<EditBooking> {
                 ),
               ),
               Container(
-                width: 15,
+                width: 20,
               ),
               Expanded(
                 flex: 4,
@@ -179,8 +179,9 @@ class _EditBookingState extends State<EditBooking> {
                     });
                   },
                   items: dropdownHours,
+                  isExpanded: true,
                   style: TextStyle(color: Colors.black, fontSize: 18),
-                  underline: Container(), // Remove the default underline
+                  menuMaxHeight: MediaQuery.of(context).size.height * 0.4,
                 ),
               ),
             ],
@@ -194,7 +195,7 @@ class _EditBookingState extends State<EditBooking> {
     List<String> targetSlots =
         generateReservedSlots(dropoff, dropoffTime.hour, duration);
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+      padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -344,7 +345,7 @@ class _EditBookingState extends State<EditBooking> {
     );
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+      padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -436,7 +437,7 @@ class _EditBookingState extends State<EditBooking> {
     });
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+      padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -461,6 +462,7 @@ class _EditBookingState extends State<EditBooking> {
             },
             items: dropdownDurations,
             style: TextStyle(color: Colors.black, fontSize: 18),
+            menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
           ),
         ],
       ),
@@ -485,7 +487,7 @@ class _EditBookingState extends State<EditBooking> {
   // Widget to build the Locker Address field
   Padding buildLockerAddressField() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
+      padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -520,7 +522,7 @@ class _EditBookingState extends State<EditBooking> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldMessenger(
-        key: _bookingKey,
+        key: _addBookingKey,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.orange,
@@ -539,14 +541,24 @@ class _EditBookingState extends State<EditBooking> {
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
                 child: Container(
                   width: double.infinity,
-                  height: 150,
-                  decoration: BoxDecoration(color: Colors.red),
+                  height: 180,
+                  decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Colors.orange, width: 3.0)),
+                    image: DecorationImage(
+                      image: AssetImage(
+                        lockerName == 'Select a locker' 
+                        ? 'assets/images/app_logo.png'
+                        : 'assets/images/$lockerName-locker-image.png'
+                      ),
+                      fit: BoxFit.cover
+                    )
+                  ),
+                  
                 ),
               ),
               buildLockerAddressField(),
               buildDropOffField(),
               buildDurationField(),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -571,7 +583,19 @@ class _EditBookingState extends State<EditBooking> {
               //  ),
               //),
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 15),
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Service fees:",
+                        style: TextStyle(fontWeight: FontWeight.w400)),
+                    Text("€2.00",
+                        style: TextStyle(fontWeight: FontWeight.w400))
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -601,8 +625,9 @@ class _EditBookingState extends State<EditBooking> {
                       // Check for valid selections in dropdowns and date/time fields
                       if (lockerName == 'Select a locker') {
                         // Show error message for locker name
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        _addBookingKey.currentState?.showSnackBar(SnackBar(
                           content: Text('Please select a locker'),
+                          backgroundColor: Colors.red,
                         ));
                         return;
                       }
@@ -617,9 +642,9 @@ class _EditBookingState extends State<EditBooking> {
 
                       if (bookingAuthorized == false) {
                         // Show error message for locker name
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                              'Please complete your reservation before saving it!'),
+                        _addBookingKey.currentState?.showSnackBar(SnackBar(
+                          content: Text('Please complete your reservation before saving it!'),
+                          backgroundColor: Colors.red,
                         ));
                         return;
                       }
@@ -688,7 +713,7 @@ class _EditBookingState extends State<EditBooking> {
                   // TODO: add prices into tooltip message
                   Tooltip(
                     message:
-                        "\nSmall baggage: up to 60x40x25 cm\nLarge baggages: up to 80x55x40 cm\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n\nNotifications are sent to the user's device\none hour before the chosen pick-up time\n",
+                        "\nSmall cells can store baggages up to:\n60x40x25 cm\n\nLarge cells can store baggages up to:\n80x55x40 cm\n\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n",
                     triggerMode: TooltipTriggerMode.tap,
                     textStyle: TextStyle(fontSize: 17, color: Colors.white),
                     textAlign: TextAlign.center,

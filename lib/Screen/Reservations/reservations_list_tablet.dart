@@ -320,17 +320,11 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                 TextStyle(color: Colors.white, fontSize: 17))),
                     TextButton.icon(
                         onPressed: () {
-                          MediaQuery.of(context).size.width > 600
-                              ? Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AddBookingTablet(
-                                          uid: snapshot.data!.uid)))
-                              : Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => EditBooking(
-                                          uid: snapshot.data!.uid)));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddBookingTablet(
+                                    uid: snapshot.data!.uid)));
                         },
                         icon: Icon(
                           Icons.add,
@@ -440,33 +434,20 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(
-                                        top:
-                                            MediaQuery.of(context).size.height *
-                                                0.07,
+                                        top: MediaQuery.of(context).size.height * 0.05,
                                       ),
+                                      width: MediaQuery.of(context).size.width * 0.25,
+                                      height: MediaQuery.of(context).size.width * 0.25,
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                          color: Colors
-                                              .orange, // Choose your desired border color
-                                          width:
-                                              2.0, // Adjust the border width as needed
+                                          color: Colors.orange, // Choose your desired border color
+                                          width: 2.0, // Adjust the border width as needed
                                         ),
-                                      ),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
+                                        image: DecorationImage(
                                             image: AssetImage(
                                                 'assets/images/$_locker-locker-image.png'),
-                                            fit: BoxFit
-                                                .cover, // Adjust the fit as needed
+                                            fit: BoxFit.cover, // Adjust the fit as needed
                                           ),
-                                        ),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.25,
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                0.25,
                                       ),
                                     ),
                                     SizedBox(
@@ -485,7 +466,7 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.035,
+                                                            0.025,
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
@@ -511,7 +492,8 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                                               FontWeight.w600),
                                                     )
                                                   ],
-                                                )),
+                                              )
+                                            ),
                                             Padding(
                                                 padding: EdgeInsets.fromLTRB(
                                                     MediaQuery.of(context)
@@ -565,7 +547,7 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
-                                                          .spaceBetween,
+                                                          .center,
                                                   children: [
                                                     //Text(
                                                     //    "Baggage size: $_baggageSize",
@@ -590,7 +572,7 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                           top: MediaQuery.of(context)
                                                   .size
                                                   .height *
-                                              0.07),
+                                              0.05),
                                       child: ElevatedButton.icon(
                                         onPressed: () {
                                           _deleteReservation(_reservationId,

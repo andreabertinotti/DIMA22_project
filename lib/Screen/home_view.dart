@@ -134,20 +134,16 @@ class _HomeViewState extends State<HomeView> {
     //A modal bottom sheet is an alternative to a menu or a dialog and prevents the user from interacting with the rest of the app.
     await showModalBottomSheet(
         context: context,
+        showDragHandle: true,
         builder: (BuildContext context) {
           return Container(
               margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
-              height: 240,
+              height: 220,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Divider(
-                    thickness: 3,
-                    indent: 150,
-                    endIndent: 150,
-                  ),
                   Container(
-                    margin: EdgeInsets.only(top: 5, left: 15),
+                    margin: EdgeInsets.only(left: 15),
                     width: double.infinity,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

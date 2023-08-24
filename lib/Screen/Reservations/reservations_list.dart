@@ -135,7 +135,7 @@ class CustomListItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton.icon(
+              /* ElevatedButton.icon(
                 // TODO: Open the edit booking page when the button is pressed
                 onPressed: () {
                   //Navigator.push(context,MaterialPageRoute(
@@ -158,7 +158,7 @@ class CustomListItem extends StatelessWidget {
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18),
                             side: BorderSide(color: Colors.orange)))),
-              ),
+              ), */
               ElevatedButton.icon(
                 onPressed: onDelete,
                 //TODO: if notifications are implemented, change delete and notif. buttons --> remove text (only icon buttons)
@@ -312,17 +312,11 @@ class _BookingsPageState extends State<BookingsPage> {
                   ),
                   IconButton(
                     onPressed: () {
-                      MediaQuery.of(context).size.width > 600
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AddBookingTablet(
-                                      uid: snapshot.data!.uid)))
-                          : Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      EditBooking(uid: snapshot.data!.uid)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                  EditBooking(uid: snapshot.data!.uid)));
                     },
                     icon: Icon(
                       Icons.add,
