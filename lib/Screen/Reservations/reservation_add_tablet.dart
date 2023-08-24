@@ -840,7 +840,15 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                         margin: EdgeInsets.only(top: 30, bottom: 20),
                         width: MediaQuery.of(context).size.width * 0.4,
                         height: MediaQuery.of(context).size.width * 0.3,
-                        decoration: BoxDecoration(color: Colors.red),
+                        decoration: lockerName == 'Select a locker'
+                            ? BoxDecoration(color: Colors.red)
+                            : BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/$lockerName-locker-image.png'),
+                                  fit: BoxFit.cover, // Adjust the fit as needed
+                                ),
+                              ),
                       ),
                       Divider(
                         thickness: 1,

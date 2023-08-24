@@ -540,7 +540,16 @@ class _EditBookingState extends State<EditBooking> {
                 child: Container(
                   width: double.infinity,
                   height: 150,
-                  decoration: BoxDecoration(color: Colors.red),
+                  decoration: lockerName == 'Select a locker'
+                      ? BoxDecoration(color: Colors.red)
+                      : BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/images/$lockerName-locker-image.png'),
+                            fit: BoxFit.cover, // Adjust the fit as needed
+                          ),
+                        ),
+                  //BoxDecoration(color: Colors.red),
                 ),
               ),
               buildLockerAddressField(),
