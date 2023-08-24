@@ -211,6 +211,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
               Expanded(
                 flex: 4,
                 child: DropdownButton<int>(
+                  icon: const Icon(Icons.access_time),
                   value: dropoffTime.hour,
                   onChanged: (int? newValue) {
                     setState(() {
@@ -224,6 +225,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                   items: dropdownHours,
                   style: TextStyle(color: Colors.black, fontSize: 20),
                   isExpanded: true,
+
                   //underline: Container(), // Remove the default underline
                 ),
               ),
