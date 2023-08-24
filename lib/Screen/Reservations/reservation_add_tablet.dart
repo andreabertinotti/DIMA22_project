@@ -15,7 +15,7 @@ class AddBookingTablet extends StatefulWidget {
 
 class _AddBookingTabletState extends State<AddBookingTablet> {
   // GlobalKey used to access the ScaffoldMessengerState for displaying a Snackbar
-  final GlobalKey<ScaffoldMessengerState> _bookingKey =
+  final GlobalKey<ScaffoldMessengerState> _addBookingKey =
       GlobalKey<ScaffoldMessengerState>();
   bool isLoading =
       false; // Indicates whether the application is still loading content
@@ -608,7 +608,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldMessenger(
-        key: _bookingKey,
+        key: _addBookingKey,
         child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.orange,
@@ -661,9 +661,9 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                                 // Check for valid selections in dropdowns and date/time fields
                                 if (lockerName == 'Select a locker') {
                                   // Show error message for locker name
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
+                                  _addBookingKey.currentState?.showSnackBar(SnackBar(
                                     content: Text('Please select a locker'),
+                                    backgroundColor: Colors.red,
                                   ));
                                   return;
                                 }
@@ -680,10 +680,9 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
 
                                 if (bookingAuthorized == false) {
                                   // Show error message for locker name
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text(
-                                        'Please complete your reservation before saving it!'),
+                                  _addBookingKey.currentState?.showSnackBar(SnackBar(
+                                    content: Text('Please complete your reservation before saving it!'),
+                                    backgroundColor: Colors.red,
                                   ));
                                   return;
                                 }
@@ -799,7 +798,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                             // TODO: add prices into tooltip message and remove notification tooltip message
                             Tooltip(
                               message:
-                                  "\nSmall baggage: up to 60x40x25 cm\nLarge baggages: up to 80x55x40 cm\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n\nNotifications are sent to the user's device\none hour before the chosen pick-up time\n",
+                                  "\nSmall cells can store baggages up to:\n60x40x25 cm\n\nLarge cells can store baggages up to:\n80x55x40 cm\n\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n",
                               triggerMode: TooltipTriggerMode.tap,
                               textStyle:
                                   TextStyle(fontSize: 17, color: Colors.white),
@@ -840,21 +839,23 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                     ],
                   ),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 30, bottom: 20),
-                        width: MediaQuery.of(context).size.width * 0.4,
+                        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.045, bottom: MediaQuery.of(context).size.height * 0.075),
+                        width: MediaQuery.of(context).size.width * 0.3,
                         height: MediaQuery.of(context).size.width * 0.3,
-                        decoration: lockerName == 'Select a locker'
-                            ? BoxDecoration(color: Colors.red)
-                            : BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/$lockerName-locker-image.png'),
-                                  fit: BoxFit.cover, // Adjust the fit as needed
-                                ),
-                              ),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.orange, width: 3.0),
+                          image: DecorationImage(
+                            image: AssetImage(
+                              lockerName == 'Select a locker' 
+                              ? 'assets/images/app_logo.png'
+                              : 'assets/images/$lockerName-locker-image.png'
+                            ),
+                            fit: BoxFit.cover
+                          )
+                        ),
                       ),
                       Divider(
                         thickness: 1,
@@ -864,7 +865,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                       ),
                       Column(
                         children: [
-                          Padding(
+                          /* Padding(
                             //TODO: togli commento
                             padding: EdgeInsets.symmetric(
                               horizontal:
@@ -885,13 +886,12 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                             //      ) // TODO: assign each size a price and automate price calculation
                             //    ],
                             //  ),
-                          ),
+                          ), */
                           Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.035,
-                              vertical:
-                                  MediaQuery.of(context).size.width * 0.01,
+                            padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.035,
+                              right: MediaQuery.of(context).size.width * 0.035,
+                              top: MediaQuery.of(context).size.width * 0.025,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -910,7 +910,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                           Padding(
                             padding: EdgeInsets.fromLTRB(
                                 MediaQuery.of(context).size.width * 0.035,
-                                MediaQuery.of(context).size.width * 0.01,
+                                MediaQuery.of(context).size.width * 0.015,
                                 MediaQuery.of(context).size.width * 0.035,
                                 MediaQuery.of(context).size.width * 0.035),
                             child: Row(

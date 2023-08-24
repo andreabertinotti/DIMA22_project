@@ -22,14 +22,13 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.topLeft,
+      alignment: Alignment.topLeft, 
       child: Dialog(
         insetPadding: EdgeInsets.fromLTRB(
             MediaQuery.of(context).size.height * 0.5,
             MediaQuery.of(context).size.height * 0.32,
-            MediaQuery.of(context).size.height *
-                0.5, //TODO: check these values and fix dimensions of the box
-            MediaQuery.of(context).size.height * 0.32),
+            MediaQuery.of(context).size.height * 0.5, //TODO: check these values and fix dimensions of the box
+            MediaQuery.of(context).size.height * 0.31),
         shape: RoundedRectangleBorder(
           side: const BorderSide(color: Colors.black, width: 1),
           borderRadius: BorderRadius.circular(Constants.padding),
@@ -106,9 +105,17 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 15, right: 15),
-                    height: 135,
+                    height: 155,
                     width: 155,
-                    decoration: BoxDecoration(color: Colors.red),
+                    decoration: BoxDecoration(
+                    border: Border.all(color: Colors.orange, width: 3.0),
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/images/${widget.document['lockerName'].toString()}-locker-image.png'
+                      ),
+                      fit: BoxFit.cover
+                    )
+                  ),
                   )
                 ],
               ),

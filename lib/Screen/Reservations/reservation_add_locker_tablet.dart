@@ -716,11 +716,10 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
 
                               if (bookingAuthorized == false) {
                                 // Show error message for locker name
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(
-                                      'Please complete your reservation before saving it!'),
-                                ));
+                                _bookingKey.currentState?.showSnackBar(SnackBar(
+                                    content: Text('Please complete your reservation before saving it!'),
+                                    backgroundColor: Colors.red,
+                                  ));
                                 return;
                               }
 
@@ -794,7 +793,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                           // TODO: add prices into tooltip message
                           Tooltip(
                             message:
-                                "\nSmall baggage: up to 60x40x25 cm\nLarge baggages: up to 80x55x40 cm\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n\nNotifications are sent to the user's device\none hour before the chosen pick-up time\n",
+                                "\nSmall cells can store baggages up to:\n60x40x25 cm\n\nLarge cells can store baggages up to:\n80x55x40 cm\n\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n",
                             triggerMode: TooltipTriggerMode.tap,
                             textStyle:
                                 TextStyle(fontSize: 17, color: Colors.white),
@@ -816,8 +815,9 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                     ],
                   )
                 ],
-              )),
-              Flexible(
+              )
+            ),
+            Flexible(
                   child: Container(
                 decoration: BoxDecoration(
                   color: Colors.orange[100],
@@ -837,15 +837,17 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 30, bottom: 20),
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.045, bottom: MediaQuery.of(context).size.height * 0.075),
+                      width: MediaQuery.of(context).size.width * 0.3,
                       height: MediaQuery.of(context).size.width * 0.3,
                       decoration: BoxDecoration(
+                        border: Border.all(color: Colors.orange, width: 3.0),
                         image: DecorationImage(
                           image: AssetImage(
-                              'assets/images/$lockerName-locker-image.png'),
-                          fit: BoxFit.cover, // Adjust the fit as needed
-                        ),
+                            'assets/images/$lockerName-locker-image.png'
+                          ),
+                          fit: BoxFit.cover
+                        )
                       ),
                     ),
                     Divider(
@@ -898,7 +900,31 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                                         ),
                                       ), */
                         Padding(
-                          padding: EdgeInsets.fromLTRB(20, 10, 20, 15),
+                            padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.035,
+                              right: MediaQuery.of(context).size.width * 0.035,
+                              top: MediaQuery.of(context).size.width * 0.025,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Service fee",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                Text(
+                                  "€2,00",
+                                  style: TextStyle(fontSize: 18),
+                                )
+                              ],
+                            ),
+                          ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.035,
+                                MediaQuery.of(context).size.width * 0.015,
+                                MediaQuery.of(context).size.width * 0.035,
+                                MediaQuery.of(context).size.width * 0.035),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
