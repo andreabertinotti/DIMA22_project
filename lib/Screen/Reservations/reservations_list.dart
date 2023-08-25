@@ -229,32 +229,6 @@ class _BookingsPageState extends State<BookingsPage> {
     }
   }
 
-  //Future<List<Map<String, dynamic>>> fetchReservations(User user) async {
-  //  final DateTime currentTime = DateTime.now();
-//
-  //  QuerySnapshot reservationSnapshot = await FirebaseFirestore.instance
-  //      .collection('users')
-  //      .doc(user.uid)
-  //      .collection('reservations')
-  //      .where('reservationEndDate',
-  //          isGreaterThan: Timestamp.fromDate(currentTime))
-  //      .get();
-//
-  //  List<Map<String, dynamic>> reservations = [];
-//
-  //  for (QueryDocumentSnapshot reservationDoc in reservationSnapshot.docs) {
-  //    if (reservationDoc.exists && reservationDoc.data() != null) {
-  //      Map<String, dynamic> reservationData =
-  //          reservationDoc.data()! as Map<String, dynamic>;
-  //      reservationData['id'] =
-  //          reservationDoc.id; // Add the document ID to the map
-  //      reservations.add(reservationData);
-  //    }
-  //  }
-//
-  //  return reservations;
-  //}
-
   Stream<List<Map<String, dynamic>>> fetchReservationsLive() {
     final DateTime currentTime = DateTime.now();
     return FirebaseFirestore.instance
