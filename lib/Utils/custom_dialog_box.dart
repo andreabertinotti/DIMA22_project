@@ -25,10 +25,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
       alignment: Alignment.topLeft,
       child: Dialog(
         insetPadding: EdgeInsets.fromLTRB(
-            MediaQuery.of(context).size.height * 0.4,
+            MediaQuery.of(context).size.height * 0.525,
             MediaQuery.of(context).size.height * 0.3,
             MediaQuery.of(context).size.height *
-                0.4, //TODO: check these values and fix dimensions of the box
+                0.525, //TODO: check these values and fix dimensions of the box
             MediaQuery.of(context).size.height * 0.3),
         shape: RoundedRectangleBorder(
           side: const BorderSide(color: Colors.black, width: 1),
@@ -46,6 +46,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
+                      flex: 3,
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,17 +114,20 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                       ),
                     ),
                     Flexible(
-                        child: Container(
-                      margin: EdgeInsets.only(top: 15, right: 15),
-                      height: 155,
-                      width: 155,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.orange, width: 3.0),
-                          image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/${widget.document['lockerName'].toString()}-locker-image.png'),
-                              fit: BoxFit.cover)),
-                    )),
+                      flex: 3,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 15, right: 15),
+                        height: 155,
+                        width: 155,
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.orange, width: 3.0),
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/${widget.document['lockerName'].toString()}-locker-image.png'),
+                                fit: BoxFit.cover)),
+                      ),
+                    ),
                   ],
                 ),
               ),
