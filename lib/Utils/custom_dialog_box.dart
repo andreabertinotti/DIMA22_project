@@ -22,12 +22,13 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.topLeft, 
+      alignment: Alignment.topLeft,
       child: Dialog(
         insetPadding: EdgeInsets.fromLTRB(
             MediaQuery.of(context).size.height * 0.5,
             MediaQuery.of(context).size.height * 0.32,
-            MediaQuery.of(context).size.height * 0.5, //TODO: check these values and fix dimensions of the box
+            MediaQuery.of(context).size.height *
+                0.5, //TODO: check these values and fix dimensions of the box
             MediaQuery.of(context).size.height * 0.31),
         shape: RoundedRectangleBorder(
           side: const BorderSide(color: Colors.black, width: 1),
@@ -40,84 +41,84 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             //mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 10, left: 15, top: 15),
-                        child: Text(
-                          "${widget.document['lockerName'].toString()} locker",
-                          style: const TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 5, 0, 5),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Address: ${widget.document['lockerAddress'].toString()}",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding:
+                              EdgeInsets.only(bottom: 10, left: 15, top: 15),
+                          child: Text(
+                            "${widget.document['lockerName'].toString()} locker",
+                            style: const TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 15),
-                        child: Text(
-                          "Locker fee: ${widget.document['lockerFee'].toString()}€",
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 5, left: 15),
-                        child: Text(
-                          "Small cell fare: ${widget.document['smallCellFare'].toString()}€/hour",
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 5, 0, 5),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Address: ${widget.document['lockerAddress'].toString()}",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(15, 5, 0, 10),
-                        child: Text(
-                          "Large cell fare: ${widget.document['largeCellFare'].toString()}€/hour",
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
+                        Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child: Text(
+                            "Locker fee: ${widget.document['lockerFee'].toString()}€",
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 15, right: 15),
-                    height: 155,
-                    width: 155,
-                    decoration: BoxDecoration(
-                    border: Border.all(color: Colors.orange, width: 3.0),
-                    image: DecorationImage(
-                      image: AssetImage(
-                        'assets/images/${widget.document['lockerName'].toString()}-locker-image.png'
-                      ),
-                      fit: BoxFit.cover
+                        Padding(
+                          padding: EdgeInsets.only(top: 5, left: 15),
+                          child: Text(
+                            "Small cell fare: ${widget.document['smallCellFare'].toString()}€/hour",
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(15, 5, 0, 10),
+                          child: Text(
+                            "Large cell fare: ${widget.document['largeCellFare'].toString()}€/hour",
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 15, right: 15),
+                      height: 155,
+                      width: 155,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.orange, width: 3.0),
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/images/${widget.document['lockerName'].toString()}-locker-image.png'),
+                              fit: BoxFit.cover)),
                     )
-                  ),
-                  )
-                ],
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 10, bottom: 10),

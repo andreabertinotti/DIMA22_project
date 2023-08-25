@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:intl/intl.dart';
-import 'package:pro/Screen/Reservations/reservations_history.dart';
-import 'package:pro/Screen/Reservations/reservation_add.dart';
 import 'package:pro/Screen/Reservations/reservations_list.dart';
 
 // Import your BookingsPage widget
