@@ -57,58 +57,59 @@ class _MenuState extends State<Menu> {
               backgroundColor: Colors.orange[900],
               toolbarHeight: 0,
             ),
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 120,
-                  child: Stack(
-                    children: [
-                      Container(
-                        color: Colors.orange[900],
-                        width: double.infinity,
-                        height: 120,
-                      ),
-                      Positioned(
-                        top: 20,
-                        right: 15,
-                        child: CircleAvatar(
-                          // User image
-                          radius: 40,
-                          backgroundColor: Colors.orange,
-                          child: Center(
-                              child: Text(
-                            "!",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold),
-                          )),
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: 120,
+                    child: Stack(
+                      children: [
+                        Container(
+                          color: Colors.orange[900],
+                          width: double.infinity,
+                          height: 120,
                         ),
-                      ),
-                      Positioned(
-                          left: 10,
-                          top: 45,
-                          child: Text('Your profile is not complete!',
+                        Positioned(
+                          top: 20,
+                          right: 15,
+                          child: CircleAvatar(
+                            // User image
+                            radius: 40,
+                            backgroundColor: Colors.orange,
+                            child: Center(
+                                child: Text(
+                              "!",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold))),
-                      Positioned(
-                          left: 10,
-                          top: 65,
-                          child: Text('Complete it in the profile page',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 13))),
-                    ],
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                          ),
+                        ),
+                        Positioned(
+                            left: 10,
+                            top: 45,
+                            child: Text('Your profile is not complete!',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold))),
+                        Positioned(
+                            left: 10,
+                            top: 65,
+                            child: Text('Complete it in the profile page',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 13))),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  padding: EdgeInsets.only(top: 30, left: 10, right: 10),
-                  child: Column(
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    padding: EdgeInsets.only(top: 30, left: 10, right: 10),
+                    child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -119,86 +120,95 @@ class _MenuState extends State<Menu> {
                         ),
                       ),
                       SizedBox(
-                          height:
-                              10), // Add some spacing between title and text
-                      FutureBuilder<String>(
-                        future: loadRulesText(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return CircularProgressIndicator();
-                          }
-                          if (snapshot.hasError) {
-                            return Text("Error loading rules");
-                          }
-                          return Text(
-                            snapshot.data ?? "No rules available",
-                            textAlign: TextAlign.justify,
-                          );
-                        },
+                          height: 10), // Add some spacing between title and text
+                      SizedBox(
+                        width: double.infinity,
+                        height: 390,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: FutureBuilder<String>(
+                            future: loadRulesText(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              }
+                              if (snapshot.hasError) {
+                                return Text("Error loading rules");
+                              }
+                              return Text(
+                                snapshot.data ?? "No rules available",
+                                textAlign: TextAlign.justify,
+                              );
+                            },
+                          ),
+                        ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
                     ],
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text(
-                              'Report a problem',
-                              style: TextStyle(color: Colors.orange),
-                            ),
-                            content: TextField(
-                              controller: descriptionController,
-                              minLines: 1,
-                              maxLines: 6,
-                              decoration: InputDecoration(
-                                hintText: "Description",
-                                //errorText: descriptionController.text.isNotEmpty ? null : "Problem description can't be empty",
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(
+                                'Report a problem',
+                                style: TextStyle(color: Colors.orange),
                               ),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  FirebaseFirestore.instance
-                                      .collection('reports')
-                                      .add({
-                                    'userUid': getCurrentUserUid(),
-                                    'locker': descriptionController.text,
-                                    'timestamp': DateTime.now(),
-                                  });
-                                  Navigator.of(context).pop();
-                                  print(descriptionController.text);
-                                },
-                                child: Text(
-                                  'Submit',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.orange),
+                              content: TextField(
+                                controller: descriptionController,
+                                minLines: 1,
+                                maxLines: 6,
+                                decoration: InputDecoration(
+                                  hintText: "Description",
+                                  //errorText: descriptionController.text.isNotEmpty ? null : "Problem description can't be empty",
                                 ),
                               ),
-                            ],
-                          );
-                        });
-                  },
-                  style: ButtonStyle(
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.orange),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18),
-                              side: BorderSide(color: Colors.orange)))),
-                  child: Text("Report a problem".toUpperCase(),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      )),
-                )
-              ],
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    FirebaseFirestore.instance
+                                        .collection('reports')
+                                        .add({
+                                      'userUid': getCurrentUserUid(),
+                                      'locker': descriptionController.text,
+                                      'timestamp': DateTime.now(),
+                                    });
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text("Report sent successfully!"), backgroundColor: Colors.green,));
+                                    Navigator.of(context).pop();
+                                    print(descriptionController.text);
+                                  },
+                                  child: Text(
+                                    'Submit',
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.orange),
+                                  ),
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.orange),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                side: BorderSide(color: Colors.orange)))),
+                    child: Text("Report a problem".toUpperCase(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        )),
+                  )
+                ],
+              ),
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
@@ -221,58 +231,59 @@ class _MenuState extends State<Menu> {
               backgroundColor: Colors.orange[900],
               toolbarHeight: 0,
             ),
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 120,
-                  child: Stack(
-                    children: [
-                      Container(
-                        color: Colors.orange[900],
-                        width: double.infinity,
-                        height: 120,
-                      ),
-                      Positioned(
-                        top: 20,
-                        right: 15,
-                        child: CircleAvatar(
-                          // User image
-                          radius: 40,
-                          backgroundColor: Colors.orange,
-                          child: Center(
-                              child: Text(
-                            "!",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold),
-                          )),
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    height: 120,
+                    child: Stack(
+                      children: [
+                        Container(
+                          color: Colors.orange[900],
+                          width: double.infinity,
+                          height: 120,
                         ),
-                      ),
-                      Positioned(
-                          left: 10,
-                          top: 45,
-                          child: Text('Your profile is not complete!',
+                        Positioned(
+                          top: 20,
+                          right: 15,
+                          child: CircleAvatar(
+                            // User image
+                            radius: 40,
+                            backgroundColor: Colors.orange,
+                            child: Center(
+                                child: Text(
+                              "!",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold))),
-                      Positioned(
-                          left: 10,
-                          top: 65,
-                          child: Text('Complete it in the profile page',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 13))),
-                    ],
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                          ),
+                        ),
+                        Positioned(
+                            left: 10,
+                            top: 45,
+                            child: Text('Your profile is not complete!',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold))),
+                        Positioned(
+                            left: 10,
+                            top: 65,
+                            child: Text('Complete it in the profile page',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 13))),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  padding: EdgeInsets.only(top: 30, left: 10, right: 10),
-                  child: Column(
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    padding: EdgeInsets.only(top: 30, left: 10, right: 10),
+                    child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -283,86 +294,95 @@ class _MenuState extends State<Menu> {
                         ),
                       ),
                       SizedBox(
-                          height:
-                              10), // Add some spacing between title and text
-                      FutureBuilder<String>(
-                        future: loadRulesText(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return CircularProgressIndicator();
-                          }
-                          if (snapshot.hasError) {
-                            return Text("Error loading rules");
-                          }
-                          return Text(
-                            snapshot.data ?? "No rules available",
-                            textAlign: TextAlign.justify,
-                          );
-                        },
+                          height: 10), // Add some spacing between title and text
+                      SizedBox(
+                        width: double.infinity,
+                        height: 390,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: FutureBuilder<String>(
+                            future: loadRulesText(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              }
+                              if (snapshot.hasError) {
+                                return Text("Error loading rules");
+                              }
+                              return Text(
+                                snapshot.data ?? "No rules available",
+                                textAlign: TextAlign.justify,
+                              );
+                            },
+                          ),
+                        ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
                     ],
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text(
-                              'Report a problem',
-                              style: TextStyle(color: Colors.orange),
-                            ),
-                            content: TextField(
-                              controller: descriptionController,
-                              minLines: 1,
-                              maxLines: 6,
-                              decoration: InputDecoration(
-                                hintText: "Description",
-                                //errorText: descriptionController.text.isNotEmpty ? null : "Problem description can't be empty",
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text(
+                                'Report a problem',
+                                style: TextStyle(color: Colors.orange),
                               ),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  FirebaseFirestore.instance
-                                      .collection('reports')
-                                      .add({
-                                    'userUid': getCurrentUserUid(),
-                                    'locker': descriptionController.text,
-                                    'timestamp': DateTime.now(),
-                                  });
-                                  Navigator.of(context).pop();
-                                  print(descriptionController.text);
-                                },
-                                child: Text(
-                                  'Submit',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.orange),
+                              content: TextField(
+                                controller: descriptionController,
+                                minLines: 1,
+                                maxLines: 6,
+                                decoration: InputDecoration(
+                                  hintText: "Description",
+                                  //errorText: descriptionController.text.isNotEmpty ? null : "Problem description can't be empty",
                                 ),
                               ),
-                            ],
-                          );
-                        });
-                  },
-                  style: ButtonStyle(
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.orange),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18),
-                              side: BorderSide(color: Colors.orange)))),
-                  child: Text("Report a problem".toUpperCase(),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      )),
-                )
-              ],
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    FirebaseFirestore.instance
+                                        .collection('reports')
+                                        .add({
+                                      'userUid': getCurrentUserUid(),
+                                      'locker': descriptionController.text,
+                                      'timestamp': DateTime.now(),
+                                    });
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text("Report sent successfully!"), backgroundColor: Colors.green,));
+                                    Navigator.of(context).pop();
+                                    print(descriptionController.text);
+                                  },
+                                  child: Text(
+                                    'Submit',
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.orange),
+                                  ),
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.orange),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                side: BorderSide(color: Colors.orange)))),
+                    child: Text("Report a problem".toUpperCase(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        )),
+                  )
+                ],
+              ),
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
@@ -387,7 +407,8 @@ class _MenuState extends State<Menu> {
             backgroundColor: Colors.orange[900],
             toolbarHeight: 0,
           ),
-          body: Column(
+          body: SingleChildScrollView(
+            child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
@@ -430,7 +451,7 @@ class _MenuState extends State<Menu> {
               Container(
                 width: double.infinity,
                 margin: EdgeInsets.symmetric(horizontal: 10),
-                padding: EdgeInsets.only(top: 30, left: 10, right: 10),
+                padding: EdgeInsets.only(top: 15, left: 10, right: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -443,23 +464,30 @@ class _MenuState extends State<Menu> {
                     ),
                     SizedBox(
                         height: 10), // Add some spacing between title and text
-                    FutureBuilder<String>(
-                      future: loadRulesText(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        }
-                        if (snapshot.hasError) {
-                          return Text("Error loading rules");
-                        }
-                        return Text(
-                          snapshot.data ?? "No rules available",
-                          textAlign: TextAlign.justify,
-                        );
-                      },
+                    SizedBox(
+                      width: double.infinity,
+                      height: 390,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: FutureBuilder<String>(
+                          future: loadRulesText(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return CircularProgressIndicator();
+                            }
+                            if (snapshot.hasError) {
+                              return Text("Error loading rules");
+                            }
+                            return Text(
+                              snapshot.data ?? "No rules available",
+                              textAlign: TextAlign.justify,
+                            );
+                          },
+                        ),
+                      ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -492,6 +520,8 @@ class _MenuState extends State<Menu> {
                                   'locker': descriptionController.text,
                                   'timestamp': DateTime.now(),
                                 });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("Report sent successfully!"), backgroundColor: Colors.green,));
                                 Navigator.of(context).pop();
                                 print(descriptionController.text);
                               },
@@ -521,6 +551,7 @@ class _MenuState extends State<Menu> {
                     )),
               )
             ],
+          ),
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
