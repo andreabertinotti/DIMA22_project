@@ -321,23 +321,23 @@ class _EditProfileState extends State<EditProfile> {
                                   _emailValid) {
                                 updateData(context);
 
-                                SnackBar editSnackbar = SnackBar(
+                                /* SnackBar editSnackbar = SnackBar(
                                   content:
                                       Text("Profile updated successfully!"),
                                   backgroundColor: Colors.green,
                                 );
                                 //Display a snackbar when content is saved
                                 _scaffoldMessengerKey.currentState
-                                    ?.showSnackBar(editSnackbar);
+                                    ?.showSnackBar(editSnackbar); */
                               } else {
-                                SnackBar editSnackbar = SnackBar(
+                                /* SnackBar editSnackbar = SnackBar(
                                   content:
                                       Text("Please, check the inserted data"),
                                   backgroundColor: Colors.red,
                                 );
                                 //If there are wrong fields, display a snackbar with an error message
                                 _scaffoldMessengerKey.currentState
-                                    ?.showSnackBar(editSnackbar);
+                                    ?.showSnackBar(editSnackbar); */
                               }
                             },
                             style: ButtonStyle(
