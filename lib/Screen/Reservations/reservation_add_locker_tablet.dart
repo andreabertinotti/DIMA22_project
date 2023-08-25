@@ -4,7 +4,6 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
 import "package:intl/intl.dart";
-import "package:pro/Models/user_model.dart";
 import 'package:provider/provider.dart';
 
 import "../../Services/auth_service.dart";
@@ -506,10 +505,12 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            "Booking duration:",
-            style: TextStyle(
-              fontSize: 15,
+          Expanded(
+            child: Text(
+              "Booking duration:",
+              style: TextStyle(
+                fontSize: 15,
+              ),
             ),
           ),
           SizedBox(
@@ -627,7 +628,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
   @override
   Widget build(BuildContext context) {
     serviceLockerName = widget.document['lockerName'];
-    final authService = Provider.of<AuthService>(context);
+    //final authService = Provider.of<AuthService>(context);
     String lockerName = widget.document['lockerName'];
     return ScaffoldMessenger(
       key: _bookingKey,
@@ -653,8 +654,12 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      buildAvailabilityButton(),
-                      buildCellField(),
+                      Expanded(
+                        child: buildAvailabilityButton(),
+                      ),
+                      Expanded(
+                        child: buildCellField(),
+                      ),
                     ],
                   ),
                   //buildNotificationField(),
@@ -767,25 +772,28 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                           ),
                           // Display message with info about notification, prices, luggage sizes when "?" button is pressed
                           // TODO: add prices into tooltip message
-                          Tooltip(
-                            message:
-                                "\nSmall cells can store baggages up to:\n60x40x25 cm\n\nLarge cells can store baggages up to:\n80x55x40 cm\n\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n",
-                            triggerMode: TooltipTriggerMode.tap,
-                            textStyle:
-                                TextStyle(fontSize: 17, color: Colors.white),
-                            textAlign: TextAlign.center,
-                            showDuration: Duration(seconds: 10),
-                            child: Container(
-                              width: 36,
-                              height: 36,
-                              decoration: BoxDecoration(
-                                  color: Colors.red, shape: BoxShape.circle),
-                              child: Center(
-                                  child: Text("?",
-                                      style: TextStyle(
-                                          fontSize: 25, color: Colors.white))),
+                          Expanded(
+                            child: Tooltip(
+                              message:
+                                  "\nSmall cells can store baggages up to:\n60x40x25 cm\n\nLarge cells can store baggages up to:\n80x55x40 cm\n\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n",
+                              triggerMode: TooltipTriggerMode.tap,
+                              textStyle:
+                                  TextStyle(fontSize: 17, color: Colors.white),
+                              textAlign: TextAlign.center,
+                              showDuration: Duration(seconds: 10),
+                              child: Container(
+                                width: 36,
+                                height: 36,
+                                decoration: BoxDecoration(
+                                    color: Colors.red, shape: BoxShape.circle),
+                                child: Center(
+                                    child: Text("?",
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            color: Colors.white))),
+                              ),
                             ),
-                          )
+                          ),
                         ],
                       )
                     ],

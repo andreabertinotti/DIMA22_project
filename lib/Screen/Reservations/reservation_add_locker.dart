@@ -609,7 +609,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
   @override
   Widget build(BuildContext context) {
     serviceLockerName = widget.document['lockerName'];
-    final authService = Provider.of<AuthService>(context);
+    //final authService = Provider.of<AuthService>(context);
     String lockerName = widget.document['lockerName'];
     return ScaffoldMessenger(
         key: _bookingKey,
