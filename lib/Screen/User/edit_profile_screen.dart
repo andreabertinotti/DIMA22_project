@@ -263,7 +263,12 @@ class _EditProfileState extends State<EditProfile> {
                         backgroundColor: Colors.orange,
                         child: Center(
                           child: Text(
-                            "${nameController.text[0]}${surnameController.text[0]}", //Initials on user image
+                            (nameController.text.isEmpty) ? 
+                              surnameController.text.isEmpty ? 
+                                "??" : "?${surnameController.text[0]}"
+                            : 
+                            surnameController.text.isEmpty ? 
+                              "${nameController.text[0]}?" : "${nameController.text[0]}${surnameController.text[0]}", //Initials on user image
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 60, 
@@ -320,25 +325,7 @@ class _EditProfileState extends State<EditProfile> {
                                   _addressValid &&
                                   _emailValid) {
                                 updateData(context);
-
-                                /* SnackBar editSnackbar = SnackBar(
-                                  content:
-                                      Text("Profile updated successfully!"),
-                                  backgroundColor: Colors.green,
-                                );
-                                //Display a snackbar when content is saved
-                                _scaffoldMessengerKey.currentState
-                                    ?.showSnackBar(editSnackbar); */
-                              } else {
-                                /* SnackBar editSnackbar = SnackBar(
-                                  content:
-                                      Text("Please, check the inserted data"),
-                                  backgroundColor: Colors.red,
-                                );
-                                //If there are wrong fields, display a snackbar with an error message
-                                _scaffoldMessengerKey.currentState
-                                    ?.showSnackBar(editSnackbar); */
-                              }
+                              } 
                             },
                             style: ButtonStyle(
                                 foregroundColor:
