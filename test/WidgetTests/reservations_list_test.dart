@@ -1,30 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
+import 'package:intl/intl.dart';
+import 'package:pro/Screen/Reservations/reservations_history.dart';
+import 'package:pro/Screen/Reservations/reservation_add.dart';
 import 'package:pro/Screen/Reservations/reservations_list.dart';
 
+// Import your BookingsPage widget
+
 void main() {
-  testWidgets('BookingsPage displays correctly', (WidgetTester tester) async {
-    // Build the BookingsPage widget
-    await tester.pumpWidget(
-      MaterialApp(
-        home: BookingsPage(uid: 'test_uid'),
-      ),
-    );
+  group('BookingsPage Widget Tests', () {
+    // Create an instance of FakeFirebaseFirestore
+    final fakeFirestore = FakeFirebaseFirestore();
 
-    // Expect the loading spinner to be shown initially
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    // Helper function to build the widget
+    Future<void> _buildBookingsPage(WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: BookingsPage(uid: 'testUserId'), // Provide a test user ID
+        ),
+      );
+      await tester.pumpAndSettle();
+    }
 
-    // Pump a loading state to the widget
-    await tester.pumpAndSettle();
+    setUp(() async {
+      // Set the Firestore instance to the fake instance
 
-    // Verify that the app bar title is displayed
-    expect(find.text('My Reservations'), findsOneWidget);
+      // Add your mock data to the fake instance
+      final collectionReference =
+          fakeFirestore.collection('users/testUserId/reservations');
+      await collectionReference.add({
+        'locker': 'Locker 1',
+        'cell': 'Cell 1',
+        'reservationStartDate': '2023-09-03 15:00:00',
+        'reservationEndDate': '2023-09-03 16:00:00',
+        'reservationDuration': 2,
+        'id': '1',
+      });
 
-    // Verify that the 'History' and 'Add' icons are displayed
-    expect(find.byIcon(Icons.history), findsOneWidget);
-    expect(find.byIcon(Icons.add), findsOneWidget);
+      await collectionReference.add({
+        'locker': 'Locker 2',
+        'cell': 'Cell 2',
+        'reservationStartDate': '2023-09-03 15:00:00',
+        'reservationEndDate': '2023-09-03 16:00:00',
+        'reservationDuration': 3,
+        'id': '2',
+      });
+    });
 
-    // TODO: Add more specific widget tests based on your application's behavior
+    testWidgets('Widget builds and displays booking items',
+        (WidgetTester tester) async {
+      await _buildBookingsPage(tester);
+
+      expect(find.byType(ExpansionTile),
+          findsNWidgets(2)); // Adjust the count as needed
+    });
+
+    // Add more test scenarios as needed
   });
 }
+
+
+
+//'2023-09-03 15:00:00'
+//flutter test test/WidgetTests/reservations_list_test.dart
