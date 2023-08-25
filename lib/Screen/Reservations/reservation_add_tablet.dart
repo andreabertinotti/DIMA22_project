@@ -783,7 +783,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                             // Display message with info about notification, prices, luggage sizes when "?" button is pressed
 
                             // TODO: add prices into tooltip message and remove notification tooltip message
-                            Expanded(
+                            Flexible(
                                 child: Tooltip(
                               message:
                                   "\nSmall cells can store baggages up to:\n60x40x25 cm\n\nLarge cells can store baggages up to:\n80x55x40 cm\n\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n",

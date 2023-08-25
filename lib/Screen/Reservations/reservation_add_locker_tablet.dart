@@ -767,12 +767,13 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                             child: Text("save booking".toUpperCase(),
                                 style: TextStyle(fontSize: 18)),
                           ),
+
                           SizedBox(
                             width: 15,
                           ),
                           // Display message with info about notification, prices, luggage sizes when "?" button is pressed
                           // TODO: add prices into tooltip message
-                          Expanded(
+                          Flexible(
                             child: Tooltip(
                               message:
                                   "\nSmall cells can store baggages up to:\n60x40x25 cm\n\nLarge cells can store baggages up to:\n80x55x40 cm\n\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n",
