@@ -123,7 +123,7 @@ class _MenuState extends State<Menu> {
                           height: 10), // Add some spacing between title and text
                       SizedBox(
                         width: double.infinity,
-                        height: 390,
+                        height: MediaQuery.of(context).size.height * 0.5,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: FutureBuilder<String>(
@@ -297,7 +297,7 @@ class _MenuState extends State<Menu> {
                           height: 10), // Add some spacing between title and text
                       SizedBox(
                         width: double.infinity,
-                        height: 390,
+                        height: MediaQuery.of(context).size.height * 0.5,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: FutureBuilder<String>(
@@ -466,7 +466,7 @@ class _MenuState extends State<Menu> {
                         height: 10), // Add some spacing between title and text
                     SizedBox(
                       width: double.infinity,
-                      height: 390,
+                      height: MediaQuery.of(context).size.height * 0.5,
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: FutureBuilder<String>(
