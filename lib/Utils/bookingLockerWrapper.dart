@@ -14,7 +14,6 @@ class BookingLockerWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
-    print('wrapper called');
     return StreamBuilder<User?>(
       stream: authService.user,
       builder: (_, AsyncSnapshot<User?> snapshot) {
