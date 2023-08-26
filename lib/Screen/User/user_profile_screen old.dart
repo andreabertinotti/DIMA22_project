@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pro/Screen/User/edit_profile_screen%20old.dart';
-import 'package:pro/Screen/User/add_profile_screen.dart';
+import 'package:pro/Screen/User/add_profile_screen%20old.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

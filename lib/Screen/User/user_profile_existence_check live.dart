@@ -12,15 +12,22 @@ class ProfileCheckScreen extends StatefulWidget {
 }
 
 class _ProfileCheckScreenState extends State<ProfileCheckScreen> {
-  final User? _user = FirebaseAuth.instance.currentUser;
+  final User? user = FirebaseAuth.instance.currentUser;
+  dynamic userEmail;
+  dynamic userUid;
 
   @override
   Widget build(BuildContext context) {
+    if (user != null) {
+      userEmail = user?.email;
+      userUid = user?.uid;
+    }
+
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('users')
-            .where('userUID', isEqualTo: _user?.uid)
+            .where('userUID', isEqualTo: user?.uid)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -30,7 +37,7 @@ class _ProfileCheckScreenState extends State<ProfileCheckScreen> {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           if (snapshot.data!.docs.isEmpty) {
-            return AddProfile();
+            return AddProfile(userUid, userEmail);
           }
           return ProfilePage(snapshot
               .data!.docs[0]); // Assuming you're using the first document

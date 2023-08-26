@@ -1,11 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_final_fields, library_private_types_in_public_api
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 
 class AddProfile extends StatefulWidget {
-  const AddProfile(this.uid, this.email, {super.key});
-  final dynamic uid;
-  final dynamic email;
+  const AddProfile({super.key});
 
   @override
   _AddProfileState createState() => _AddProfileState();
@@ -38,7 +37,7 @@ class _AddProfileState extends State<AddProfile> {
     setState(() {
       isLoading = true; //page starts loading content
     });
-    nameController.text = 'Mario';
+    nameController.text = 'Mario'; //TODO: retrieve data from db
     surnameController.text = 'Rossi';
     phoneController.text = '1234567890';
     addressController.text = 'Kings street 104, London, UK';
@@ -135,10 +134,8 @@ class _AddProfileState extends State<AddProfile> {
   void updateData(BuildContext context) async {
     // Save the data entered by the user in variables
     String name = nameController.text;
-    //String email = FirebaseAuth.instance.currentUser?.email ?? "";
-    //String uid = FirebaseAuth.instance.currentUser?.uid ?? "";
-    String email = widget.email;
-    String uid = widget.uid;
+    String email = FirebaseAuth.instance.currentUser?.email ?? "";
+    String uid = FirebaseAuth.instance.currentUser?.uid ?? "";
     String phoneNumber = phoneController.text;
     String surname = surnameController.text;
     String address = addressController.text;
@@ -195,7 +192,6 @@ class _AddProfileState extends State<AddProfile> {
 
   @override
   Widget build(BuildContext context) {
-    print('EVVIVAAAA');
     return ScaffoldMessenger(
         key: _scaffoldMessengerKey,
         child: Scaffold(

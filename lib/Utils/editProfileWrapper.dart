@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pro/Screen/User/add_profile_screen.dart';
 
 import '../Screen/User/edit_profile_screen.dart';
+import '../Screen/register_screen.dart';
 
 class EditProfileWrapper extends StatefulWidget {
   const EditProfileWrapper({Key? key}) : super(key: key);
@@ -17,26 +18,29 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('users')
-            .where('userUID', isEqualTo: _user?.uid)
-            .snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-          if (snapshot.data!.docs.isEmpty) {
-            return AddProfile();
-          }
-          return EditProfile(snapshot
-              .data!.docs[0]); // Assuming you're using the first document
-        },
-      ),
-    );
+    return _user == null
+        ? Register()
+        : Scaffold(
+            body: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('users')
+                  .where('userUID', isEqualTo: _user?.uid)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
+                if (snapshot.data!.docs.isEmpty) {
+                  return AddProfile(_user?.uid, _user?.email);
+                }
+                return EditProfile(snapshot
+                    .data!.docs[0]); // Assuming you're using the first document
+              },
+            ),
+          );
   }
 }
