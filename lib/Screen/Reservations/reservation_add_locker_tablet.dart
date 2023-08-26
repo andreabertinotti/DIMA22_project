@@ -7,6 +7,7 @@ import "package:intl/intl.dart";
 import 'package:provider/provider.dart';
 
 import "../../Services/auth_service.dart";
+import "../../Services/database_service.dart";
 
 class AddLockerBookingTablet extends StatefulWidget {
   final dynamic document;
@@ -57,28 +58,28 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
 // Update cell fare
   void _updateCellFare() async {
     // print(serviceLockerName);
-    cellFare =
-        await retrieveCellFare(serviceLockerName, selectedCell, duration);
+    cellFare = await retrieveCellFare(
+        serviceLockerName, selectedCell, duration, bookingAuthorized);
     setState(() {});
   }
 
-  Future<String> retrieveCellFare(
-      String locker, String cell, int duration) async {
-    if (!bookingAuthorized) {
-      return '';
-    }
-    DocumentSnapshot cellSnapshot = await FirebaseFirestore.instance
-        .collection('lockers')
-        .doc(locker)
-        .collection('cells')
-        .doc(cell)
-        .get();
-
-    double cellFare = cellSnapshot['cellFare'] as double;
-    String fare = (cellFare * duration).toStringAsFixed(2);
-    String renderedFare = '$fare€';
-    return renderedFare;
-  }
+// Future<String> retrieveCellFare(
+//     String locker, String cell, int duration) async {
+//   if (!bookingAuthorized) {
+//     return '';
+//   }
+//   DocumentSnapshot cellSnapshot = await FirebaseFirestore.instance
+//       .collection('lockers')
+//       .doc(locker)
+//       .collection('cells')
+//       .doc(cell)
+//       .get();
+//
+//   double cellFare = cellSnapshot['cellFare'] as double;
+//   String fare = (cellFare * duration).toStringAsFixed(2);
+//   String renderedFare = '$fare€';
+//   return renderedFare;
+// }
 
   /*
   @override

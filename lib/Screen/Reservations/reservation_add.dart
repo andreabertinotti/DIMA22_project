@@ -2,6 +2,8 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
+import "../../Services/database_service.dart";
+
 class EditBooking extends StatefulWidget {
   EditBooking({Key? key, required this.uid}) : super(key: key);
 
@@ -42,37 +44,31 @@ class _EditBookingState extends State<EditBooking> {
   List available_cells = [];
 
   String cellFare = ''; // Initialize with an empty string
-  //String lockerFee = ''; // Initialize with an empty string
 
 // Update cell fare
   void _updateCellFare() async {
-    cellFare = await retrieveCellFare(lockerName, selectedCell, duration);
+    cellFare = await retrieveCellFare(
+        lockerName, selectedCell, duration, bookingAuthorized);
     setState(() {});
   }
 
-// Update locker fee
-  // void _updateLockerFee() async {
-  //   lockerFee = await retrieveLockerFee(lockerName);
-  //   setState(() {});
-  // }
+  //Future<String> retrieveCellFare(
+  //    String locker, String cell, int duration) async {
+  //  if (!bookingAuthorized) {
+  //    return '';
+  //  }
+  //  DocumentSnapshot cellSnapshot = await FirebaseFirestore.instance
+  //      .collection('lockers')
+  //      .doc(locker)
+  //      .collection('cells')
+  //      .doc(cell)
+  //      .get();
 
-  Future<String> retrieveCellFare(
-      String locker, String cell, int duration) async {
-    if (!bookingAuthorized) {
-      return '';
-    }
-    DocumentSnapshot cellSnapshot = await FirebaseFirestore.instance
-        .collection('lockers')
-        .doc(locker)
-        .collection('cells')
-        .doc(cell)
-        .get();
-
-    double cellFare = cellSnapshot['cellFare'] as double;
-    String fare = (cellFare * duration).toStringAsFixed(2);
-    String renderedFare = '$fare€';
-    return renderedFare;
-  }
+  //  double cellFare = cellSnapshot['cellFare'] as double;
+  //  String fare = (cellFare * duration).toStringAsFixed(2);
+  //  String renderedFare = '$fare€';
+  //  return renderedFare;
+  //}
 
   List<DropdownMenuItem<String>> get dropdownLockers {
     List<DropdownMenuItem<String>> menuLockers = [

@@ -4,6 +4,8 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
+import "../../Services/database_service.dart";
+
 class AddBookingTablet extends StatefulWidget {
   AddBookingTablet({Key? key, required this.uid}) : super(key: key);
 
@@ -49,27 +51,28 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
 
   // Update cell fare
   void _updateCellFare() async {
-    cellFare = await retrieveCellFare(lockerName, selectedCell, duration);
+    cellFare = await retrieveCellFare(
+        lockerName, selectedCell, duration, bookingAuthorized);
     setState(() {});
   }
 
-  Future<String> retrieveCellFare(
-      String locker, String cell, int duration) async {
-    if (!bookingAuthorized) {
-      return '';
-    }
-    DocumentSnapshot cellSnapshot = await FirebaseFirestore.instance
-        .collection('lockers')
-        .doc(locker)
-        .collection('cells')
-        .doc(cell)
-        .get();
+  //Future<String> retrieveCellFare(
+  //    String locker, String cell, int duration) async {
+  //  if (!bookingAuthorized) {
+  //    return '';
+  //  }
+  //  DocumentSnapshot cellSnapshot = await FirebaseFirestore.instance
+  //      .collection('lockers')
+  //      .doc(locker)
+  //      .collection('cells')
+  //      .doc(cell)
+  //      .get();
 
-    double cellFare = cellSnapshot['cellFare'] as double;
-    String fare = (cellFare * duration).toStringAsFixed(2);
-    String renderedFare = '$fare€';
-    return renderedFare;
-  }
+  //  double cellFare = cellSnapshot['cellFare'] as double;
+  //  String fare = (cellFare * duration).toStringAsFixed(2);
+  //  String renderedFare = '$fare€';
+  //  return renderedFare;
+  //}
 
   /*
   @override

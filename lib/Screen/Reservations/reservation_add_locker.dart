@@ -5,6 +5,7 @@ import "package:intl/intl.dart";
 import 'package:provider/provider.dart';
 
 import "../../Services/auth_service.dart";
+import "../../Services/database_service.dart";
 
 class EditLockerBooking extends StatefulWidget {
   final dynamic document;
@@ -49,53 +50,32 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
   List available_cells = [];
 
   String cellFare = ''; // Initialize with an empty string
-  //String lockerFee = ''; // Initialize with an empty string
 
 // Update cell fare
   void _updateCellFare() async {
     //print(serviceLockerName);
-    cellFare =
-        await retrieveCellFare(serviceLockerName, selectedCell, duration);
+    cellFare = await retrieveCellFare(
+        serviceLockerName, selectedCell, duration, bookingAuthorized);
     setState(() {});
   }
 
-// Update locker fee
-  // void _updateLockerFee() async {
-  //   lockerFee = await retrieveLockerFee(widget.document['lockerName']);
-  //   setState(() {});
-  // }
+  // Future<String> retrieveCellFare(
+  //     String locker, String cell, int duration) async {
+  //   if (!bookingAuthorized) {
+  //     return '';
+  //   }
+  //   DocumentSnapshot cellSnapshot = await FirebaseFirestore.instance
+  //       .collection('lockers')
+  //       .doc(locker)
+  //       .collection('cells')
+  //       .doc(cell)
+  //       .get();
 //
-  Future<String> retrieveCellFare(
-      String locker, String cell, int duration) async {
-    if (!bookingAuthorized) {
-      return '';
-    }
-    DocumentSnapshot cellSnapshot = await FirebaseFirestore.instance
-        .collection('lockers')
-        .doc(locker)
-        .collection('cells')
-        .doc(cell)
-        .get();
-
-    double cellFare = cellSnapshot['cellFare'] as double;
-    String fare = (cellFare * duration).toStringAsFixed(2);
-    String renderedFare = '$fare€';
-    return renderedFare;
-  }
-
-  Future<String> retrieveLockerFee(String locker) async {
-    if (locker == 'Select a locker') {
-      return '';
-    }
-    //DocumentSnapshot lockerSnapshot = await FirebaseFirestore.instance
-    //    .collection('lockers')
-    //    .doc(locker)
-    //    .get();
-
-    String fee = '0'; //lockerSnapshot['lockerFee'].toString();
-    String renderedFee = '$fee€';
-    return renderedFee;
-  }
+  //   double cellFare = cellSnapshot['cellFare'] as double;
+  //   String fare = (cellFare * duration).toStringAsFixed(2);
+  //   String renderedFare = '$fare€';
+  //   return renderedFare;
+  // }
 
   /*
   @override
