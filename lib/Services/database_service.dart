@@ -17,3 +17,23 @@ class DatabaseService {
         .get();
   }
 }
+
+Stream<List<Map<String, dynamic>>> fetchReservations(String userUid) {
+  final DateTime currentTime = DateTime.now();
+
+  return FirebaseFirestore.instance
+      .collection('users')
+      .doc(userUid)
+      .collection('reservations')
+      .where('reservationEndDate',
+          isGreaterThan: Timestamp.fromDate(currentTime))
+      .snapshots()
+      .map((snapshot) {
+    return snapshot.docs.map((reservationDoc) {
+      Map<String, dynamic> reservationData =
+          reservationDoc.data()! as Map<String, dynamic>;
+      reservationData['id'] = reservationDoc.id;
+      return reservationData;
+    }).toList();
+  });
+}
