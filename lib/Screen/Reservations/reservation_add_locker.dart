@@ -669,18 +669,18 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                 //    children: [Text("Locker fee:"), Text(lockerFee)],
                 //  ),
                 //),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Service fees:",
-                          style: TextStyle(fontWeight: FontWeight.w400)),
-                      Text("€2.00",
-                          style: TextStyle(fontWeight: FontWeight.w400))
-                    ],
-                  ),
-                ),
+                //      Padding(
+                //        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                //        child: Row(
+                //          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //          children: [
+                //            Text("Service fees:",
+                //                style: TextStyle(fontWeight: FontWeight.w400)),
+                //            Text("€2.00",
+                //                style: TextStyle(fontWeight: FontWeight.w400))
+                //          ],
+                //        ),
+                //      ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 5, 20, 25),
                   child: Row(

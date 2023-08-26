@@ -875,26 +875,26 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                             //    ],
                             //  ),
                           ), */
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.035,
-                              right: MediaQuery.of(context).size.width * 0.035,
-                              top: MediaQuery.of(context).size.width * 0.025,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Service fee",
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                Text(
-                                  "€2,00",
-                                  style: TextStyle(fontSize: 18),
-                                )
-                              ],
-                            ),
-                          ),
+                          //  Padding(
+                          //    padding: EdgeInsets.only(
+                          //      left: MediaQuery.of(context).size.width * 0.035,
+                          //      right: MediaQuery.of(context).size.width * 0.035,
+                          //      top: MediaQuery.of(context).size.width * 0.025,
+                          //    ),
+                          //    child: Row(
+                          //      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //      children: [
+                          //        Text(
+                          //          "Service fee",
+                          //          style: TextStyle(fontSize: 18),
+                          //        ),
+                          //        Text(
+                          //          "€2,00",
+                          //          style: TextStyle(fontSize: 18),
+                          //        )
+                          //      ],
+                          //    ),
+                          //  ),
                           Padding(
                             padding: EdgeInsets.fromLTRB(
                                 MediaQuery.of(context).size.width * 0.035,
