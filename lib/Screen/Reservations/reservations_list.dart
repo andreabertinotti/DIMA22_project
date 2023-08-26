@@ -66,7 +66,7 @@ class CustomListItem extends StatelessWidget {
                       ),
                       image: DecorationImage(
                         image: AssetImage(
-                            'assets/images/$locker-locker-image.png'),
+                            'assets/images/square/$locker-locker-image-square.jpg'),
                         fit: BoxFit.cover, // Adjust the fit as needed
                       ),
                     ),

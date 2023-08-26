@@ -830,7 +830,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                           border: Border.all(color: Colors.orange, width: 3.0),
                           image: DecorationImage(
                               image: AssetImage(
-                                  'assets/images/$lockerName-locker-image.png'),
+                                  'assets/images/square/$lockerName-locker-image-square.jpg'),
                               fit: BoxFit.cover)),
                     ),
                     Divider(

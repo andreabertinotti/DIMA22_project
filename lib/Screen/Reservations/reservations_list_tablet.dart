@@ -435,7 +435,7 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                   ),
                                   image: DecorationImage(
                                     image: AssetImage(
-                                        'assets/images/$_locker-locker-image.png'),
+                                        'assets/images/square/$_locker-locker-image-square.jpg'),
                                     fit: BoxFit
                                         .cover, // Adjust the fit as needed
                                   ),

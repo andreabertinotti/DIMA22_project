@@ -83,13 +83,22 @@ flutter:
   assets:
     - assets/images/marker.png
     - assets/images/app_logo.png
-    - assets/images/Leonardo-locker-image.png
-    - assets/images/Centrale-locker-image.png
-    - assets/images/Garibaldi-locker-image.png
-    - assets/images/Duomo-locker-image.png
-    - assets/images/Bovisa-locker-image.png
-    - assets/images/Darsena-locker-image.png
     - assets/texts/service_rules.txt
+    - assets/images/square/appLogo-placeholder-square.jpg 
+    - assets/images/square/Leonardo-locker-image-square.jpg
+    - assets/images/square/Bovisa-locker-image-square.jpg
+    - assets/images/square/Centrale-locker-image-square.jpg
+    - assets/images/square/Darsena-locker-image-square.jpg
+    - assets/images/square/Garibaldi-locker-image-square.jpg
+    - assets/images/square/Duomo-locker-image-square.jpg
+    - assets/images/wide/appLogo-placeholder-wide.jpg 
+    - assets/images/wide/Leonardo-locker-image-wide.jpg
+    - assets/images/wide/Bovisa-locker-image-wide.jpg
+    - assets/images/wide/Centrale-locker-image-wide.jpg
+    - assets/images/wide/Darsena-locker-image-wide.jpg
+    - assets/images/wide/Garibaldi-locker-image-wide.jpg
+    - assets/images/wide/Duomo-locker-image-wide.jpg
+
      
 
   # An image asset can refer to one or more resolution-specific "variants", see

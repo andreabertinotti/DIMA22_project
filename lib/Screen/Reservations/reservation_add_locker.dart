@@ -639,7 +639,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                                 BorderSide(color: Colors.orange, width: 3.0)),
                         image: DecorationImage(
                             image: AssetImage(
-                                'assets/images/$lockerName-locker-image.png'),
+                                'assets/images/wide/$lockerName-locker-image-wide.jpg'),
                             fit: BoxFit.cover)),
                   ),
                 ),

@@ -841,8 +841,8 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                             image: DecorationImage(
                                 image: AssetImage(lockerName ==
                                         'Select a locker'
-                                    ? 'assets/images/app_logo.png'
-                                    : 'assets/images/$lockerName-locker-image.png'),
+                                    ? 'assets/images/square/appLogo-placeholder-square.jpg'
+                                    : 'assets/images/square/$lockerName-locker-image-square.jpg'),
                                 fit: BoxFit.cover)),
                       ),
                       Divider(

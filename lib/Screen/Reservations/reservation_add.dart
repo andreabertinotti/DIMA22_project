@@ -550,8 +550,8 @@ class _EditBookingState extends State<EditBooking> {
                                 BorderSide(color: Colors.orange, width: 3.0)),
                         image: DecorationImage(
                             image: AssetImage(lockerName == 'Select a locker'
-                                ? 'assets/images/app_logo.png'
-                                : 'assets/images/$lockerName-locker-image.png'),
+                                ? 'assets/images/wide/appLogo-placeholder-wide.jpg'
+                                : 'assets/images/wide/$lockerName-locker-image-wide.jpg'),
                             fit: BoxFit.cover)),
                   ),
                 ),

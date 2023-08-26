@@ -119,7 +119,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                 Border.all(color: Colors.orange, width: 3.0),
                             image: DecorationImage(
                                 image: AssetImage(
-                                    'assets/images/${widget.document['lockerName'].toString()}-locker-image.png'),
+                                    'assets/images/square/${widget.document['lockerName'].toString()}-locker-image-square.jpg'),
                                 fit: BoxFit.cover)),
                       ),
                     ),
