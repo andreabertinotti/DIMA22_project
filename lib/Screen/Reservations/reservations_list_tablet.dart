@@ -192,7 +192,6 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
   String _cell = "";
   DateTime _dropOff = DateTime.now();
   DateTime _pickUp = DateTime.now();
-  //String _baggageSize = "";
   int _duration = 0;
   String _reservationId = "";
   bool _tapped = false;
@@ -234,32 +233,6 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
       );
     }
   }
-
-  //Future<List<Map<String, dynamic>>> fetchReservations(User user) async {
-  //  final DateTime currentTime = DateTime.now();
-//
-  //  QuerySnapshot reservationSnapshot = await FirebaseFirestore.instance
-  //      .collection('users')
-  //      .doc(user.uid)
-  //      .collection('reservations')
-  //      .where('reservationEndDate',
-  //          isGreaterThan: Timestamp.fromDate(currentTime))
-  //      .get();
-//
-  //  List<Map<String, dynamic>> reservations = [];
-//
-  //  for (QueryDocumentSnapshot reservationDoc in reservationSnapshot.docs) {
-  //    if (reservationDoc.exists && reservationDoc.data() != null) {
-  //      Map<String, dynamic> reservationData =
-  //          reservationDoc.data()! as Map<String, dynamic>;
-  //      reservationData['id'] =
-  //          reservationDoc.id; // Add the document ID to the map
-  //      reservations.add(reservationData);
-  //    }
-  //  }
-//
-  //  return reservations;
-  //}
 
   Stream<List<Map<String, dynamic>>> fetchReservationsLive() {
     final DateTime currentTime = DateTime.now();
@@ -387,17 +360,10 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                 _cell = cell;
                                 _dropOff = dropOff;
                                 _pickUp = pickUp;
-                                //_baggageSize = baggageSize;
                                 _duration = duration;
                                 _reservationId = reservationId;
                                 _tapped = true;
                               });
-                              /* print("locker: $locker");
-                                  print("dropoff: ${dropOff.toString()}");
-                                  print("pickup: ${pickUp.toString()}");
-                                  print("cell: $cell");
-                                  print("size: $baggageSize");
-                                  print("Duration: $duration"); */
                             },
                           );
                         },
@@ -428,16 +394,13 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                     MediaQuery.of(context).size.width * 0.25,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Colors
-                                        .orange, // Choose your desired border color
-                                    width:
-                                        2.0, // Adjust the border width as needed
+                                    color: Colors.orange,
+                                    width: 2.0,
                                   ),
                                   image: DecorationImage(
                                     image: AssetImage(
                                         'assets/images/square/$_locker-locker-image-square.jpg'),
-                                    fit: BoxFit
-                                        .cover, // Adjust the fit as needed
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),

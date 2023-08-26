@@ -20,13 +20,11 @@ class CustomListItem extends StatelessWidget {
     super.key,
     required this.dropOff,
     required this.pickUp,
-    //required this.baggageSize,
     required this.locker,
     required this.cell,
     required this.duration,
     required this.reservationId,
     required this.onDelete,
-    //required this.notificationSet,
     //required this.price,
     // required this.lockerImage
   });
@@ -40,7 +38,6 @@ class CustomListItem extends StatelessWidget {
   final String reservationId;
   final VoidCallback onDelete;
 
-  //final bool notificationSet;
   //final int price;
   // final Widget lockerImage;
 
@@ -86,7 +83,6 @@ class CustomListItem extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-
                     Text(
                       // used 'intl' package for date format
                       "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(pickUp)}",
@@ -102,12 +98,6 @@ class CustomListItem extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    //Text(
-                    //  "Baggage size: $baggageSize",
-                    //  style: TextStyle(
-                    //    fontSize: 18,
-                    //  ),
-                    //),
                     Text(
                       "Cell: $cell",
                       style: TextStyle(
@@ -343,17 +333,12 @@ class _BookingsPageState extends State<BookingsPage> {
                       CustomListItem(
                         dropOff: dropOff,
                         pickUp: pickUp,
-                        //baggageSize: baggageSize,
                         duration: duration,
                         cell: cell,
                         locker: locker,
                         reservationId: reservationId,
-                        onDelete: () => _deleteReservation(
-                            reservationId,
-                            //user,
-                            locker,
-                            cell), // Pass a callback to delete
-                        //notificationSet: snapshot.data![index]['notificationSet'],
+                        onDelete: () => _deleteReservation(reservationId,
+                            locker, cell), // Pass a callback to delete
                         //price: snapshot.data![index]['price'],
                       )
                     ],
