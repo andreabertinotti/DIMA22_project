@@ -537,44 +537,6 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
     return reservedSlots;
   }
 
-  /*
-  // Widget to build the Notification field
-  Padding buildNotificationField() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        SizedBox(
-          width: 180,
-          child: Text(
-            "Send notification one hour before pick-up time:",
-            maxLines: 3,
-            style: TextStyle(
-              fontSize: 15,
-            ),
-          ),
-        ),
-        Container(
-          //Space between text and checkbox
-          width: 15,
-        ),
-        Transform.scale(
-            scale: 1.5,
-            // Display checkbox to choose notification preference
-            child: Checkbox(
-              checkColor: Colors.white,
-              activeColor: Colors.orange,
-              value: isNotificationActive,
-              onChanged: (bool? value) {
-                setState(() {
-                  isNotificationActive = value!; //TODO: change value on db
-                });
-              },
-            ))
-      ]),
-    );
-  }
-  */
-
   Padding buildLockerAddressField() {
     String lockerName = widget.document['lockerName'];
     return Padding(
@@ -653,34 +615,12 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                     buildCellField(),
                   ],
                 ),
-
-                //buildNotificationField(),
                 Divider(
                   thickness: 1,
                   color: Colors.black,
                   indent: 20,
                   endIndent: 20,
                 ),
-
-                //Padding(
-                //  padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-                //  child: Row(
-                //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //    children: [Text("Locker fee:"), Text(lockerFee)],
-                //  ),
-                //),
-                //      Padding(
-                //        padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                //        child: Row(
-                //          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //          children: [
-                //            Text("Service fees:",
-                //                style: TextStyle(fontWeight: FontWeight.w400)),
-                //            Text("€2.00",
-                //                style: TextStyle(fontWeight: FontWeight.w400))
-                //          ],
-                //        ),
-                //      ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 5, 20, 25),
                   child: Row(

@@ -853,48 +853,6 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                       ),
                       Column(
                         children: [
-                          /* Padding(
-                            //TODO: togli commento
-                            padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.035,
-                              vertical:
-                                  MediaQuery.of(context).size.width * 0.01,
-                            ),
-                            //  child: Row(
-                            //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //    children: [
-                            //      Text(
-                            //        "${baggageSize == 'Select a size' ? "Baggage deposit" : "$baggageSize baggage deposit"}",
-                            //        style: TextStyle(fontSize: 18),
-                            //      ),
-                            //      Text(
-                            //        "€6,99",
-                            //        style: TextStyle(fontSize: 18),
-                            //      ) // TODO: assign each size a price and automate price calculation
-                            //    ],
-                            //  ),
-                          ), */
-                          //  Padding(
-                          //    padding: EdgeInsets.only(
-                          //      left: MediaQuery.of(context).size.width * 0.035,
-                          //      right: MediaQuery.of(context).size.width * 0.035,
-                          //      top: MediaQuery.of(context).size.width * 0.025,
-                          //    ),
-                          //    child: Row(
-                          //      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //      children: [
-                          //        Text(
-                          //          "Service fee",
-                          //          style: TextStyle(fontSize: 18),
-                          //        ),
-                          //        Text(
-                          //          "€2,00",
-                          //          style: TextStyle(fontSize: 18),
-                          //        )
-                          //      ],
-                          //    ),
-                          //  ),
                           Padding(
                             padding: EdgeInsets.fromLTRB(
                                 MediaQuery.of(context).size.width * 0.035,

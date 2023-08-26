@@ -552,44 +552,6 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
     return reservedSlots;
   }
 
-  /*
-  // Widget to build the Notification field
-  Padding buildNotificationField() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        SizedBox(
-          width: 180,
-          child: Text(
-            "Send notification one hour before pick-up time:",
-            maxLines: 3,
-            style: TextStyle(
-              fontSize: 15,
-            ),
-          ),
-        ),
-        Container(
-          //Space between text and checkbox
-          width: 15,
-        ),
-        Transform.scale(
-            scale: 1.5,
-            // Display checkbox to choose notification preference
-            child: Checkbox(
-              checkColor: Colors.white,
-              activeColor: Colors.orange,
-              value: isNotificationActive,
-              onChanged: (bool? value) {
-                setState(() {
-                  isNotificationActive = value!; //TODO: change value on db
-                });
-              },
-            ))
-      ]),
-    );
-  }
-  */
-
   Padding buildLockerAddressField() {
     String lockerName = widget.document['lockerName'];
     return Padding(
@@ -841,67 +803,6 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                     ),
                     Column(
                       children: [
-                        /* Padding(                                       //TODO: layout prezzi preso da reservation_add_tablet.dart (da sistemare)
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context).size.width * 0.035, 
-                                          vertical: MediaQuery.of(context).size.width * 0.01,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                                "${baggageSize == 'Select a size' ? "Baggage deposit" : "$baggageSize baggage deposit"}",
-                                                style: TextStyle(fontSize: 18),),
-                                            Text(
-                                                "€6,99",
-                                                style: TextStyle(fontSize: 18),) // TODO: assign each size a price and automate price calculation
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context).size.width * 0.035, 
-                                          vertical: MediaQuery.of(context).size.width * 0.01,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [Text("Service fee", style: TextStyle(fontSize: 18),), Text("€2,00", style: TextStyle(fontSize: 18),)],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                          MediaQuery.of(context).size.width * 0.035, MediaQuery.of(context).size.width * 0.01, MediaQuery.of(context).size.width * 0.035, MediaQuery.of(context).size.width * 0.035
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("Total price",
-                                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                                            Text("€${5.99 + 2.00}",
-                                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18))
-                                          ],
-                                        ),
-                                      ), */
-                        // Padding(
-                        //   padding: EdgeInsets.only(
-                        //     left: MediaQuery.of(context).size.width * 0.035,
-                        //     right: MediaQuery.of(context).size.width * 0.035,
-                        //     top: MediaQuery.of(context).size.width * 0.025,
-                        //   ),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [
-                        //       Text(
-                        //         "Service fee",
-                        //         style: TextStyle(fontSize: 18),
-                        //       ),
-                        //       Text(
-                        //         "€2,00",
-                        //         style: TextStyle(fontSize: 18),
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(
                               MediaQuery.of(context).size.width * 0.035,
@@ -930,12 +831,5 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
             ],
           )),
     );
-    //    } else {
-    //      return const Scaffold(
-    //        body: Center(
-    //          child: CircularProgressIndicator(),
-    //        ),
-    //      );
-    //    }
   }
 }
