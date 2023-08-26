@@ -24,7 +24,6 @@ class ReservationTileHorizontal extends StatelessWidget {
   final String reservationId;
   final VoidCallback onDelete;
 
-  //final int price;
   // final Widget lockerImage;
 
   @override
@@ -106,7 +105,7 @@ class ReservationTileHorizontal extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Price: ",
+                        Text("Price: $price",
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
