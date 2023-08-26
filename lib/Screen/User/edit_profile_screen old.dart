@@ -2,10 +2,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:pro/Screen/my_home.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile(this.userData, {super.key});
-  final dynamic userData;
+  const EditProfile({super.key});
+
   @override
   _EditProfileState createState() => _EditProfileState();
 }
@@ -38,34 +39,34 @@ class _EditProfileState extends State<EditProfile> {
       isLoading = true; //page starts loading content
     });
 
-    //  try {
-    // Retrieve the user document from Firestore using the current user's uid
-    //final userUid = FirebaseAuth.instance.currentUser?.uid;
-    //final userQuerySnapshot = await FirebaseFirestore.instance
-    //    .collection('users')
-    //    .where('userUID', isEqualTo: userUid)
-    //    .get();
+    try {
+      // Retrieve the user document from Firestore using the current user's uid
+      final userUid = FirebaseAuth.instance.currentUser?.uid;
+      final userQuerySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('userUID', isEqualTo: userUid)
+          .get();
 
-    if (widget.userData != null) {
-      // Document with userUID exists, update the TextEditingController values
-      //final userDoc = userQuerySnapshot.docs.first;
-      //final userData = userDoc;
+      if (userQuerySnapshot.docs.isNotEmpty) {
+        // Document with userUID exists, update the TextEditingController values
+        final userDoc = userQuerySnapshot.docs.first;
+        final userData = userDoc;
 
-      nameController.text = widget.userData['name'] ?? '';
-      surnameController.text = widget.userData['surname'] ?? '';
-      phoneController.text = widget.userData['phone'] ?? '';
-      addressController.text = widget.userData['address'] ?? '';
-      //emailController.text = FirebaseAuth.instance.currentUser?.email ?? '';
-    } else {
-      nameController.text = 'Mario';
-      surnameController.text = 'Rossi';
-      phoneController.text = '1234567890';
-      addressController.text = 'Kings street 104, London, UK';
-      //emailController.text = 'email';
+        nameController.text = userData['name'] ?? '';
+        surnameController.text = userData['surname'] ?? '';
+        phoneController.text = userData['phone'] ?? '';
+        addressController.text = userData['address'] ?? '';
+        //emailController.text = FirebaseAuth.instance.currentUser?.email ?? '';
+      } else {
+        nameController.text = 'Mario';
+        surnameController.text = 'Rossi';
+        phoneController.text = '1234567890';
+        addressController.text = 'Kings street 104, London, UK';
+        //emailController.text = 'email';
+      }
+    } catch (e) {
+      print('Error fetching user data: $e');
     }
-    //  } catch (e) {
-    //    print('Error fetching user data: $e');
-    //  }
 
     setState(() {
       isLoading = false; //Page ends loading content
@@ -167,14 +168,14 @@ class _EditProfileState extends State<EditProfile> {
 
     // Check if the user document already exists
     try {
-      //  final userQuerySnapshot = await FirebaseFirestore.instance
-      //      .collection('users')
-      //      .where('userUID', isEqualTo: uid)
-      //      .get();
+      final userQuerySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('userUID', isEqualTo: uid)
+          .get();
 
-      if (widget.userData != null) {
+      if (userQuerySnapshot.docs.isNotEmpty) {
         // Document with userUID exists, update the user data in the existing document
-        final userDoc = widget.userData;
+        final userDoc = userQuerySnapshot.docs.first;
         await userDoc.reference.update({
           'name': name,
           'surname': surname,
