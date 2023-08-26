@@ -7,6 +7,8 @@ import 'package:pro/Screen/Reservations/reservation_tile_horizontal.dart';
 import 'package:pro/Screen/Reservations/reservations_history.dart';
 import 'package:pro/Screen/Reservations/reservation_add_tablet.dart';
 
+import '../../Services/database_service.dart';
+
 // A stateful widget representing the bookings page.
 class TabletBookingsPage extends StatefulWidget {
   const TabletBookingsPage({super.key, required this.uid});
@@ -70,25 +72,25 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
     }
   }
 
-  Stream<List<Map<String, dynamic>>> fetchReservationsLive() {
-    final DateTime currentTime = DateTime.now();
-
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(widget.uid)
-        .collection('reservations')
-        .where('reservationEndDate',
-            isGreaterThan: Timestamp.fromDate(currentTime))
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs.map((reservationDoc) {
-        Map<String, dynamic> reservationData =
-            reservationDoc.data()! as Map<String, dynamic>;
-        reservationData['id'] = reservationDoc.id;
-        return reservationData;
-      }).toList();
-    });
-  }
+  //Stream<List<Map<String, dynamic>>> fetchReservationsLive() {
+  //  final DateTime currentTime = DateTime.now();
+//
+  //  return FirebaseFirestore.instance
+  //      .collection('users')
+  //      .doc(widget.uid)
+  //      .collection('reservations')
+  //      .where('reservationEndDate',
+  //          isGreaterThan: Timestamp.fromDate(currentTime))
+  //      .snapshots()
+  //      .map((snapshot) {
+  //    return snapshot.docs.map((reservationDoc) {
+  //      Map<String, dynamic> reservationData =
+  //          reservationDoc.data()! as Map<String, dynamic>;
+  //      reservationData['id'] = reservationDoc.id;
+  //      return reservationData;
+  //    }).toList();
+  //  });
+  //}
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +141,7 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
               Expanded(
                 flex: 4,
                 child: StreamBuilder<List<Map<String, dynamic>>>(
-                  stream: fetchReservationsLive(),
+                  stream: fetchReservations(widget.uid),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
