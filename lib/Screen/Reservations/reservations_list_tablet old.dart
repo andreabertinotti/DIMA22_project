@@ -495,13 +495,6 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              //Text(
-                                              //    "Baggage size: $_baggageSize",
-                                              //    style: TextStyle(
-                                              //      fontSize: 20,
-                                              //      fontWeight:
-                                              //          FontWeight.w400,
-                                              //    )),
                                               Text("Price: ",
                                                   style: TextStyle(
                                                       fontSize: 20,
