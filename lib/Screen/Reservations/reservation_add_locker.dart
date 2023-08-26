@@ -792,10 +792,10 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                             'userUid': widget.uid,
                             'locker': lockerName,
                             'cell': selectedCell,
-                            //'baggageSize': baggageSize,
                             'reservationStartDate': dropoff,
                             'reservationEndDate': pickup,
                             'reservationDuration': duration,
+                            'reservationPrice': cellFare,
                           };
 
                           transaction.set(reservationRef, reservationData);

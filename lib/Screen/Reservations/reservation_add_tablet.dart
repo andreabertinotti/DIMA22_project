@@ -733,10 +733,10 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                                     'userUid': widget.uid,
                                     'locker': lockerName,
                                     'cell': selectedCell,
-                                    // 'baggageSize': baggageSize,
                                     'reservationStartDate': dropoff,
                                     'reservationEndDate': pickup,
                                     'reservationDuration': duration,
+                                    'reservationPrice': cellFare,
                                   };
 
                                   transaction.set(
