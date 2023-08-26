@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:pro/Screen/User/edit_profile_screen.dart';
+
+import '../../Utils/editProfileWrapper.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage(this.userData, {super.key});
@@ -198,7 +199,8 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const EditProfile()),
+                  MaterialPageRoute(
+                      builder: (context) => const EditProfileWrapper()),
                 );
               },
               backgroundColor: Color(0xFFFF9800),

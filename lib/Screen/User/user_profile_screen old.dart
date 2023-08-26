@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pro/Screen/User/edit_profile_screen.dart';
+import 'package:pro/Screen/User/edit_profile_screen%20old.dart';
 import 'package:pro/Screen/User/add_profile_screen.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -73,110 +73,151 @@ class _ProfilePageState extends State<ProfilePage> {
                     Positioned(
                       top: 120,
                       child: CircleAvatar(
-                        // User image
-                        radius: 60,
-                        backgroundColor: Colors.orange,
-                        child: CircleAvatar(
-                          radius: 58,
-                          backgroundColor: Colors.white,
-                          child: Center(
-                          child: Text(
-                            "${userData['name'][0] ?? ''}${userData['surname'][0] ?? ''}", //Initials on user image
-                            style: TextStyle(
-                              color: Colors.orange,
-                              fontSize: 60, 
-                              fontWeight: FontWeight.bold
-                            ),
-                          )
-                        ),
-                      )                        
-                      ),
+                          // User image
+                          radius: 60,
+                          backgroundColor: Colors.orange,
+                          child: CircleAvatar(
+                            radius: 58,
+                            backgroundColor: Colors.white,
+                            child: Center(
+                                child: Text(
+                              "${userData['name'][0] ?? ''}${userData['surname'][0] ?? ''}", //Initials on user image
+                              style: TextStyle(
+                                  color: Colors.orange,
+                                  fontSize: 60,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                          )),
                     ),
                     Positioned(
                       top: 50,
                       child: Text(
                         '${userData['name'] ?? ''} ${userData['surname'] ?? ''}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 40
-                        ),
+                        style: TextStyle(color: Colors.white, fontSize: 40),
                       ),
                     )
                   ],
                 ),
               ),
               Container(
-                margin: MediaQuery.of(context).size.width > 600 
-                      ? EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2, right: MediaQuery.of(context).size.width * 0.2, top: 10)
-                      : EdgeInsets.only(left: 25, right: 25, top: 10),
+                margin: MediaQuery.of(context).size.width > 600
+                    ? EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.2,
+                        right: MediaQuery.of(context).size.width * 0.2,
+                        top: 10)
+                    : EdgeInsets.only(left: 25, right: 25, top: 10),
                 padding: EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2)))),
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom:
+                            BorderSide(color: Colors.black.withOpacity(0.2)))),
                 child: Row(
                   children: [
-                    Icon(Icons.person_outline, color: Colors.orange, size: 45,),
-                    SizedBox(width: 20,),
+                    Icon(
+                      Icons.person_outline,
+                      color: Colors.orange,
+                      size: 45,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
                     Text(
                       '${userData['name'] ?? ''} ${userData['surname'] ?? ''}',
                       style: TextStyle(
-                        fontSize: userData['name'].length + userData['surname'].length > 30 ? 15 : 18
-                      ),
+                          fontSize: userData['name'].length +
+                                      userData['surname'].length >
+                                  30
+                              ? 15
+                              : 18),
                     )
                   ],
                 ),
               ),
               Container(
-                margin: MediaQuery.of(context).size.width > 600 
-                      ? EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2, right: MediaQuery.of(context).size.width * 0.2, top: 25)
-                      : EdgeInsets.only(left: 25, right: 25, top: 25),
+                margin: MediaQuery.of(context).size.width > 600
+                    ? EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.2,
+                        right: MediaQuery.of(context).size.width * 0.2,
+                        top: 25)
+                    : EdgeInsets.only(left: 25, right: 25, top: 25),
                 padding: EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2)))),
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom:
+                            BorderSide(color: Colors.black.withOpacity(0.2)))),
                 child: Row(
                   children: [
-                    Icon(Icons.mail_outline, color: Colors.orange, size: 45,),
-                    SizedBox(width: 20,),
+                    Icon(
+                      Icons.mail_outline,
+                      color: Colors.orange,
+                      size: 45,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
                     Text(
                       '${userData['email'] ?? ''}',
                       style: TextStyle(
-                        fontSize: userData['email'].length > 30 ? 15 : 18
-                      ),
+                          fontSize: userData['email'].length > 30 ? 15 : 18),
                     )
                   ],
                 ),
               ),
               Container(
-                margin: MediaQuery.of(context).size.width > 600 
-                      ? EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2, right: MediaQuery.of(context).size.width * 0.2, top: 25)
-                      : EdgeInsets.only(left: 25, right: 25, top: 25),
+                margin: MediaQuery.of(context).size.width > 600
+                    ? EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.2,
+                        right: MediaQuery.of(context).size.width * 0.2,
+                        top: 25)
+                    : EdgeInsets.only(left: 25, right: 25, top: 25),
                 padding: EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2)))),
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom:
+                            BorderSide(color: Colors.black.withOpacity(0.2)))),
                 child: Row(
                   children: [
-                    Icon(Icons.place_outlined, color: Colors.orange, size: 45,),
-                    SizedBox(width: 20,),
+                    Icon(
+                      Icons.place_outlined,
+                      color: Colors.orange,
+                      size: 45,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
                     Text(
                       '${userData['address'] ?? ''}',
                       style: TextStyle(
-                        fontSize: userData['address'].length > 30 ? 15 : 18
-                      ),
+                          fontSize: userData['address'].length > 30 ? 15 : 18),
                     )
                   ],
                 ),
               ),
               Container(
-                margin: MediaQuery.of(context).size.width > 600 
-                      ? EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2, right: MediaQuery.of(context).size.width * 0.2, top: 25)
-                      : EdgeInsets.only(left: 25, right: 25, top: 25),
+                margin: MediaQuery.of(context).size.width > 600
+                    ? EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.2,
+                        right: MediaQuery.of(context).size.width * 0.2,
+                        top: 25)
+                    : EdgeInsets.only(left: 25, right: 25, top: 25),
                 padding: EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black.withOpacity(0.2)))),
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom:
+                            BorderSide(color: Colors.black.withOpacity(0.2)))),
                 child: Row(
                   children: [
-                    Icon(Icons.phone_outlined, color: Colors.orange, size: 45,),
-                    SizedBox(width: 20,),
+                    Icon(
+                      Icons.phone_outlined,
+                      color: Colors.orange,
+                      size: 45,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
                     Text(
                       '${userData['phone'] ?? ''}',
-                      style: TextStyle(
-                        fontSize: 18
-                      ),
+                      style: TextStyle(fontSize: 18),
                     )
                   ],
                 ),
@@ -193,7 +234,10 @@ class _ProfilePageState extends State<ProfilePage> {
               );
             },
             backgroundColor: Color(0xFFFF9800),
-            child: Icon(Icons.edit, color: Colors.white,),
+            child: Icon(
+              Icons.edit,
+              color: Colors.white,
+            ),
           ),
         );
       },
