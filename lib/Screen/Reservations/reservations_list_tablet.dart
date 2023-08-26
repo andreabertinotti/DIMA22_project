@@ -3,10 +3,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:pro/Models/user_model.dart';
+import 'package:pro/Screen/Reservations/reservation_tile_horizontal.dart';
 import 'package:pro/Screen/Reservations/reservations_history.dart';
-import 'package:pro/Services/auth_service.dart';
-import 'package:provider/provider.dart'; // package used to edit date format
 import 'package:pro/Screen/Reservations/reservation_add_tablet.dart';
 
 // A stateful widget representing the bookings page.
@@ -17,183 +15,17 @@ class TabletBookingsPage extends StatefulWidget {
   State<TabletBookingsPage> createState() => _TabletBookingsPageState();
 }
 
-/* // A custom list item widget that displays booking information.
-class CustomListItem extends StatelessWidget {
-  const CustomListItem({
-    super.key,
-    required this.dropOff,
-    required this.pickUp,
-    required this.baggageSize,
-    required this.locker,
-    required this.cell,
-    required this.duration,
-    required this.reservationId,
-    required this.onDelete,
-    //required this.notificationSet,
-    //required this.price,
-    // required this.lockerImage
-  });
-
-  final DateTime dropOff;
-  final DateTime pickUp;
-  final String baggageSize;
-  final String locker;
-  final String cell;
-  final int duration;
-  final String reservationId;
-  final VoidCallback onDelete;
-  //final bool notificationSet;
-  //final int price;
-  // final Widget lockerImage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 140,
-          padding: EdgeInsets.all(10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              AspectRatio(
-                aspectRatio: 1,
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image:
-                          AssetImage('assets/images/$locker-locker-image.png'),
-                      fit: BoxFit.cover, // Adjust the fit as needed
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(left: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      // used 'intl' package for date format
-                      "Drop-off: ${DateFormat('dd/MM/yyyy, HH:mm').format(dropOff)}",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      // used 'intl' package for date format
-                      "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(pickUp)}",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      "Duration: $duration hours",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    //Text(
-                    //  "Baggage size: $baggageSize",
-                    //  style: TextStyle(
-                    //    fontSize: 18,
-                    //  ),
-                    //),
-                    Text(
-                      "Cell: $cell (baggage size: $baggageSize)",
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                    Text(
-                      "Price: ", //€$price",     //TODO:add price
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.orange,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton.icon(
-                // TODO: Open the edit booking page when the button is pressed
-                onPressed: () {
-                  //Navigator.push(context,MaterialPageRoute(
-                  //builder: (context) => const EditBooking()));
-                },
-                icon: Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                ),
-                label: Text(
-                  "Edit booking",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-                style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.orange),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            side: BorderSide(color: Colors.orange)))),
-              ),
-              ElevatedButton.icon(
-                onPressed: onDelete,
-                //TODO: if notifications are implemented, change delete and notif. buttons --> remove text (only icon buttons)
-                //onPressed: () {
-                //  //TODO: Delete booking on button press
-                //
-                //},
-                style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.orange),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            side: BorderSide(color: Colors.orange)))),
-                icon: Icon(Icons.delete, color: Colors.white),
-                label: Text(
-                  "Delete booking",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
-  }
-}  */
-
 class _TabletBookingsPageState extends State<TabletBookingsPage> {
   final GlobalKey<ScaffoldMessengerState> _bookingMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
-  String _locker = "";
-  String _cell = "";
-  DateTime _dropOff = DateTime.now();
-  DateTime _pickUp = DateTime.now();
-  int _duration = 0;
-  String _reservationId = "";
+  String selectedLocker = "";
+  String selectedCell = "";
+  DateTime selectedDropOff = DateTime.now();
+  DateTime selectedPickUp = DateTime.now();
+  int selectedDuration = 0;
+  String selectedReservationId = "";
+  String selectedPrice = "";
   bool _tapped = false;
 
   void _deleteReservation(
@@ -220,6 +52,10 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
         for (final bookedSlotDoc in bookedSlotSnapshot.docs) {
           transaction.delete(bookedSlotDoc.reference);
         }
+      });
+
+      setState(() {
+        _tapped = false;
       });
 
       // Show a success message using ScaffoldMessenger
@@ -330,8 +166,8 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                           final DateTime pickUp = snapshot.data![index]
                                   ['reservationEndDate']
                               .toDate();
-                          //final String baggageSize =
-                          //    snapshot.data![index]['baggageSize'];
+                          final String price =
+                              snapshot.data![index]['reservationPrice'];
                           final int duration =
                               snapshot.data![index]['reservationDuration'];
                           final String reservationId =
@@ -356,12 +192,13 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                             ),
                             onTap: () {
                               setState(() {
-                                _locker = locker;
-                                _cell = cell;
-                                _dropOff = dropOff;
-                                _pickUp = pickUp;
-                                _duration = duration;
-                                _reservationId = reservationId;
+                                selectedLocker = locker;
+                                selectedCell = cell;
+                                selectedDropOff = dropOff;
+                                selectedPickUp = pickUp;
+                                selectedDuration = duration;
+                                selectedReservationId = reservationId;
+                                selectedPrice = price;
                                 _tapped = true;
                               });
                             },
@@ -375,181 +212,24 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
               Expanded(
                   flex: 6,
                   child: Container(
-                    decoration: BoxDecoration(color: Colors.orange[100]),
-                    child: _tapped == false
-                        ? Center(
-                            child: Text(
-                                "Please tap on a reservation to show details"), //TODO: display app logo instead of text
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                ),
-                                width: MediaQuery.of(context).size.width * 0.25,
-                                height:
-                                    MediaQuery.of(context).size.width * 0.25,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.orange,
-                                    width: 2.0,
-                                  ),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        'assets/images/square/$_locker-locker-image-square.jpg'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                  width: double.infinity,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.075,
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.025,
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.075,
-                                              0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "Drop-off: ${DateFormat('dd/MM/yyyy, HH:mm').format(_dropOff)}",
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                              Text(
-                                                "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(_pickUp)}",
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              )
-                                            ],
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.075,
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.01,
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.075,
-                                              0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text("Duration: $_duration hours",
-                                                  style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.w400,
-                                                  )),
-                                              Text("Cell: $_cell",
-                                                  style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.w400,
-                                                  )),
-                                            ],
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.075,
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.01,
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.075,
-                                              0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              //Text(
-                                              //    "Baggage size: $_baggageSize",
-                                              //    style: TextStyle(
-                                              //      fontSize: 20,
-                                              //      fontWeight:
-                                              //          FontWeight.w400,
-                                              //    )),
-                                              Text("Price: ",
-                                                  style: TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color:
-                                                          Colors.orange[700])),
-                                            ],
-                                          )),
-                                    ],
-                                  )),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height *
-                                        0.05),
-                                child: ElevatedButton.icon(
-                                  onPressed: () {
-                                    _deleteReservation(
-                                        _reservationId, _locker, _cell);
-                                    setState(() {
-                                      _tapped = false;
-                                    });
-                                  },
-                                  style: ButtonStyle(
-                                      foregroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.white),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.orange),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18),
-                                              side: BorderSide(
-                                                  color: Colors.orange)))),
-                                  icon: Icon(Icons.delete, color: Colors.white),
-                                  label: Text(
-                                    "Delete booking",
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.white),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                  ))
+                      decoration: BoxDecoration(color: Colors.orange[100]),
+                      child: _tapped == false
+                          ? Center(
+                              child: Text(
+                                  "Please tap on a reservation to show details"), //TODO: display app logo instead of text
+                            )
+                          : ReservationTileHorizontal(
+                              dropOff: selectedDropOff,
+                              pickUp: selectedPickUp,
+                              locker: selectedLocker,
+                              cell: selectedCell,
+                              duration: selectedDuration,
+                              reservationId: selectedReservationId,
+                              onDelete: () => _deleteReservation(
+                                  selectedReservationId,
+                                  selectedLocker,
+                                  selectedCell),
+                              price: selectedPrice)))
             ],
           )),
     );
