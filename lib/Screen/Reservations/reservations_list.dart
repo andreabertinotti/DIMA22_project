@@ -25,13 +25,13 @@ class CustomListItem extends StatelessWidget {
     required this.duration,
     required this.reservationId,
     required this.onDelete,
-    //required this.price,
+    required this.price,
     // required this.lockerImage
   });
 
   final DateTime dropOff;
   final DateTime pickUp;
-  //final String baggageSize;
+  final String price;
   final String locker;
   final String cell;
   final int duration;
@@ -105,7 +105,7 @@ class CustomListItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Price: ", //€$price",     //TODO:add price
+                      "Price: $price",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -305,8 +305,8 @@ class _BookingsPageState extends State<BookingsPage> {
                       snapshot.data![index]['reservationStartDate'].toDate();
                   final DateTime pickUp =
                       snapshot.data![index]['reservationEndDate'].toDate();
-                  //final String baggageSize =
-                  //    snapshot.data![index]['baggageSize'];
+                  final String price =
+                      snapshot.data![index]['reservationPrice'];
                   final int duration =
                       snapshot.data![index]['reservationDuration'];
                   final String reservationId = snapshot.data![index]['id'];
@@ -337,9 +337,9 @@ class _BookingsPageState extends State<BookingsPage> {
                         cell: cell,
                         locker: locker,
                         reservationId: reservationId,
+                        price: price,
                         onDelete: () => _deleteReservation(reservationId,
                             locker, cell), // Pass a callback to delete
-                        //price: snapshot.data![index]['price'],
                       )
                     ],
                   );
