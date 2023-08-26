@@ -83,6 +83,7 @@ flutter:
   assets:
     - assets/images/marker.png
     - assets/images/app_logo.png
+    - assets/images/circleAppLogo.png
     - assets/texts/service_rules.txt
     - assets/images/square/appLogo-placeholder-square.jpg 
     - assets/images/square/Leonardo-locker-image-square.jpg
