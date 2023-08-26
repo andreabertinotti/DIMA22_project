@@ -2,7 +2,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
-import 'package:pro/Screen/User/user_profile_existence_check.dart';
 import 'package:pro/Screen/my_home.dart';
 
 class EditProfile extends StatefulWidget {
@@ -207,8 +206,9 @@ class _EditProfileState extends State<EditProfile> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => MyHome()));
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  //Navigator.pushReplacement(context,
+                  //  MaterialPageRoute(builder: (context) => MyHome()));
                 },
                 child: Text('OK'),
               ),
