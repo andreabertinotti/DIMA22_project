@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pro/Screen/Reservations/reservations_screen.dart';
 import 'package:pro/Screen/User/user_profile_existence_check.dart';
-import 'package:pro/Screen/menu.dart';
 import 'package:provider/provider.dart';
 import '../Services/auth_service.dart';
 import '../Theme/Theme.dart';
+import '../Utils/menuWrapper.dart';
 import '../Utils/wrapper.dart';
 import '../firebase_options.dart';
 import 'home_view.dart';
@@ -79,7 +79,8 @@ class _MyHomeState extends State<MyHome> {
         home: Scaffold(
           //drawer is the menu that can be hidden on left side
           drawer: Drawer(
-            child: Wrapper(widget: Menu()),
+            //child: Wrapper(widget: Menu()),
+            child: MenuWrapper(),
           ),
           body: Center(
             child: _widgetOptions.elementAt(_selectedIndex),

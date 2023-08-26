@@ -5,11 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:pro/Screen/menu.dart';
+
 import '../Utils/bookingLockerWrapper.dart';
 import '../Utils/custom_dialog_box.dart';
 import '../Utils/image_view.dart';
-import '../Utils/wrapper.dart';
+import '../Utils/menuWrapper.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -69,7 +69,8 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
         drawer: Drawer(
-          child: Wrapper(widget: Menu()),
+          //child: Wrapper(widget: Menu()),
+          child: MenuWrapper(),
         ),
         body: SafeArea(
           child: StreamBuilder(
