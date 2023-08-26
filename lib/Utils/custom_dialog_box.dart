@@ -24,29 +24,24 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
     return Align(
       alignment: Alignment.topLeft,
       child: Dialog(
-        insetPadding: EdgeInsets.fromLTRB(
-            MediaQuery.of(context).size.height * 0.525,
-            MediaQuery.of(context).size.height * 0.3,
-            MediaQuery.of(context).size.height *
-                0.525, //TODO: check these values and fix dimensions of the box
-            MediaQuery.of(context).size.height * 0.3),
         shape: RoundedRectangleBorder(
           side: const BorderSide(color: Colors.black, width: 1),
           borderRadius: BorderRadius.circular(Constants.padding),
         ),
         child: Container(
           margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+          width: 435,
+          height: 260,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Flexible(
-                      flex: 3,
+                      flex: 4,
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +95,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.fromLTRB(15, 5, 0, 10),
+                              padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
                               child: Text(
                                 "Large cell fare: ${widget.document['largeCellFare'].toString()}€/hour",
                                 style: const TextStyle(
@@ -132,7 +127,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 5, bottom: 5),
+                padding: EdgeInsets.only(top: 10, bottom: 15),
                 child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
