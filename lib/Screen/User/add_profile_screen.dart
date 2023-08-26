@@ -195,7 +195,6 @@ class _AddProfileState extends State<AddProfile> {
 
   @override
   Widget build(BuildContext context) {
-    print('EVVIVAAAA');
     return ScaffoldMessenger(
         key: _scaffoldMessengerKey,
         child: Scaffold(
@@ -229,7 +228,6 @@ class _AddProfileState extends State<AddProfile> {
                           buildNameField(), //Insert all the fields through methods defined above
                           buildSurnameField(),
                           buildNumberField(),
-                          //buildEmailField(),
                           buildAddressField(),
                         ],
                       ),
