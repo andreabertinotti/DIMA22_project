@@ -14,6 +14,7 @@ class ProfileCheckScreen extends StatefulWidget {
 class _ProfileCheckScreenState extends State<ProfileCheckScreen> {
   bool isLoading = true;
   bool profileExists = false;
+  dynamic userDoc = null;
 
   @override
   void initState() {
@@ -40,6 +41,9 @@ class _ProfileCheckScreenState extends State<ProfileCheckScreen> {
           // If any documents match the query, set profileExists to true.
           profileExists = userQuerySnapshot.docs.isNotEmpty;
           isLoading = false;
+          if (userQuerySnapshot.docs.isNotEmpty) {
+            userDoc = userQuerySnapshot.docs.first;
+          }
         });
       } catch (e) {
         // Handle any errors that might occur during the Firestore query.
@@ -57,7 +61,7 @@ class _ProfileCheckScreenState extends State<ProfileCheckScreen> {
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : profileExists
-              ? ProfilePage()
+              ? ProfilePage(userDoc)
               : AddProfile(),
     );
   }

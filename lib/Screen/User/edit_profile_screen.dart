@@ -2,6 +2,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:pro/Screen/User/user_profile_existence_check.dart';
+import 'package:pro/Screen/my_home.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
@@ -205,6 +207,8 @@ class _EditProfileState extends State<EditProfile> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => MyHome()));
                 },
                 child: Text('OK'),
               ),
@@ -262,26 +266,30 @@ class _EditProfileState extends State<EditProfile> {
                         radius: 60,
                         backgroundColor: Colors.orange,
                         child: Center(
-                          child: Text(
-                            (nameController.text.isEmpty) ? 
-                              surnameController.text.isEmpty ? 
-                                "??" : "?${surnameController.text[0]}"
-                            : 
-                            surnameController.text.isEmpty ? 
-                              "${nameController.text[0]}?" : "${nameController.text[0]}${surnameController.text[0]}", //Initials on user image
-                            style: TextStyle(
+                            child: Text(
+                          (nameController.text.isEmpty)
+                              ? surnameController.text.isEmpty
+                                  ? "??"
+                                  : "?${surnameController.text[0]}"
+                              : surnameController.text.isEmpty
+                                  ? "${nameController.text[0]}?"
+                                  : "${nameController.text[0]}${surnameController.text[0]}", //Initials on user image
+                          style: TextStyle(
                               color: Colors.white,
-                              fontSize: 60, 
-                              fontWeight: FontWeight.bold
-                            ),
-                          )
-                        ),
+                              fontSize: 60,
+                              fontWeight: FontWeight.bold),
+                        )),
                       ),
                     ),
                     Padding(
-                      padding: MediaQuery.of(context).size.width > 600 
-                      ? EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.2, right: MediaQuery.of(context).size.width * 0.2, top: 25, bottom: 45)
-                      : EdgeInsets.only(left: 25, right: 25, top: 25, bottom: 35),
+                      padding: MediaQuery.of(context).size.width > 600
+                          ? EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.2,
+                              right: MediaQuery.of(context).size.width * 0.2,
+                              top: 25,
+                              bottom: 45)
+                          : EdgeInsets.only(
+                              left: 25, right: 25, top: 25, bottom: 35),
                       child: Column(
                         children: [
                           buildNameField(), //Insert all the fields through methods defined above
@@ -325,7 +333,7 @@ class _EditProfileState extends State<EditProfile> {
                                   _addressValid &&
                                   _emailValid) {
                                 updateData(context);
-                              } 
+                              }
                             },
                             style: ButtonStyle(
                                 foregroundColor:
