@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
@@ -29,8 +30,8 @@ void main() {
       await collectionReference.add({
         'locker': 'Locker 1',
         'cell': 'Cell 1',
-        'reservationStartDate': '2023-09-03 15:00:00',
-        'reservationEndDate': '2023-09-03 16:00:00',
+        'reservationStartDate': FieldValue.serverTimestamp(),
+        'reservationEndDate': FieldValue.serverTimestamp(),
         'reservationDuration': 2,
         'id': '1',
       });
@@ -38,8 +39,8 @@ void main() {
       await collectionReference.add({
         'locker': 'Locker 2',
         'cell': 'Cell 2',
-        'reservationStartDate': '2023-09-03 15:00:00',
-        'reservationEndDate': '2023-09-03 16:00:00',
+        'reservationStartDate': FieldValue.serverTimestamp(),
+        'reservationEndDate': FieldValue.serverTimestamp(),
         'reservationDuration': 3,
         'id': '2',
       });
