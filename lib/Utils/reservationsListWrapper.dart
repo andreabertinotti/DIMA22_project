@@ -33,11 +33,6 @@ class _ReservationsListWrapperState extends State<ReservationsListWrapper> {
                   return Center(
                     child: Text("Error loading data."),
                   );
-                } else if (snapshot.data!.isEmpty) {
-                  return Center(
-                    child: Text("No booking found!",
-                        style: TextStyle(fontSize: 20)),
-                  );
                 } else {
                   return MediaQuery.of(context).size.width < 500
                       ? BookingsPage(snapshot.data!, uid: user!.uid)

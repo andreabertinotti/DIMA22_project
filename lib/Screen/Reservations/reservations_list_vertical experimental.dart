@@ -99,52 +99,60 @@ class _BookingsPageState extends State<BookingsPage> {
             ),
           ],
         ),
-        body: ListView.builder(
-          itemCount: widget.snapshot.length,
-          itemBuilder: (context, index) {
-            final String locker = widget.snapshot[index]['locker'];
-            final String cell = widget.snapshot[index]['cell'];
-            final DateTime dropOff =
-                widget.snapshot[index]['reservationStartDate'].toDate();
-            final DateTime pickUp =
-                widget.snapshot[index]['reservationEndDate'].toDate();
-            final String price = widget.snapshot[index]['reservationPrice'];
-            final int duration = widget.snapshot[index]['reservationDuration'];
-            final String reservationId = widget.snapshot[index]['id'];
+        body: widget.snapshot.isEmpty
+            ? Center(
+                child:
+                    Text("No booking found!", style: TextStyle(fontSize: 20)),
+              )
+            : ListView.builder(
+                itemCount: widget.snapshot.length,
+                itemBuilder: (context, index) {
+                  final String locker = widget.snapshot[index]['locker'];
+                  final String cell = widget.snapshot[index]['cell'];
+                  final DateTime dropOff =
+                      widget.snapshot[index]['reservationStartDate'].toDate();
+                  final DateTime pickUp =
+                      widget.snapshot[index]['reservationEndDate'].toDate();
+                  final String price =
+                      widget.snapshot[index]['reservationPrice'];
+                  final int duration =
+                      widget.snapshot[index]['reservationDuration'];
+                  final String reservationId = widget.snapshot[index]['id'];
 
-            // Create a CustomListItem using the data retrieved from Firestore
-            return ExpansionTile(
-              title: Text("Reservation @ $locker",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-              subtitle: Text(
-                "from ${DateFormat('dd/MM/yyyy').format(dropOff)}",
-                style: TextStyle(fontSize: 18),
+                  // Create a CustomListItem using the data retrieved from Firestore
+                  return ExpansionTile(
+                    title: Text("Reservation @ $locker",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20)),
+                    subtitle: Text(
+                      "from ${DateFormat('dd/MM/yyyy').format(dropOff)}",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    textColor: Colors.orange,
+                    iconColor: Colors.orange,
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.orange,
+                      child: Text(
+                        "${index + 1}",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                    children: <Widget>[
+                      ReservationTileVertical(
+                        dropOff: dropOff,
+                        pickUp: pickUp,
+                        duration: duration,
+                        cell: cell,
+                        locker: locker,
+                        reservationId: reservationId,
+                        price: price,
+                        onDelete: () => _deleteReservation(reservationId,
+                            locker, cell), // Pass a callback to delete
+                      )
+                    ],
+                  );
+                },
               ),
-              textColor: Colors.orange,
-              iconColor: Colors.orange,
-              leading: CircleAvatar(
-                backgroundColor: Colors.orange,
-                child: Text(
-                  "${index + 1}",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-              ),
-              children: <Widget>[
-                ReservationTileVertical(
-                  dropOff: dropOff,
-                  pickUp: pickUp,
-                  duration: duration,
-                  cell: cell,
-                  locker: locker,
-                  reservationId: reservationId,
-                  price: price,
-                  onDelete: () => _deleteReservation(
-                      reservationId, locker, cell), // Pass a callback to delete
-                )
-              ],
-            );
-          },
-        ),
       ),
     );
   }

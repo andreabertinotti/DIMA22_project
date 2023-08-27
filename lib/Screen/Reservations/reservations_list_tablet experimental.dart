@@ -115,80 +115,91 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                       style: TextStyle(color: Colors.white, fontSize: 17))),
             ],
           ),
-          body: Row(
-            children: [
-              Expanded(
-                flex: 4,
-                child: ListView.builder(
-                  itemCount: widget.snapshot.length,
-                  itemBuilder: (context, index) {
-                    final String locker = widget.snapshot[index]['locker'];
-                    final String cell = widget.snapshot[index]['cell'];
-                    final DateTime dropOff =
-                        widget.snapshot[index]['reservationStartDate'].toDate();
-                    final DateTime pickUp =
-                        widget.snapshot[index]['reservationEndDate'].toDate();
-                    final String price =
-                        widget.snapshot[index]['reservationPrice'];
-                    final int duration =
-                        widget.snapshot[index]['reservationDuration'];
-                    final String reservationId = widget.snapshot[index]['id'];
+          body: widget.snapshot.isEmpty
+              ? Center(
+                  child:
+                      Text("No booking found!", style: TextStyle(fontSize: 20)),
+                )
+              : Row(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: ListView.builder(
+                        itemCount: widget.snapshot.length,
+                        itemBuilder: (context, index) {
+                          final String locker =
+                              widget.snapshot[index]['locker'];
+                          final String cell = widget.snapshot[index]['cell'];
+                          final DateTime dropOff = widget.snapshot[index]
+                                  ['reservationStartDate']
+                              .toDate();
+                          final DateTime pickUp = widget.snapshot[index]
+                                  ['reservationEndDate']
+                              .toDate();
+                          final String price =
+                              widget.snapshot[index]['reservationPrice'];
+                          final int duration =
+                              widget.snapshot[index]['reservationDuration'];
+                          final String reservationId =
+                              widget.snapshot[index]['id'];
 
-                    // Create a CustomListItem using the data retrieved from Firestore
-                    return ListTile(
-                      title: Text("Reservation @ locker $locker",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20)),
-                      subtitle: Text(
-                        "from ${DateFormat('dd/MM/yyyy').format(dropOff)}",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.orange,
-                        child: Text(
-                          "${index + 1}",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      ),
-                      onTap: () {
-                        setState(() {
-                          selectedLocker = locker;
-                          selectedCell = cell;
-                          selectedDropOff = dropOff;
-                          selectedPickUp = pickUp;
-                          selectedDuration = duration;
-                          selectedReservationId = reservationId;
-                          selectedPrice = price;
-                          _tapped = true;
-                        });
-                      },
-                    );
-                  },
-                ),
-              ),
-              Expanded(
-                  flex: 6,
-                  child: Container(
-                      decoration: BoxDecoration(color: Colors.orange[100]),
-                      child: _tapped == false
-                          ? Center(
+                          // Create a CustomListItem using the data retrieved from Firestore
+                          return ListTile(
+                            title: Text("Reservation @ locker $locker",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20)),
+                            subtitle: Text(
+                              "from ${DateFormat('dd/MM/yyyy').format(dropOff)}",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.orange,
                               child: Text(
-                                  "Please tap on a reservation to show details"), //TODO: display app logo instead of text
-                            )
-                          : ReservationTileHorizontal(
-                              dropOff: selectedDropOff,
-                              pickUp: selectedPickUp,
-                              locker: selectedLocker,
-                              cell: selectedCell,
-                              duration: selectedDuration,
-                              reservationId: selectedReservationId,
-                              onDelete: () => _deleteReservation(
-                                  selectedReservationId,
-                                  selectedLocker,
-                                  selectedCell),
-                              price: selectedPrice)))
-            ],
-          )),
+                                "${index + 1}",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selectedLocker = locker;
+                                selectedCell = cell;
+                                selectedDropOff = dropOff;
+                                selectedPickUp = pickUp;
+                                selectedDuration = duration;
+                                selectedReservationId = reservationId;
+                                selectedPrice = price;
+                                _tapped = true;
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                    Expanded(
+                        flex: 6,
+                        child: Container(
+                            decoration:
+                                BoxDecoration(color: Colors.orange[100]),
+                            child: _tapped == false
+                                ? Center(
+                                    child: Text(
+                                        "Please tap on a reservation to show details"), //TODO: display app logo instead of text
+                                  )
+                                : ReservationTileHorizontal(
+                                    dropOff: selectedDropOff,
+                                    pickUp: selectedPickUp,
+                                    locker: selectedLocker,
+                                    cell: selectedCell,
+                                    duration: selectedDuration,
+                                    reservationId: selectedReservationId,
+                                    onDelete: () => _deleteReservation(
+                                        selectedReservationId,
+                                        selectedLocker,
+                                        selectedCell),
+                                    price: selectedPrice)))
+                  ],
+                )),
     );
   }
 }
