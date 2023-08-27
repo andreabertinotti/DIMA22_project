@@ -134,7 +134,7 @@ class LoginScreen extends StatelessWidget {
                                         "The provided email and password do not match any existing account."),
                                     actions: <Widget>[
                                       TextButton(
-                                        child: Text("OK"),
+                                        child: Text("OK", style: TextStyle(color: Colors.orange),),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
@@ -156,7 +156,7 @@ class LoginScreen extends StatelessWidget {
                                       "The provided email and password do not match any existing account."),
                                   actions: <Widget>[
                                     TextButton(
-                                      child: Text("OK"),
+                                      child: Text("OK", style: TextStyle(color: Colors.orange),),
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
@@ -166,6 +166,26 @@ class LoginScreen extends StatelessWidget {
                               },
                             );
                           }
+                        }
+                        else{
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Login Error"),
+                                content: Text(
+                                    "Please check the inserted values for email and password"),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text("OK", style: TextStyle(color: Colors.orange),),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
                       },
                       style: ButtonStyle(

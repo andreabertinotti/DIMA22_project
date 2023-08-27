@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:pro/Screen/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +60,7 @@ class Register extends StatelessWidget {
                             ? MediaQuery.of(context).size.width * 0.4 
                             : MediaQuery.of(context).size.width * 0.75,
                           child: TextFormField(
-                            //validator: (value) => EmailFieldValidator.validate(value!),
+                            validator: (value) => EmailFieldValidator.validate(value!),
                             controller: emailController,
                             cursorColor: Colors.orange,
                             decoration: const InputDecoration(
@@ -77,7 +77,7 @@ class Register extends StatelessWidget {
                             ? MediaQuery.of(context).size.width * 0.4 
                             : MediaQuery.of(context).size.width * 0.75,
                           child: TextFormField(
-                            //validator: (value) => PasswordFieldValidator.validate(value!),
+                            validator: (value) => PasswordFieldValidator.validate(value!),
                             obscureText: true,
                             cursorColor: Colors.orange,
                             controller: passwordController,
@@ -110,6 +110,26 @@ class Register extends StatelessWidget {
                                         })
                                       });
                               Navigator.pop(context);
+                            }
+                            else{
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Registration Error"),
+                                    content: Text(
+                                        "Please check the inserted values for email and password"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: Text("OK", style: TextStyle(color: Colors.orange),),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             }
                           },
                           style: ButtonStyle(
