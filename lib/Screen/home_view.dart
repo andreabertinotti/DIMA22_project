@@ -68,6 +68,22 @@ class _HomeViewState extends State<HomeView> {
               color: Colors.white,
             ),
           ),
+          actions: [
+            TextButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              Wrapper(widget: MenuWrapper())));
+                },
+                icon: Icon(
+                  Icons.question_mark,
+                  color: Colors.white,
+                ),
+                label: Text("",
+                    style: TextStyle(color: Colors.white, fontSize: 17))),
+          ],
         ),
         drawer: Drawer(
           child: Wrapper(widget: MenuWrapper()),

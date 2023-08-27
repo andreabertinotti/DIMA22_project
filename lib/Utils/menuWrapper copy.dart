@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pro/Screen/login_screen.dart';
 
-import '../Screen/menu copy.dart';
+import '../Screen/info_screen.dart';
 
 class MenuWrapper extends StatefulWidget {
   const MenuWrapper({Key? key}) : super(key: key);

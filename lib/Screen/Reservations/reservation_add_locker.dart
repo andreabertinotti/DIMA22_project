@@ -659,46 +659,6 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                         List<String> reservedSlots = generateReservedSlots(
                             dropoff, dropoffTime.hour, duration);
 
-                        // Add data to Firestore when all validations pass
-                        // Create a reference to the parent reservation document
-
-                        // add reservation document to user's reservations
-
-                        //DocumentReference reservationRef = await FirebaseFirestore
-                        //    .instance
-                        //    .collection('users')
-                        //    .doc(widget.uid)
-                        //    .collection('reservations')
-                        //    .add({
-                        //  'userUid': widget.uid,
-                        //  'locker': lockerName,
-                        //  'cell': selectedCell,
-                        //  'baggageSize': baggageSize,
-                        //  'reservationStartDate': dropoff,
-                        //  'reservationEndDate': pickup,
-                        //  'reservationDuration': duration,
-                        //});
-//
-                        //// Add bookedSlot document to the correspondent locker and cell
-                        //DocumentReference lockerRef = await FirebaseFirestore
-                        //    .instance
-                        //    .collection('lockers')
-                        //    .doc(lockerName)
-                        //    .collection('cells')
-                        //    .doc(selectedCell);
-//
-                        //for (String slot in reservedSlots) {
-                        //  await lockerRef
-                        //      .collection('bookedSlots')
-                        //      .doc(slot)
-                        //      .set({
-                        //    'locker': lockerName,
-                        //    'cell': selectedCell,
-                        //    'timeSlot': slot,
-                        //    'linkedReservation': reservationRef.id,
-                        //  });
-                        //}
-
                         await FirebaseFirestore.instance
                             .runTransaction((transaction) async {
                           // Create the reservation document
