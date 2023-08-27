@@ -76,7 +76,9 @@ class LoginScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.75,
+                      width: MediaQuery.of(context).size.width > 500 
+                        ? MediaQuery.of(context).size.width * 0.4 
+                        : MediaQuery.of(context).size.width * 0.75,
                       child: TextFormField(
                         cursorColor: Colors.orange,
                         validator: (value) =>
@@ -92,7 +94,9 @@ class LoginScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.75,
+                      width: MediaQuery.of(context).size.width > 500 
+                        ? MediaQuery.of(context).size.width * 0.4 
+                        : MediaQuery.of(context).size.width * 0.75,
                       child: TextFormField(
                         obscureText: true,
                         cursorColor: Colors.orange,
@@ -108,7 +112,9 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Container(
                     padding: EdgeInsets.only(bottom: 5),
-                    width: MediaQuery.of(context).size.width * 0.45,
+                    width: MediaQuery.of(context).size.width > 500 
+                        ? MediaQuery.of(context).size.width * 0.2 
+                        : MediaQuery.of(context).size.width * 0.45,
                     child: ElevatedButton(
                       onPressed: () async {
                         if (formGlobalKey.currentState!.validate()) {
