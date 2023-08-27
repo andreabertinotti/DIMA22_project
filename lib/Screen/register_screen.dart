@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:pro/Screen/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,18 +7,39 @@ import '../Services/auth_service.dart';
 
 final formGlobalKey = GlobalKey<FormState>();
 
-class Register extends StatelessWidget {
+class EmailFieldValidator {
+  static String? validate(String value) {
+    return (value.isEmpty ||
+            !RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                .hasMatch(value))
+        ? 'Invalid Email'
+        : null;
+  }
+}
+
+class PasswordFieldValidator {
+  static String? validate(String value) {
+    return (value.isEmpty || value.length < 6)
+        ? 'Password can\'t be empty or shorter than 6 characters'
+        : null;
+  }
+}
+
+class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
+
+  @override
+  _RegisterState createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    //AuthService? authService = null;
-    //if (!Platform.environment.containsKey('FLUTTER_TEST')) {
-    //  authService = Provider.of<AuthService>(context);
-    //}
 
     return Scaffold(
         appBar: AppBar(
