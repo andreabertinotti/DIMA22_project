@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_final_fields, library_private_types_in_public_api
+//import 'dart:js_util';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 
@@ -20,13 +22,11 @@ class _AddProfileState extends State<AddProfile> {
   TextEditingController surnameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
   bool isLoading = false; //If application is still loading content
   bool _nameValid = true;
   bool _surnameValid = true; //checks for profile fields inserted
   bool _numberValid = true;
   bool _addressValid = true;
-  bool _emailValid = true;
 
   @override
   void initState() {
@@ -38,11 +38,10 @@ class _AddProfileState extends State<AddProfile> {
     setState(() {
       isLoading = true; //page starts loading content
     });
-    nameController.text = 'Mario';
-    surnameController.text = 'Rossi';
-    phoneController.text = '1234567890';
-    addressController.text = 'Kings street 104, London, UK';
-    emailController.text = 'email';
+    nameController.text = '';
+    surnameController.text = '';
+    phoneController.text = '';
+    addressController.text = '';
     setState(() {
       isLoading = false; //Page ends loading content
     });
@@ -53,15 +52,17 @@ class _AddProfileState extends State<AddProfile> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const Padding(
-            padding: EdgeInsets.only(top: 12.0),
+            padding: EdgeInsets.only(top: 0.0),
             child: Text(
               "Name",
               style: TextStyle(color: Colors.grey),
             )),
         TextField(
           controller: nameController,
+          cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Insert your name",
+            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
             errorText: _nameValid ? null : "Missing name",
           ),
         )
@@ -81,8 +82,10 @@ class _AddProfileState extends State<AddProfile> {
             )),
         TextField(
           controller: surnameController,
+          cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Insert your surname",
+            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
             errorText: _surnameValid ? null : "Missing surname",
           ),
         )
@@ -102,8 +105,10 @@ class _AddProfileState extends State<AddProfile> {
             )),
         TextField(
           controller: phoneController,
+          cursorColor: Colors.orange,
           decoration: InputDecoration(
-            hintText: "Insert your phone number",
+            hintText: "Update phone number",
+            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
             errorText: _numberValid ? null : "Wrong number format",
           ),
         )
@@ -123,8 +128,10 @@ class _AddProfileState extends State<AddProfile> {
             )),
         TextField(
           controller: addressController,
+          cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Insert your address",
+            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
             errorText: _addressValid ? null : "Wrong address format",
           ),
         )
@@ -158,14 +165,14 @@ class _AddProfileState extends State<AddProfile> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Data Updated'),
+            title: Text('Data Updated', style: TextStyle(color: Colors.orange),),
             content: Text('Your profile has been succesfully completed!'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.orange),),
               ),
             ],
           );
@@ -177,14 +184,14 @@ class _AddProfileState extends State<AddProfile> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Error'),
+            title: Text('Error', style: TextStyle(color: Colors.orange),),
             content: Text('An error occurred while updating your data.'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.orange),),
               ),
             ],
           );
@@ -212,17 +219,28 @@ class _AddProfileState extends State<AddProfile> {
               : ListView(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(
-                        top: 25,
-                        bottom: 8,
-                      ),
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundColor: Colors.orange,
+                      padding: EdgeInsets.only(top: 25, bottom: 8),
+                      child: Container(
+                        width: 120,
+                        height: 120,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/circleAppLogo.png'),
+                            fit: BoxFit.contain
+                          )
+                        ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(20),
+                      padding: MediaQuery.of(context).size.width > 600
+                          ? EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width * 0.2,
+                              right: MediaQuery.of(context).size.width * 0.2,
+                              top: 0,
+                              bottom: 20)
+                          : EdgeInsets.only(
+                              left: 25, right: 25, top: 20, bottom: 20),
                       child: Column(
                         children: [
                           buildNameField(), //Insert all the fields through methods defined above
@@ -241,48 +259,47 @@ class _AddProfileState extends State<AddProfile> {
                             onPressed: () {
                               setState(() {
                                 //Check all fields' correctness before saving
-                                nameController.text.isEmpty
+                                nameController.text.length < 2
                                     ? _nameValid = false
                                     : _nameValid = true;
-                                surnameController.text.isEmpty
+                                surnameController.text.length < 2
                                     ? _surnameValid = false
                                     : _surnameValid = true;
-                                phoneController.text.length < 9 ||
-                                        phoneController.text.length > 11
-                                    ? _numberValid = false
-                                    : _numberValid = true;
-                                //check address correctness
-                                addressController.text.contains(',')
-                                    ? _addressValid = true
-                                    : _addressValid = false;
-                                //email validator package to be implemented
+                                //Check phone number correctness through regular expression
+                                RegExp(r'^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$').hasMatch(phoneController.text)
+                                    ? _numberValid = true
+                                    : _numberValid = false;
+                                addressController.text.length < 3 || addressController.text.length > 69
+                                  ? _addressValid = false
+                                  : _addressValid = true;                                    
                               });
 
                               //If all fields are correct, update the values in the db
                               if (_nameValid &&
                                   _surnameValid &&
                                   _numberValid &&
-                                  _addressValid &&
-                                  _emailValid) {
+                                  _addressValid) {
                                 updateData(context);
-
-                                SnackBar editSnackbar = SnackBar(
-                                  content:
-                                      Text("Profile completed successfully!"),
-                                  backgroundColor: Colors.green,
+                              } 
+                              else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("Error!", style: TextStyle(color: Colors.orange),),
+                                      content: Text(
+                                          "Please check the inserted values!"),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text("OK", style: TextStyle(color: Colors.orange),),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 );
-                                //Display a snackbar when content is saved
-                                _scaffoldMessengerKey.currentState
-                                    ?.showSnackBar(editSnackbar);
-                              } else {
-                                SnackBar editSnackbar = SnackBar(
-                                  content:
-                                      Text("Please, check the inserted data"),
-                                  backgroundColor: Colors.red,
-                                );
-                                //If there are wrong fields, display a snackbar with an error message
-                                _scaffoldMessengerKey.currentState
-                                    ?.showSnackBar(editSnackbar);
                               }
                             },
                             style: ButtonStyle(
