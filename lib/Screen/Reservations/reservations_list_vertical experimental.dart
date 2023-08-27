@@ -7,8 +7,6 @@ import 'package:pro/Screen/Reservations/reservation_tile_vertical.dart';
 import 'package:pro/Screen/Reservations/reservations_history.dart';
 import 'package:pro/Screen/Reservations/reservation_add.dart';
 
-import '../../Services/database_service.dart';
-
 // A stateful widget representing the bookings page.
 class BookingsPage extends StatefulWidget {
   const BookingsPage(this.snapshot, {super.key, required this.uid});
