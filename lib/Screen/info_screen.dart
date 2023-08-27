@@ -36,6 +36,7 @@ class _MenuState extends State<Menu> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange[800],
+        foregroundColor: Colors.white,
         title: const Text(
           'Info & Terms and Conditions',
           style: TextStyle(
