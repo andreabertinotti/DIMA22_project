@@ -1,18 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:pro/Screen/Reservations/reservations_list_vertical%20experimental.dart';
+import 'package:pro/Screen/Reservations/reservations_list_tablet%20experimental.dart';
 
 void main() {
-  testWidgets('BookingsPage displays reservations',
-      (WidgetTester tester) async {
-    // Create a fake instance of Cloud Firestore
+  testWidgets('Test TabletBookingsPage widget', (WidgetTester tester) async {
     final fakeFirestore = FakeFirebaseFirestore();
     dynamic start = Timestamp.fromDate(DateTime.now());
     dynamic end = Timestamp.fromDate(DateTime.now().add(Duration(hours: 3)));
-    // Prepare some sample reservation data
+    // Add fake data to the Firestore instance
     final List<Map<String, dynamic>> sampleReservations = [
       {
         'id': 'reservation1',
@@ -39,24 +37,39 @@ void main() {
     // Build the widget and pass the fake snapshot
     await tester.pumpWidget(
       MaterialApp(
-        home: BookingsPage(sampleReservations, uid: 'user_id'),
+        home: TabletBookingsPage(sampleReservations, uid: 'user_id'),
       ),
     );
 
-    // Expect to find the reservation information in the UI
-    expect(find.text('Reservation @ Leonardo'), findsOneWidget);
+    // Verify if the "My Reservations" title is displayed
+    expect(find.text('My Reservations'), findsOneWidget);
     expect(find.text('from ${DateFormat('dd/MM/yyyy').format(start.toDate())}'),
         findsOneWidget);
     expect(find.text('Reservation deleted successfully'), findsNothing);
 
-    // Tap on the delete button
-    //await tester.tap(find.byIcon(Icons.delete));
-    //await tester.pump();
+    // Simulate tapping on the reservation
+    //await tester.tap(find.text('Reservation @ locker Leonardo'));
+    //await tester.pumpAndSettle();
 //
-    //// Expect to see the success snackbar after deleting
+    //// Verify if the reservation details are displayed
+    //expect(
+    //    find.text(
+    //        'Drop-off: ${DateFormat('dd/MM/yyyy HH:mm').format(start.toDate())}'),
+    //    findsOneWidget);
+    //expect(
+    //    find.text(
+    //        'Pick-up: ${DateFormat('dd/MM/yyyy HH:mm').format(end.toDate())}'),
+    //    findsOneWidget);
+    //expect(find.text('Cell: Cell 0 (large)'), findsOneWidget);
+    //expect(find.text('Duration: 2 hours'), findsOneWidget);
+
+    // Simulate tapping the delete button
+    //await tester.tap(find.text('Delete booking'));
+    //await tester.pumpAndSettle();
+//
+    //// Verify if the success message is displayed after deleting
     //expect(find.text('Reservation deleted successfully'), findsOneWidget);
   });
 }
 
-
-// flutter test test/WidgetTests/reservationsListTest/reservations_list_vertical_test.dart
+// flutter test test/WidgetTests/reservationsListTest/reservations_list_horizontal_test.dart
