@@ -129,7 +129,7 @@ class LoginScreen extends StatelessWidget {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text("Authentication Error"),
+                                    title: Text("Authentication Error", style: TextStyle(color: Colors.orange),),
                                     content: Text(
                                         "The provided email and password do not match any existing account."),
                                     actions: <Widget>[
@@ -151,7 +151,7 @@ class LoginScreen extends StatelessWidget {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text("Authentication Error"),
+                                  title: Text("Authentication Error", style: TextStyle(color: Colors.orange),),
                                   content: Text(
                                       "The provided email and password do not match any existing account."),
                                   actions: <Widget>[
@@ -172,7 +172,7 @@ class LoginScreen extends StatelessWidget {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text("Login Error"),
+                                title: Text("Login Error", style: TextStyle(color: Colors.orange),),
                                 content: Text(
                                     "Please check the inserted values for email and password"),
                                 actions: <Widget>[
