@@ -26,10 +26,10 @@ class _MenuState extends State<Menu> {
     return await rootBundle.loadString('assets/texts/service_rules.txt');
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
