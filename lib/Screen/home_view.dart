@@ -85,9 +85,9 @@ class _HomeViewState extends State<HomeView> {
                     style: TextStyle(color: Colors.white, fontSize: 17))),
           ],
         ),
-        drawer: Drawer(
-          child: Wrapper(widget: MenuWrapper()),
-        ),
+        //drawer: Drawer(
+        // child: Wrapper(widget: MenuWrapper()),
+        // ),
         body: SafeArea(
           child: StreamBuilder(
             stream:
