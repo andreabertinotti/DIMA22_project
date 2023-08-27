@@ -16,12 +16,6 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  // Method to get the current user UID
-  //String? getCurrentUserUid() {
-  //  final user = FirebaseAuth.instance.currentUser;
-  //  return user?.uid;
-  //}
-
   TextEditingController descriptionController = TextEditingController();
 
   Future<String> loadRulesText() async {
