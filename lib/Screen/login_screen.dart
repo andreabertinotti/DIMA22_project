@@ -76,7 +76,9 @@ class LoginScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.75,
+                      width: MediaQuery.of(context).size.width > 500 
+                        ? MediaQuery.of(context).size.width * 0.4 
+                        : MediaQuery.of(context).size.width * 0.75,
                       child: TextFormField(
                         cursorColor: Colors.orange,
                         validator: (value) =>
@@ -92,7 +94,9 @@ class LoginScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.75,
+                      width: MediaQuery.of(context).size.width > 500 
+                        ? MediaQuery.of(context).size.width * 0.4 
+                        : MediaQuery.of(context).size.width * 0.75,
                       child: TextFormField(
                         obscureText: true,
                         cursorColor: Colors.orange,
@@ -108,7 +112,9 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Container(
                     padding: EdgeInsets.only(bottom: 5),
-                    width: MediaQuery.of(context).size.width * 0.45,
+                    width: MediaQuery.of(context).size.width > 500 
+                        ? MediaQuery.of(context).size.width * 0.2 
+                        : MediaQuery.of(context).size.width * 0.45,
                     child: ElevatedButton(
                       onPressed: () async {
                         if (formGlobalKey.currentState!.validate()) {
@@ -128,7 +134,7 @@ class LoginScreen extends StatelessWidget {
                                         "The provided email and password do not match any existing account."),
                                     actions: <Widget>[
                                       TextButton(
-                                        child: Text("OK"),
+                                        child: Text("OK", style: TextStyle(color: Colors.orange),),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
@@ -150,7 +156,7 @@ class LoginScreen extends StatelessWidget {
                                       "The provided email and password do not match any existing account."),
                                   actions: <Widget>[
                                     TextButton(
-                                      child: Text("OK"),
+                                      child: Text("OK", style: TextStyle(color: Colors.orange),),
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
@@ -160,6 +166,26 @@ class LoginScreen extends StatelessWidget {
                               },
                             );
                           }
+                        }
+                        else{
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Login Error"),
+                                content: Text(
+                                    "Please check the inserted values for email and password"),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text("OK", style: TextStyle(color: Colors.orange),),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
                       },
                       style: ButtonStyle(
