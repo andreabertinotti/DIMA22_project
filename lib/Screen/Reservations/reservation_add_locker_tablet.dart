@@ -598,6 +598,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.orange,
+            foregroundColor: Colors.white,
             title: const Text(
               'Add a new reservation',
               style: TextStyle(

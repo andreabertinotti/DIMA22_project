@@ -523,6 +523,7 @@ class _EditBookingState extends State<EditBooking> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.orange,
+            foregroundColor: Colors.white,
             title: const Text(
               'Add a new reservation',
               style: TextStyle(
