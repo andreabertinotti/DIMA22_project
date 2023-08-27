@@ -326,9 +326,9 @@ class _EditProfileState extends State<EditProfile> {
                                 RegExp(r'^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$').hasMatch(phoneController.text)
                                     ? _numberValid = true
                                     : _numberValid = false;
-                                addressController.text.length <= 70
-                                    ? _addressValid = true
-                                    : _addressValid = false;
+                                addressController.text.length < 3 || addressController.text.length > 69
+                                    ? _addressValid = false
+                                    : _addressValid = true;
                               });
 
                               //If all fields are correct, update the values in the db
