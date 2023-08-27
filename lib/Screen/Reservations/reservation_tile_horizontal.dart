@@ -49,12 +49,13 @@ class ReservationTileHorizontal extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
+        Flexible(
+          child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
                     padding: EdgeInsets.fromLTRB(
                         MediaQuery.of(context).size.width * 0.075,
                         MediaQuery.of(context).size.width * 0.025,
@@ -63,58 +64,72 @@ class ReservationTileHorizontal extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Drop-off: ${DateFormat('dd/MM/yyyy, HH:mm').format(dropOff)}",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600),
+                        Flexible(
+                          child: Text(
+                            "Drop-off: ${DateFormat('dd/MM/yyyy, HH:mm').format(dropOff)}",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
                         ),
-                        Text(
-                          "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(pickUp)}",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600),
-                        )
-                      ],
-                    )),
-                Padding(
-                    padding: EdgeInsets.fromLTRB(
-                        MediaQuery.of(context).size.width * 0.075,
-                        MediaQuery.of(context).size.width * 0.01,
-                        MediaQuery.of(context).size.width * 0.075,
-                        0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Duration: $duration hours",
+                        Flexible(
+                          child: Text(
+                            "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(pickUp)}",
                             style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            )),
-                        Text("Cell: $cell",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            )),
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
+                        ),
                       ],
-                    )),
-                Padding(
-                    padding: EdgeInsets.fromLTRB(
-                        MediaQuery.of(context).size.width * 0.075,
-                        MediaQuery.of(context).size.width * 0.01,
-                        MediaQuery.of(context).size.width * 0.075,
-                        0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Price: $price",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.orange[700])),
-                      ],
-                    )),
-              ],
-            )),
-        Padding(
+                    ),
+                  ),
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          MediaQuery.of(context).size.width * 0.075,
+                          MediaQuery.of(context).size.width * 0.01,
+                          MediaQuery.of(context).size.width * 0.075,
+                          0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text("Duration: $duration hours",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
+                                )),
+                          ),
+                          Flexible(
+                            child: Text("Cell: $cell",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
+                                )),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          MediaQuery.of(context).size.width * 0.075,
+                          MediaQuery.of(context).size.width * 0.01,
+                          MediaQuery.of(context).size.width * 0.075,
+                          0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Price: $price",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.orange[700])),
+                        ],
+                      )),
+                ],
+              )),
+        ),
+        Flexible(
+            child: Padding(
           padding:
               EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
           child: ElevatedButton.icon(
@@ -133,7 +148,7 @@ class ReservationTileHorizontal extends StatelessWidget {
               style: TextStyle(fontSize: 18, color: Colors.white),
             ),
           ),
-        )
+        )),
       ],
     );
   }
