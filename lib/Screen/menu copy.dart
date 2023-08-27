@@ -2,12 +2,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import '../Services/auth_service.dart';
 
 class Menu extends StatefulWidget {
-  const Menu(this.document, this.uid, this.authService, {super.key});
+  const Menu(this.document, this.uid, {super.key});
   final dynamic document;
   final dynamic uid;
-  final dynamic authService;
 
   @override
   _MenuState createState() => _MenuState();
@@ -33,7 +35,7 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-    //final authService = Provider.of<AuthService>(context);
+    final authService = Provider.of<AuthService>(context);
 
     var userData = widget.document;
 
@@ -234,7 +236,7 @@ class _MenuState extends State<Menu> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          widget.authService.signOut(); // Handle "Logout" button press
+          authService.signOut(); // Handle "Logout" button press
         },
         backgroundColor: Colors.orange[900],
         child: Icon(

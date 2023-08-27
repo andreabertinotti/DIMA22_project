@@ -10,6 +10,7 @@ import '../Utils/bookingLockerWrapper.dart';
 import '../Utils/custom_dialog_box.dart';
 import '../Utils/image_view.dart';
 import '../Utils/menuWrapper copy.dart';
+import '../Utils/wrapper.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -69,8 +70,7 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
         drawer: Drawer(
-          //child: Wrapper(widget: Menu()),
-          child: MenuWrapper(),
+          child: Wrapper(widget: MenuWrapper()),
         ),
         body: SafeArea(
           child: StreamBuilder(

@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pro/Screen/User/add_profile_screen.dart';
+import 'package:pro/Screen/login_screen.dart';
 
 import '../Screen/User/edit_profile_screen.dart';
-import '../Screen/register_screen.dart';
 
 class EditProfileWrapper extends StatefulWidget {
   const EditProfileWrapper({Key? key}) : super(key: key);
@@ -19,7 +19,7 @@ class _EditProfileWrapperState extends State<EditProfileWrapper> {
   @override
   Widget build(BuildContext context) {
     return _user == null
-        ? Register()
+        ? LoginScreen()
         : Scaffold(
             body: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance

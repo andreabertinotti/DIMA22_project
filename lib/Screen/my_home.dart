@@ -80,7 +80,7 @@ class _MyHomeState extends State<MyHome> {
           //drawer is the menu that can be hidden on left side
           drawer: Drawer(
             //child: Wrapper(widget: Menu()),
-            child: MenuWrapper(),
+            child: Wrapper(widget: MenuWrapper()),
           ),
           body: Center(
             child: _widgetOptions.elementAt(_selectedIndex),
