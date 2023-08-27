@@ -8,7 +8,7 @@ void main() {
       (WidgetTester tester) async {
     final DateTime mockDropOff = DateTime(2023, 8, 27, 10, 0);
     final DateTime mockPickUp = DateTime(2023, 8, 27, 15, 0);
-    const String mockPrice = '5';
+    const String mockPrice = '5€';
     const String mockLocker = 'Leonardo';
     const String mockCell = 'cell 0 (small)';
     const int mockDuration = 5;
@@ -44,6 +44,9 @@ void main() {
     expect(find.text('Price: $mockPrice'), findsOneWidget);
     expect(find.text('Duration: $mockDuration hours'), findsOneWidget);
     expect(find.text('Cell: $mockCell'), findsOneWidget);
+
+    // Verify delete button is displayed correctly
+    expect(find.text('Delete booking'), findsOneWidget);
   });
 }
 
