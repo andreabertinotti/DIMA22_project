@@ -116,7 +116,7 @@ class Register extends StatelessWidget {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    title: Text("Registration Error"),
+                                    title: Text("Registration Error", style: TextStyle(color: Colors.orange),),
                                     content: Text(
                                         "Please check the inserted values for email and password"),
                                     actions: <Widget>[

@@ -84,9 +84,11 @@ class _EditProfileState extends State<EditProfile> {
             )),
         TextField(
           controller: nameController,
+          cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Update name",
-            errorText: _nameValid ? null : "Missing name",
+            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
+            errorText: _nameValid ? null : "Name is too short",
           ),
         )
       ],
@@ -105,9 +107,11 @@ class _EditProfileState extends State<EditProfile> {
             )),
         TextField(
           controller: surnameController,
+          cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Update surname",
-            errorText: _surnameValid ? null : "Missing surname",
+            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
+            errorText: _surnameValid ? null : "Surname is too short",
           ),
         )
       ],
@@ -126,8 +130,10 @@ class _EditProfileState extends State<EditProfile> {
             )),
         TextField(
           controller: phoneController,
+          cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Update phone number",
+            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
             errorText: _numberValid ? null : "Wrong number format",
           ),
         )
@@ -147,9 +153,11 @@ class _EditProfileState extends State<EditProfile> {
             )),
         TextField(
           controller: addressController,
+          cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Update address",
-            errorText: _addressValid ? null : "Wrong address format",
+            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
+            errorText: _addressValid ? null : "Address too long",
           ),
         )
       ],
@@ -199,7 +207,7 @@ class _EditProfileState extends State<EditProfile> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Data Updated'),
+            title: Text('Data Updated', style: TextStyle(color: Colors.orange),),
             content: Text('Your profile has been updated!'),
             actions: [
               TextButton(
@@ -209,7 +217,7 @@ class _EditProfileState extends State<EditProfile> {
                   //Navigator.pushReplacement(context,
                   //  MaterialPageRoute(builder: (context) => MyHome()));
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.orange),),
               ),
             ],
           );
@@ -221,14 +229,14 @@ class _EditProfileState extends State<EditProfile> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Error'),
+            title: Text('Error', style: TextStyle(color: Colors.orange),),
             content: Text('An error occurred while updating your data.'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.orange),),
               ),
             ],
           );
@@ -293,9 +301,9 @@ class _EditProfileState extends State<EditProfile> {
                         children: [
                           buildNameField(), //Insert all the fields through methods defined above
                           buildSurnameField(),
+                          buildAddressField(),
                           buildNumberField(),
                           //buildEmailField(),
-                          buildAddressField(),
                         ],
                       ),
                     ),
@@ -308,21 +316,19 @@ class _EditProfileState extends State<EditProfile> {
                             onPressed: () {
                               setState(() {
                                 //Check all fields' correctness before saving
-                                nameController.text.isEmpty
+                                nameController.text.length < 2 
                                     ? _nameValid = false
                                     : _nameValid = true;
-                                surnameController.text.isEmpty
+                                surnameController.text.length < 2
                                     ? _surnameValid = false
                                     : _surnameValid = true;
-                                phoneController.text.length < 9 ||
-                                        phoneController.text.length > 11
-                                    ? _numberValid = false
-                                    : _numberValid = true;
-                                //check address correctness
-                                addressController.text.contains(',')
+                                //Check phone number correctness through regular expression
+                                RegExp(r'^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$').hasMatch(phoneController.text)
+                                    ? _numberValid = true
+                                    : _numberValid = false;
+                                addressController.text.length <= 70
                                     ? _addressValid = true
                                     : _addressValid = false;
-                                //email validator package to be implemented
                               });
 
                               //If all fields are correct, update the values in the db
@@ -332,6 +338,26 @@ class _EditProfileState extends State<EditProfile> {
                                   _addressValid &&
                                   _emailValid) {
                                 updateData(context);
+                              }
+                              else{
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("Error!", style: TextStyle(color: Colors.orange),),
+                                      content: Text(
+                                          "Please check the inserted values!"),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text("OK", style: TextStyle(color: Colors.orange),),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               }
                             },
                             style: ButtonStyle(
