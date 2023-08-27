@@ -63,7 +63,7 @@ class _HomeViewState extends State<HomeView> {
           backgroundColor: Color(0xFFFF9800),
           foregroundColor: Colors.white,
           title: const Text(
-            'Milan Baggage keeper', //Change app name (?)
+            'Milan Lockers', //Change app name (?)
             style: TextStyle(
               color: Colors.white,
             ),

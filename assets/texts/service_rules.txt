@@ -1,6 +1,6 @@
-1. Milan Baggage Keeper enables users to reserve lockers in Milan for storing their belongings temporarily. Lockers can be reserved through the service, and payment can be made at the locker site using either cash or card payments.
+1. Milan Lockers enables users to reserve lockers in Milan for storing their belongings temporarily. Lockers can be reserved through the service, and payment can be made at the locker site using either cash or card payments.
 
-2. User Registration:  To use the Milan Baggage Keeper service, you must register for an account. By registering, you agree to provide accurate, complete, and current information. You are responsible for maintaining the security of your account credentials.
+2. User Registration:  To use the Milan Lockers service, you must register for an account. By registering, you agree to provide accurate, complete, and current information. You are responsible for maintaining the security of your account credentials.
 
 3. Locker Reservations:  Users can select lockers, specify reservation durations, and view pricing information. Prices are calculated based on the locker's location, dimensions, and duration of reservation.
 

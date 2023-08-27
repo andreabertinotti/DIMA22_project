@@ -34,17 +34,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
-    //AuthService? authService = null;
-    //if (!Platform.environment.containsKey('FLUTTER_TEST')) {
-    //  authService = Provider.of<AuthService>(context);
-    //}
+    //final authService = Provider.of<AuthService>(context);
+    AuthService? authService = null;
+    if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+      authService = Provider.of<AuthService>(context);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -68,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         Text(
-          "Welcome to Milan Locker!",
+          "Welcome to Milan Lockers!",
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
         ),
         Padding(

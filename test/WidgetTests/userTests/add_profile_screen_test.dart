@@ -19,7 +19,7 @@ void main() {
     expect(find.text('Complete your profile'), findsOneWidget);
     expect(find.text('Insert your name'), findsOneWidget);
     expect(find.text('Insert your surname'), findsOneWidget);
-    expect(find.text('Insert your phone number'), findsOneWidget);
+    expect(find.text('Update phone number'), findsOneWidget);
     expect(find.text('Insert your address'), findsOneWidget);
 
     // Simulate filling in the form fields
@@ -28,8 +28,7 @@ void main() {
     await tester.enterText(
         find.widgetWithText(TextField, 'Insert your surname'), 'Rossi');
     await tester.enterText(
-        find.widgetWithText(TextField, 'Insert your phone number'),
-        '1234567890');
+        find.widgetWithText(TextField, 'Update phone number'), '1234567890');
     await tester.enterText(
         find.widgetWithText(TextField, 'Insert your address'),
         'viale Roma 12, Milano');
