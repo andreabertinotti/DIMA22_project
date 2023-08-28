@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:pro/Screen/Reservations/reservation_tile_vertical.dart';
 import 'package:pro/Screen/Reservations/reservations_history.dart';
 import 'package:pro/Screen/Reservations/reservation_add.dart';
+import 'package:pro/Utils/reservationAddWrapper.dart';
 
 // A stateful widget representing the bookings page.
 class BookingsPage extends StatefulWidget {
@@ -90,7 +91,9 @@ class _BookingsPageState extends State<BookingsPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EditBooking(uid: widget.uid)));
+                        //builder: (context) => EditBooking(uid: widget.uid)));
+                        builder: (context) =>
+                            ReservationAddWrapper(widget.uid)));
               },
               icon: Icon(
                 Icons.add,

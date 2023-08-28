@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../Screen/Reservations/reservation_add experimental.dart';
+import '../Screen/Reservations/reservation_add_tablet experimental.dart';
 
 // wrapping a widget: if user is logged in, wrapped widget will be returned, else LoginScreen() will
 
-class ReservationAddWrapper extends StatelessWidget {
-  ReservationAddWrapper(this.uid, {Key? key}) : super(key: key);
+class ReservationAddTabletWrapper extends StatelessWidget {
+  ReservationAddTabletWrapper(this.uid, {Key? key}) : super(key: key);
   String uid;
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class ReservationAddWrapper extends StatelessWidget {
           if (lockersSnapshot.hasData) {
             final lockersData = lockersSnapshot.data!;
             // Pass userData to Menu widget
-            return EditBooking(lockersData, uid: uid);
+            return AddBookingTablet(lockersData, uid: uid);
           } else {
             return const Center(
               child: Text('Error fetching user data'),
