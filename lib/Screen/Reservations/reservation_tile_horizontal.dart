@@ -12,6 +12,7 @@ class ReservationTileHorizontal extends StatelessWidget {
     required this.reservationId,
     required this.onDelete,
     required this.price,
+    required this.address,
     // required this.lockerImage
   });
 
@@ -22,6 +23,7 @@ class ReservationTileHorizontal extends StatelessWidget {
   final String cell;
   final int duration;
   final String reservationId;
+  final String address;
   final VoidCallback onDelete;
 
   // final Widget lockerImage;
@@ -110,21 +112,40 @@ class ReservationTileHorizontal extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          MediaQuery.of(context).size.width * 0.075,
-                          MediaQuery.of(context).size.width * 0.01,
-                          MediaQuery.of(context).size.width * 0.075,
-                          0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Price: $price",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.orange[700])),
-                        ],
-                      )),
+                    padding: EdgeInsets.fromLTRB(
+                        MediaQuery.of(context).size.width * 0.075,
+                        MediaQuery.of(context).size.width * 0.01,
+                        MediaQuery.of(context).size.width * 0.075,
+                        0),
+                    child: FittedBox(
+                      child: Text(
+                        "Address: $address",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        MediaQuery.of(context).size.width * 0.075,
+                        MediaQuery.of(context).size.width * 0.01,
+                        MediaQuery.of(context).size.width * 0.075,
+                        0),
+                    child: FittedBox(
+                        child: Text(
+                      "Price: $price",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orange[700],
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                  ),
                 ],
               )),
         ),

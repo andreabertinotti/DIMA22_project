@@ -28,6 +28,7 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
   int selectedDuration = 0;
   String selectedReservationId = "";
   String selectedPrice = "";
+  String selectedAddress = "";
   bool _tapped = false;
 
   void _deleteReservation(
@@ -141,6 +142,8 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                               .toDate();
                           final String price =
                               widget.snapshot[index]['reservationPrice'];
+                          final String address =
+                              widget.snapshot[index]['lockerAddress'];
                           final int duration =
                               widget.snapshot[index]['reservationDuration'];
                           final String reservationId =
@@ -172,6 +175,7 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                 selectedDuration = duration;
                                 selectedReservationId = reservationId;
                                 selectedPrice = price;
+                                selectedAddress = address;
                                 _tapped = true;
                               });
                             },
@@ -200,7 +204,9 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                         selectedReservationId,
                                         selectedLocker,
                                         selectedCell),
-                                    price: selectedPrice)))
+                                    price: selectedPrice,
+                                    address: selectedAddress,
+                                  )))
                   ],
                 )),
     );

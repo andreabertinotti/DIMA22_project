@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pro/Models/user_model.dart';
-import 'package:pro/Screen/Reservations/reservations_list_vertical.dart';
-import 'package:pro/Screen/Reservations/reservations_list_tablet.dart';
 import 'package:pro/Services/auth_service.dart';
 import 'package:pro/Utils/reservationsListWrapper.dart';
 import 'package:provider/provider.dart';
