@@ -9,7 +9,7 @@ import 'package:location/location.dart';
 import '../Utils/bookingLockerWrapper.dart';
 import '../Utils/custom_dialog_box.dart';
 import '../Utils/image_view.dart';
-import '../Utils/menuWrapper copy.dart';
+import '../Utils/info_screen_wrapper.dart';
 import '../Utils/wrapper.dart';
 
 class HomeView extends StatefulWidget {

@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../Screen/Reservations/reservation_add experimental.dart';
+import 'package:pro/Services/database_service.dart';
 import '../Screen/Reservations/reservation_add_tablet experimental.dart';
 
 // wrapping a widget: if user is logged in, wrapped widget will be returned, else LoginScreen() will
@@ -10,8 +9,8 @@ class ReservationAddTabletWrapper extends StatelessWidget {
   String uid;
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-      future: FirebaseFirestore.instance.collection('lockers').get(),
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: fetchLockers(),
       builder: (context, lockersSnapshot) {
         if (lockersSnapshot.connectionState == ConnectionState.done) {
           if (lockersSnapshot.hasData) {

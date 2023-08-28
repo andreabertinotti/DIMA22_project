@@ -102,9 +102,9 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
       value: 'Select a locker',
       child: Text('Select a locker'),
     ));
-    for (QueryDocumentSnapshot doc in widget.lockers.docs) {
-      String name = doc.get('lockerName') as String;
-      String address = doc.get('lockerAddress') as String;
+    for (dynamic doc in widget.lockers) {
+      String name = doc['lockerName'];
+      String address = doc['lockerAddress'];
       items.add(DropdownMenuItem<String>(
         value: name,
         child: Text(name),

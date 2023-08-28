@@ -55,3 +55,16 @@ Future<String> retrieveCellFare(
   String renderedFare = '$fare€';
   return renderedFare;
 }
+
+Future<List<Map<String, dynamic>>> fetchLockers() async {
+  QuerySnapshot querySnapshot =
+      await FirebaseFirestore.instance.collection('lockers').get();
+
+  List<Map<String, dynamic>> result = [];
+
+  querySnapshot.docs.forEach((DocumentSnapshot doc) {
+    result.add(doc.data() as Map<String, dynamic>);
+  });
+
+  return result;
+}
