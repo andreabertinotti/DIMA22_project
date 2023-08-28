@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
 import "../../Services/database_service.dart";
+import "../../Services/functions.dart";
 
 class EditBooking extends StatefulWidget {
   EditBooking({Key? key, required this.uid}) : super(key: key);

@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
 import "../../Services/database_service.dart";
+import "../../Services/functions.dart";
 
 class AddBookingTablet extends StatefulWidget {
   AddBookingTablet({Key? key, required this.uid}) : super(key: key);
