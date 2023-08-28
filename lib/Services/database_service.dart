@@ -55,3 +55,15 @@ Future<String> retrieveCellFare(
   String renderedFare = '$fare€';
   return renderedFare;
 }
+
+Future<String> retrieveLockerAddress(String locker) async {
+  if (locker == 'Select a locker') {
+    return '';
+  }
+  DocumentSnapshot lockerSnapshot =
+      await FirebaseFirestore.instance.collection('lockers').doc(locker).get();
+
+  String lockerAddress = lockerSnapshot['lockerAddress'];
+
+  return lockerAddress;
+}

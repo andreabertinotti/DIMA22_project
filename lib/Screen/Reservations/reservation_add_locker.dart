@@ -49,7 +49,8 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
   List occupied_cells = [];
   List available_cells = [];
 
-  String cellFare = ''; // Initialize with an empty string
+  String cellFare = '';
+  String lockerAddress = '';
 
 // Update cell fare
   void _updateCellFare() async {
@@ -58,24 +59,6 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
         serviceLockerName, selectedCell, duration, bookingAuthorized);
     setState(() {});
   }
-
-  // Future<String> retrieveCellFare(
-  //     String locker, String cell, int duration) async {
-  //   if (!bookingAuthorized) {
-  //     return '';
-  //   }
-  //   DocumentSnapshot cellSnapshot = await FirebaseFirestore.instance
-  //       .collection('lockers')
-  //       .doc(locker)
-  //       .collection('cells')
-  //       .doc(cell)
-  //       .get();
-//
-  //   double cellFare = cellSnapshot['cellFare'] as double;
-  //   String fare = (cellFare * duration).toStringAsFixed(2);
-  //   String renderedFare = '$fare€';
-  //   return renderedFare;
-  // }
 
   /*
   @override
@@ -553,6 +536,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
     serviceLockerName = widget.document['lockerName'];
     //final authService = Provider.of<AuthService>(context);
     String lockerName = widget.document['lockerName'];
+    lockerAddress = widget.document['lockerAddress'];
     return ScaffoldMessenger(
         key: _bookingKey,
         child: Scaffold(
@@ -604,13 +588,26 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 5, 20, 25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
                     children: [
-                      Text("Price to pay:",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      Text(cellFare,
-                          style: TextStyle(fontWeight: FontWeight.bold))
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Locker Address:",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(lockerAddress,
+                              style: TextStyle(fontWeight: FontWeight.w400))
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Price to pay:",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(cellFare,
+                              style: TextStyle(fontWeight: FontWeight.bold))
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -677,6 +674,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                             'reservationEndDate': pickup,
                             'reservationDuration': duration,
                             'reservationPrice': cellFare,
+                            'lockerAddress': lockerAddress,
                           };
 
                           transaction.set(reservationRef, reservationData);

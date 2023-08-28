@@ -4,9 +4,6 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
 import "package:intl/intl.dart";
-import 'package:provider/provider.dart';
-
-import "../../Services/auth_service.dart";
 import "../../Services/database_service.dart";
 
 class AddLockerBookingTablet extends StatefulWidget {
@@ -53,7 +50,8 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
   List occupied_cells = [];
   List available_cells = [];
 
-  String cellFare = ''; // Initialize with an empty string
+  String cellFare = '';
+  String lockerAddress = '';
 
 // Update cell fare
   void _updateCellFare() async {
@@ -555,6 +553,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
 
   Padding buildLockerAddressField() {
     String lockerName = widget.document['lockerName'];
+
     return Padding(
         padding: EdgeInsets.fromLTRB(
             MediaQuery.of(context).size.width * 0.03,
@@ -591,8 +590,8 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
   @override
   Widget build(BuildContext context) {
     serviceLockerName = widget.document['lockerName'];
-    //final authService = Provider.of<AuthService>(context);
     String lockerName = widget.document['lockerName'];
+    lockerAddress = widget.document['lockerAddress'];
     return ScaffoldMessenger(
       key: _bookingKey,
       child: Scaffold(
@@ -691,6 +690,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                                   'reservationEndDate': pickup,
                                   'reservationDuration': duration,
                                   'reservationPrice': cellFare,
+                                  'lockerAddress': lockerAddress,
                                 };
 
                                 transaction.set(
@@ -811,17 +811,37 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                               MediaQuery.of(context).size.width * 0.015,
                               MediaQuery.of(context).size.width * 0.035,
                               MediaQuery.of(context).size.width * 0.035),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Column(
                             children: [
-                              Text("Price to pay:",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18)),
-                              Text(cellFare,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18))
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Locker Address:",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
+                                  Flexible(
+                                      child: Text(lockerAddress,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 18)))
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Price to pay:",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
+                                  Text(cellFare,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18))
+                                ],
+                              ),
                             ],
                           ),
                         ),

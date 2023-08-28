@@ -48,11 +48,18 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
   List available_cells = [];
 
   String cellFare = '';
+  String lockerAddress = '';
 
   // Update cell fare
   void _updateCellFare() async {
     cellFare = await retrieveCellFare(
         lockerName, selectedCell, duration, bookingAuthorized);
+    setState(() {});
+  }
+
+  // Update locker address
+  void _updateLockerAddress() async {
+    lockerAddress = await retrieveLockerAddress(lockerName);
     setState(() {});
   }
 
@@ -540,44 +547,6 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
     return reservedSlots;
   }
 
-  /*
-  // Widget to build the Notification field
-  Padding buildNotificationField() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(20, 10, 20, 5),
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        SizedBox(
-          width: 180,
-          child: Text(
-            "Send notification one hour before pick-up time:",
-            maxLines: 3,
-            style: TextStyle(
-              fontSize: 15,
-            ),
-          ),
-        ),
-        Container(
-          //Space between text and checkbox
-          width: 15,
-        ),
-        Transform.scale(
-            scale: 1.5,
-            // Display checkbox to choose notification preference
-            child: Checkbox(
-              checkColor: Colors.white,
-              activeColor: Colors.orange,
-              value: isNotificationActive,
-              onChanged: (bool? value) {
-                setState(() {
-                  isNotificationActive = value!; //TODO: change value on db
-                });
-              },
-            ))
-      ]),
-    );
-  }
-  */
-
   // Widget to build the Locker Address field
   Padding buildLockerAddressField() {
     return Padding(
@@ -606,6 +575,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                   lockerName = newValue!;
                   availabilityChecked = false;
                   occupied_cells = [];
+                  _updateLockerAddress();
                 });
               },
               items: dropdownLockers,
@@ -723,6 +693,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                                     'reservationEndDate': pickup,
                                     'reservationDuration': duration,
                                     'reservationPrice': cellFare,
+                                    'lockerAddress': lockerAddress,
                                   };
 
                                   transaction.set(
@@ -845,17 +816,38 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                                 MediaQuery.of(context).size.width * 0.015,
                                 MediaQuery.of(context).size.width * 0.035,
                                 MediaQuery.of(context).size.width * 0.035),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            child: Column(
                               children: [
-                                Text("Price to pay:",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                                Text(cellFare,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18))
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Locker Address:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18)),
+                                    Flexible(
+                                      child: Text(lockerAddress,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 18)),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Price to pay:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18)),
+                                    Text(cellFare,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18))
+                                  ],
+                                ),
                               ],
                             ),
                           ),

@@ -43,12 +43,19 @@ class _EditBookingState extends State<EditBooking> {
   List occupied_cells = [];
   List available_cells = [];
 
-  String cellFare = ''; // Initialize with an empty string
+  String cellFare = '';
+  String lockerAddress = '';
 
 // Update cell fare
   void _updateCellFare() async {
     cellFare = await retrieveCellFare(
         lockerName, selectedCell, duration, bookingAuthorized);
+    setState(() {});
+  }
+
+  // Update locker address
+  void _updateLockerAddress() async {
+    lockerAddress = await retrieveLockerAddress(lockerName);
     setState(() {});
   }
 
@@ -504,6 +511,7 @@ class _EditBookingState extends State<EditBooking> {
                   lockerName = newValue!;
                   availabilityChecked = false;
                   occupied_cells = [];
+                  _updateLockerAddress();
                 });
               },
               items: dropdownLockers,
@@ -570,13 +578,26 @@ class _EditBookingState extends State<EditBooking> {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 5, 20, 25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
                     children: [
-                      Text("Price to pay:",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      Text(cellFare,
-                          style: TextStyle(fontWeight: FontWeight.bold))
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Locker Address:",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(lockerAddress,
+                              style: TextStyle(fontWeight: FontWeight.w400))
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Price to pay:",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(cellFare,
+                              style: TextStyle(fontWeight: FontWeight.bold))
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -604,14 +625,6 @@ class _EditBookingState extends State<EditBooking> {
                           ));
                           return;
                         }
-
-                        // if (baggageSize == 'Select a size') {
-                        //   // Show error message for baggage size
-                        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //     content: Text('Please select a baggage size'),
-                        //   ));
-                        //   return;
-                        // }
 
                         if (bookingAuthorized == false) {
                           // Show error message for locker name
@@ -644,6 +657,7 @@ class _EditBookingState extends State<EditBooking> {
                             'reservationEndDate': pickup,
                             'reservationDuration': duration,
                             'reservationPrice': cellFare,
+                            'lockerAddress': lockerAddress,
                           };
 
                           transaction.set(reservationRef, reservationData);
