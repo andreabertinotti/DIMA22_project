@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pro/Utils/bookingLockerWrapper_horizontalView.dart';
 import 'package:pro/Utils/custom_dialog_box.dart';
-import 'package:pro/Utils/image_view.dart';
 
 void main() {
   testWidgets('CustomDialogBox widget test', (WidgetTester tester) async {
