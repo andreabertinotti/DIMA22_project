@@ -38,11 +38,11 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
-    // AuthService? authService = null;
-    // if (!Platform.environment.containsKey('FLUTTER_TEST')) {
-    //   authService = Provider.of<AuthService>(context);
-    // }
+    //final authService = Provider.of<AuthService>(context);
+    AuthService? authService = null;
+    if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+      authService = Provider.of<AuthService>(context);
+    }
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.orange,

@@ -9,6 +9,7 @@ void main() {
     final firestore = FakeFirebaseFirestore();
     await firestore.collection('lockers').doc('Leonardo').set({
       'lockerName': 'Leonardo',
+      'lockerAddress': 'via Roma 1, Milano',
     });
     final document =
         await firestore.collection('lockers').doc('Leonardo').get();
@@ -23,6 +24,7 @@ void main() {
     expect(find.text('Fill the form'), findsOneWidget);
     expect(find.text('Select available cell:'), findsOneWidget);
     expect(find.text('Price to pay:'), findsOneWidget);
+    expect(find.text('Locker Address:'), findsOneWidget);
     expect(
         find.byType(ElevatedButton),
         findsNWidgets(
@@ -35,6 +37,7 @@ void main() {
     final firestore = FakeFirebaseFirestore();
     await firestore.collection('lockers').doc('Leonardo').set({
       'lockerName': 'Leonardo',
+      'lockerAddress': 'via Roma 1, Milano',
     });
     final document =
         await firestore.collection('lockers').doc('Leonardo').get();
@@ -68,6 +71,7 @@ void main() {
     final firestore = FakeFirebaseFirestore();
     await firestore.collection('lockers').doc('Leonardo').set({
       'lockerName': 'Leonardo',
+      'lockerAddress': 'via Roma 1, Milano',
     });
     final document =
         await firestore.collection('lockers').doc('Leonardo').get();
@@ -81,3 +85,5 @@ void main() {
     // TODO: LOGICA PER SELEZIONARE PRIMA LOCKER, DATA E ORA E POI PREMERE CHECK AVAILABILITY
   };
 }
+
+// flutter test test/WidgetTests/reservationAddTests/reservation_add_locker_test.dart
