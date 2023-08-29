@@ -20,6 +20,7 @@ void main() {
         'reservationEndDate': end,
         'reservationPrice': '3€',
         'reservationDuration': 3,
+        'lockerAddress': 'via Roma 1, Milano',
       },
       // Add more reservation entries as needed
     ];
@@ -46,6 +47,8 @@ void main() {
     expect(find.text('from ${DateFormat('dd/MM/yyyy').format(start.toDate())}'),
         findsOneWidget);
     expect(find.text('Reservation deleted successfully'), findsNothing);
+
+    expect(find.text('Reservation @ locker Leonardo'), findsOneWidget);
 
     // Simulate tapping on the reservation
     //await tester.tap(find.text('Reservation @ locker Leonardo'));

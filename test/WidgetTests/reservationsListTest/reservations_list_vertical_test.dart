@@ -22,6 +22,7 @@ void main() {
         'reservationEndDate': end,
         'reservationPrice': '3€',
         'reservationDuration': 3,
+        'lockerAddress': 'via Roma 1, Milano',
       },
       // Add more reservation entries as needed
     ];

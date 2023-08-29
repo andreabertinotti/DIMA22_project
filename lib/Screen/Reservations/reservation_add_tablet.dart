@@ -784,77 +784,80 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                       )
                     ],
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.045,
-                            bottom: MediaQuery.of(context).size.height * 0.075),
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.width * 0.3,
-                        decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.orange, width: 3.0),
-                            image: DecorationImage(
-                                image: AssetImage(lockerName ==
-                                        'Select a locker'
-                                    ? 'assets/images/square/appLogo-placeholder-square.jpg'
-                                    : 'assets/images/square/$lockerName-locker-image-square.jpg'),
-                                fit: BoxFit.cover)),
-                      ),
-                      Divider(
-                        thickness: 1,
-                        color: Colors.black,
-                        indent: MediaQuery.of(context).size.width * 0.035,
-                        endIndent: MediaQuery.of(context).size.width * 0.035,
-                      ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                MediaQuery.of(context).size.width * 0.035,
-                                MediaQuery.of(context).size.width * 0.015,
-                                MediaQuery.of(context).size.width * 0.035,
-                                MediaQuery.of(context).size.width * 0.035),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("Locker Address:",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18)),
-                                    Flexible(
-                                      child: Text(lockerAddress,
+                  child: Flexible(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.045,
+                              bottom:
+                                  MediaQuery.of(context).size.height * 0.075),
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.width * 0.3,
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.orange, width: 3.0),
+                              image: DecorationImage(
+                                  image: AssetImage(lockerName ==
+                                          'Select a locker'
+                                      ? 'assets/images/square/appLogo-placeholder-square.jpg'
+                                      : 'assets/images/square/$lockerName-locker-image-square.jpg'),
+                                  fit: BoxFit.cover)),
+                        ),
+                        Divider(
+                          thickness: 1,
+                          color: Colors.black,
+                          indent: MediaQuery.of(context).size.width * 0.035,
+                          endIndent: MediaQuery.of(context).size.width * 0.035,
+                        ),
+                        Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  MediaQuery.of(context).size.width * 0.035,
+                                  MediaQuery.of(context).size.width * 0.015,
+                                  MediaQuery.of(context).size.width * 0.035,
+                                  MediaQuery.of(context).size.width * 0.035),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Locker Address:",
                                           style: TextStyle(
-                                              fontWeight: FontWeight.w400,
+                                              fontWeight: FontWeight.bold,
                                               fontSize: 18)),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("Price to pay:",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18)),
-                                    Text(cellFare,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18))
-                                  ],
-                                ),
-                              ],
+                                      Flexible(
+                                        child: Text(lockerAddress,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 18)),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Price to pay:",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18)),
+                                      Text(cellFare,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18))
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ))
               ],
