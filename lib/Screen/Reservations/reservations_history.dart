@@ -202,44 +202,6 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
   final GlobalKey<ScaffoldMessengerState> _bookingMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
-  void _deleteReservation(
-      String reservationId, User user, String locker, String cell) async {
-    try {
-      await FirebaseFirestore.instance.runTransaction((transaction) async {
-        // Delete the reservation document
-        final reservationRef = FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .collection('reservations')
-            .doc(reservationId);
-        transaction.delete(reservationRef);
-
-        // Query and delete the related bookedSlots documents
-        final bookedSlotQuery = FirebaseFirestore.instance
-            .collection('lockers')
-            .doc(locker)
-            .collection('cells')
-            .doc(cell)
-            .collection('bookedSlots')
-            .where('linkedReservation', isEqualTo: reservationId);
-        final bookedSlotSnapshot = await bookedSlotQuery.get();
-        for (final bookedSlotDoc in bookedSlotSnapshot.docs) {
-          transaction.delete(bookedSlotDoc.reference);
-        }
-      });
-
-      // Show a success message using ScaffoldMessenger
-      _bookingMessengerKey.currentState?.showSnackBar(
-        SnackBar(content: Text('Reservation deleted successfully')),
-      );
-    } catch (error) {
-      // Show an error message using ScaffoldMessenger
-      _bookingMessengerKey.currentState?.showSnackBar(
-        SnackBar(content: Text('Failed to delete reservation')),
-      );
-    }
-  }
-
   Future<List<Map<String, dynamic>>> fetchReservations(User user) async {
     final DateTime currentTime = DateTime.now();
     //QuerySnapshot reservationSnapshot = await FirebaseFirestore.instance
