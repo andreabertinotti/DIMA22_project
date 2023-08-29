@@ -13,6 +13,7 @@ void main() {
     const String mockCell = 'cell 0 (small)';
     const int mockDuration = 5;
     const String mockReservationId = '123456';
+    const String mockAddress = 'via Roma 1, Milano';
 
     // Build the widget
     await tester.pumpWidget(
@@ -26,6 +27,7 @@ void main() {
             cell: mockCell,
             duration: mockDuration,
             reservationId: mockReservationId,
+            address: mockAddress,
             onDelete: () {}, // Provide an empty function for onDelete
           ),
         ),
@@ -44,6 +46,7 @@ void main() {
     expect(find.text('Price: $mockPrice'), findsOneWidget);
     expect(find.text('Duration: $mockDuration hours'), findsOneWidget);
     expect(find.text('Cell: $mockCell'), findsOneWidget);
+    expect(find.text('Address: $mockAddress'), findsOneWidget);
 
     // Verify delete button is displayed correctly
     expect(find.text('Delete booking'), findsOneWidget);
