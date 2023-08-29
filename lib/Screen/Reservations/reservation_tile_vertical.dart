@@ -12,6 +12,7 @@ class ReservationTileVertical extends StatelessWidget {
     required this.reservationId,
     required this.onDelete,
     required this.price,
+    required this.address,
     // required this.lockerImage
   });
 
@@ -22,6 +23,7 @@ class ReservationTileVertical extends StatelessWidget {
   final String cell;
   final int duration;
   final String reservationId;
+  final String address;
   final VoidCallback onDelete;
 
   //final int price;
@@ -65,7 +67,7 @@ class ReservationTileVertical extends StatelessWidget {
                       // used 'intl' package for date format
                       "Drop-off: ${DateFormat('dd/MM/yyyy, HH:mm').format(dropOff)}",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 17,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -73,27 +75,33 @@ class ReservationTileVertical extends StatelessWidget {
                       // used 'intl' package for date format
                       "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(pickUp)}",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 17,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
                       "Duration: $duration hours",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 17,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
                       "Cell: $cell",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 17,
+                      ),
+                    ),
+                    Text(
+                      "Address: $address",
+                      style: TextStyle(
+                        fontSize: 16,
                       ),
                     ),
                     Text(
                       "Price: $price",
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 17,
                         fontWeight: FontWeight.bold,
                         color: Colors.orange,
                       ),

@@ -121,6 +121,8 @@ class _BookingsPageState extends State<BookingsPage> {
                   final int duration =
                       widget.snapshot[index]['reservationDuration'];
                   final String reservationId = widget.snapshot[index]['id'];
+                  final String address =
+                      widget.snapshot[index]['lockerAddress'];
 
                   // Create a CustomListItem using the data retrieved from Firestore
                   return ExpansionTile(
@@ -149,6 +151,7 @@ class _BookingsPageState extends State<BookingsPage> {
                         locker: locker,
                         reservationId: reservationId,
                         price: price,
+                        address: address,
                         onDelete: () => _deleteReservation(reservationId,
                             locker, cell), // Pass a callback to delete
                       )
