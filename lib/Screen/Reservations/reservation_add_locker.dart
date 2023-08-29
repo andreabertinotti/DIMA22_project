@@ -212,7 +212,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text("Please fill the information above."),
+                          title: Text("Please fill the information above"),
                           content: Text(
                               "You need to select the date and a valid duration before checking availability."),
                           actions: <Widget>[
