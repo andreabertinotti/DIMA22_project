@@ -57,7 +57,42 @@ void main() {
     //// Expect to see the success snackbar after deleting
     //expect(find.text('Reservation deleted successfully'), findsOneWidget);
   });
-}
 
+  testWidgets('BookingsPage handles case in which user has no reservations',
+      (WidgetTester tester) async {
+    // Create a fake instance of Cloud Firestore
+    final fakeFirestore = FakeFirebaseFirestore();
+
+    // Prepare some sample reservation data
+    final List<Map<String, dynamic>> sampleReservations = [];
+
+    // Add the sample reservation data to the fake Firestore instance
+    for (final reservation in sampleReservations) {
+      await fakeFirestore
+          .collection('users')
+          .doc('user_id')
+          .collection('reservations')
+          .doc(reservation['id'])
+          .set(reservation);
+    }
+
+    // Build the widget and pass the fake snapshot
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BookingsPage(sampleReservations, uid: 'user_id'),
+      ),
+    );
+
+    // Expect to find the reservation information in the UI
+    expect(find.text('No booking found!'), findsOneWidget);
+
+    // Tap on the delete button
+    //await tester.tap(find.byIcon(Icons.delete));
+    //await tester.pump();
+//
+    //// Expect to see the success snackbar after deleting
+    //expect(find.text('Reservation deleted successfully'), findsOneWidget);
+  });
+}
 
 // flutter test test/WidgetTests/reservationsListTest/reservations_list_vertical_test.dart
