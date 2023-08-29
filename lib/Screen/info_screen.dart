@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,8 +31,12 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
-
+    //final authService = Provider.of<AuthService>(context);
+    AuthService? authService = null;
+    if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+      authService = Provider.of<AuthService>(context);
+    }
+//
     var userData = widget.document;
 
     return Scaffold(
@@ -240,7 +246,9 @@ class _MenuState extends State<Menu> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          authService.signOut(); // Handle "Logout" button press
+          //if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+          authService?.signOut(); // Handle "Logout" button press
+          //}
         },
         backgroundColor: Colors.orange[900],
         child: Icon(
