@@ -34,7 +34,7 @@ class _ReservationsHistoryWrapperState
                     child: Text("Error loading data."),
                   );
                 } else {
-                  return ReservationsHistoryPage(snapshot);
+                  return ReservationsHistoryPage(snapshot.data!);
                 }
               },
             ),

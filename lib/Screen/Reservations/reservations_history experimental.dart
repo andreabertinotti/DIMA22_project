@@ -94,27 +94,6 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
   final GlobalKey<ScaffoldMessengerState> _bookingMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
-  Future<List<Map<String, dynamic>>> fetchReservationsHistory(User user) async {
-    QuerySnapshot reservationSnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .collection('reservations')
-        .get();
-
-    List<Map<String, dynamic>> reservations = [];
-
-    for (QueryDocumentSnapshot reservationDoc in reservationSnapshot.docs) {
-      if (reservationDoc.exists && reservationDoc.data() != null) {
-        Map<String, dynamic> reservationData =
-            reservationDoc.data()! as Map<String, dynamic>;
-        reservationData['id'] =
-            reservationDoc.id; // Add the document ID to the map
-        reservations.add(reservationData);
-      }
-    }
-    return reservations;
-  }
-
   @override
   Widget build(BuildContext context) {
     return ScaffoldMessenger(
@@ -131,28 +110,24 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
             ),
             actions: [],
           ),
-          body: widget.snapshot.data!.isEmpty
+          body: widget.snapshot.isEmpty
               ? Center(
                   child: Text("Booking history is empty!",
                       style: TextStyle(fontSize: 20)),
                 )
               : ListView.builder(
-                  itemCount: widget.snapshot.data!.length,
+                  itemCount: widget.snapshot.length,
                   itemBuilder: (context, index) {
-                    final String locker =
-                        widget.snapshot.data![index]['locker'];
-                    final String cell = widget.snapshot.data![index]['cell'];
-                    final DateTime dropOff = widget
-                        .snapshot.data![index]['reservationStartDate']
-                        .toDate();
-                    final DateTime pickUp = widget
-                        .snapshot.data![index]['reservationEndDate']
-                        .toDate();
+                    final String locker = widget.snapshot[index]['locker'];
+                    final String cell = widget.snapshot[index]['cell'];
+                    final DateTime dropOff =
+                        widget.snapshot[index]['reservationStartDate'].toDate();
+                    final DateTime pickUp =
+                        widget.snapshot[index]['reservationEndDate'].toDate();
 
                     final int duration =
-                        widget.snapshot.data![index]['reservationDuration'];
-                    final String reservationId =
-                        widget.snapshot.data![index]['id'];
+                        widget.snapshot[index]['reservationDuration'];
+                    final String reservationId = widget.snapshot[index]['id'];
 
                     return HistoryListTile(
                       dropOff: dropOff,
