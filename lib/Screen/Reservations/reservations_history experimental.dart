@@ -19,103 +19,103 @@ class ReservationsHistoryPage extends StatefulWidget {
 }
 
 // A custom list item widget that displays booking information.
-class CustomListItem extends StatelessWidget {
-  const CustomListItem({
-    super.key,
-    required this.dropOff,
-    required this.pickUp,
-    required this.locker,
-    required this.cell,
-    required this.duration,
-    required this.reservationId,
-    required this.onDelete,
-    //required this.notificationSet,
-    //required this.price,
-    // required this.lockerImage
-  });
-
-  final DateTime dropOff;
-  final DateTime pickUp;
-  //final String baggageSize;
-  final String locker;
-  final String cell;
-  final int duration;
-  final String reservationId;
-  final VoidCallback onDelete;
-  //final bool notificationSet;
-  //final int price;
-  // final Widget lockerImage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 140,
-          padding: EdgeInsets.all(10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(left: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      // used 'intl' package for date format
-                      "Drop-off: ${DateFormat('dd/MM/yyyy, HH:mm').format(dropOff)}",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      // used 'intl' package for date format
-                      "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(pickUp)}",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      "Duration: $duration hours",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    //Text(
-                    //  "Baggage size: $baggageSize",
-                    //  style: TextStyle(
-                    //    fontSize: 18,
-                    //  ),
-                    //),
-                    Text(
-                      "Cell: $cell",
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
-                    /* Text(
-                      "Price: ", //€$price",     //TODO:add price
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.orange,
-                      ),
-                    ) */
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
+//class CustomListItem extends StatelessWidget {
+//  const CustomListItem({
+//    super.key,
+//    required this.dropOff,
+//    required this.pickUp,
+//    required this.locker,
+//    required this.cell,
+//    required this.duration,
+//    required this.reservationId,
+//    required this.onDelete,
+//    //required this.notificationSet,
+//    //required this.price,
+//    // required this.lockerImage
+//  });
+//
+//  final DateTime dropOff;
+//  final DateTime pickUp;
+//  //final String baggageSize;
+//  final String locker;
+//  final String cell;
+//  final int duration;
+//  final String reservationId;
+//  final VoidCallback onDelete;
+//  //final bool notificationSet;
+//  //final int price;
+//  // final Widget lockerImage;
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Column(
+//      children: [
+//        Container(
+//          height: 140,
+//          padding: EdgeInsets.all(10),
+//          child: Row(
+//            crossAxisAlignment: CrossAxisAlignment.start,
+//            children: <Widget>[
+//              Container(
+//                alignment: Alignment.centerLeft,
+//                margin: EdgeInsets.only(left: 10),
+//                child: Column(
+//                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                  crossAxisAlignment: CrossAxisAlignment.start,
+//                  children: [
+//                    Text(
+//                      // used 'intl' package for date format
+//                      "Drop-off: ${DateFormat('dd/MM/yyyy, HH:mm').format(dropOff)}",
+//                      style: TextStyle(
+//                        fontSize: 18,
+//                        fontWeight: FontWeight.w600,
+//                      ),
+//                    ),
+//                    Text(
+//                      // used 'intl' package for date format
+//                      "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(pickUp)}",
+//                      style: TextStyle(
+//                        fontSize: 18,
+//                        fontWeight: FontWeight.w600,
+//                      ),
+//                    ),
+//                    Text(
+//                      "Duration: $duration hours",
+//                      style: TextStyle(
+//                        fontSize: 18,
+//                        fontWeight: FontWeight.w600,
+//                      ),
+//                    ),
+//                    //Text(
+//                    //  "Baggage size: $baggageSize",
+//                    //  style: TextStyle(
+//                    //    fontSize: 18,
+//                    //  ),
+//                    //),
+//                    Text(
+//                      "Cell: $cell",
+//                      style: TextStyle(
+//                        fontSize: 18,
+//                      ),
+//                    ),
+//                    /* Text(
+//                      "Price: ", //€$price",     //TODO:add price
+//                      style: TextStyle(
+//                        fontSize: 18,
+//                        fontWeight: FontWeight.bold,
+//                        color: Colors.orange,
+//                      ),
+//                    ) */
+//                  ],
+//                ),
+//              ),
+//            ],
+//          ),
+//        ),
+//      ],
+//    );
+//  }
+//}
 
 class HistoryListTile extends StatelessWidget {
   const HistoryListTile(
@@ -185,13 +185,6 @@ class HistoryListTile extends StatelessWidget {
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
-                // Padding(
-                //   padding: EdgeInsets.only(top: 5, left: 15),
-                //   child: Text(
-                //     "Baggage size: $baggageSize",
-                //     style: TextStyle(fontSize: 16),
-                //   ),
-                // ),
               ],
             )
           ],
@@ -226,15 +219,6 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('hereee history');
-    final authService = Provider.of<AuthService>(context);
-
-    //  return StreamBuilder<User?>(
-    //    stream: authService.user,
-    //    builder: (_, AsyncSnapshot<User?> snapshot) {
-    //      if (snapshot.connectionState == ConnectionState.active) {
-    //        final User? user = snapshot.data;
-
     return ScaffoldMessenger(
       key: _bookingMessengerKey,
       child: Scaffold(
@@ -249,83 +233,42 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
             ),
             actions: [],
           ),
-          body:
-              //FutureBuilder<List<Map<String, dynamic>>>(
-              // future: fetchReservations(user!),
-              // builder: (context, snapshot) {
-              //   if (snapshot.connectionState == ConnectionState.waiting) {
-              //     return Center(
-              //       child: CircularProgressIndicator(),
-              //     );
-              //   } else if (snapshot.hasError) {
-              //     print(user.uid);
-              //     print(snapshot);
-//
-              //     return Center(
-              //       child: Text("Error loading data."),
-              //     );
-              //   } else if (snapshot.data!.isEmpty) {
-              //     return Center(
-              //       child: Text("Booking history is empty!",
-              //           style: TextStyle(fontSize: 20)),
-              //     );
-              //   } else {
-              //   return
-              widget.snapshot.data!.isEmpty
-                  ? Center(
-                      child: Text("Booking history is empty!",
-                          style: TextStyle(fontSize: 20)),
-                    )
-                  : ListView.builder(
-                      itemCount: widget.snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        final String locker =
-                            widget.snapshot.data![index]['locker'];
-                        final String cell =
-                            widget.snapshot.data![index]['cell'];
-                        final DateTime dropOff = widget
-                            .snapshot.data![index]['reservationStartDate']
-                            .toDate();
-                        final DateTime pickUp = widget
-                            .snapshot.data![index]['reservationEndDate']
-                            .toDate();
-                        //   final String baggageSize =
-                        //       snapshot.data![index]['baggageSize'];
-                        final int duration =
-                            widget.snapshot.data![index]['reservationDuration'];
-                        final String reservationId =
-                            widget.snapshot.data![index]['id'];
+          body: widget.snapshot.data!.isEmpty
+              ? Center(
+                  child: Text("Booking history is empty!",
+                      style: TextStyle(fontSize: 20)),
+                )
+              : ListView.builder(
+                  itemCount: widget.snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    final String locker =
+                        widget.snapshot.data![index]['locker'];
+                    final String cell = widget.snapshot.data![index]['cell'];
+                    final DateTime dropOff = widget
+                        .snapshot.data![index]['reservationStartDate']
+                        .toDate();
+                    final DateTime pickUp = widget
+                        .snapshot.data![index]['reservationEndDate']
+                        .toDate();
+                    //   final String baggageSize =
+                    //       snapshot.data![index]['baggageSize'];
+                    final int duration =
+                        widget.snapshot.data![index]['reservationDuration'];
+                    final String reservationId =
+                        widget.snapshot.data![index]['id'];
 
-                        // Create a CustomListItem using the data retrieved from Firestore
-                        return HistoryListTile(
-                          dropOff: dropOff,
-                          pickUp: pickUp,
-                          //   baggageSize: baggageSize,
-                          locker: locker,
-                          cell: cell,
-                          duration: duration,
-                          reservationId: reservationId,
-                          onDelete: () {},
-                          tileIndex: index + 1,
-                        );
-                      },
-                    ) //;
-
-          //             }
-          //           },
-          //         ),
-
-          ),
+                    return HistoryListTile(
+                      dropOff: dropOff,
+                      pickUp: pickUp,
+                      locker: locker,
+                      cell: cell,
+                      duration: duration,
+                      reservationId: reservationId,
+                      onDelete: () {},
+                      tileIndex: index + 1,
+                    );
+                  },
+                )),
     );
-
-    //      } else {
-    //        return const Scaffold(
-    //          body: Center(
-    //            child: CircularProgressIndicator(),
-    //          ),
-    //        );
-    //      }
-    //    },
-    //  );
   }
 }
