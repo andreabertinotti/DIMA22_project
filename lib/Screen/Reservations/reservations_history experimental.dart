@@ -228,101 +228,104 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
   Widget build(BuildContext context) {
     print('hereee history');
     final authService = Provider.of<AuthService>(context);
-    return StreamBuilder<User?>(
-      stream: authService.user,
-      builder: (_, AsyncSnapshot<User?> snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          final User? user = snapshot.data;
-          return ScaffoldMessenger(
-            key: _bookingMessengerKey,
-            child: Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.orange,
-                  foregroundColor: Colors.white,
-                  title: const Text(
-                    'Reservations history',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  actions: [],
-                ),
-                body:
-                    //FutureBuilder<List<Map<String, dynamic>>>(
-                    // future: fetchReservations(user!),
-                    // builder: (context, snapshot) {
-                    //   if (snapshot.connectionState == ConnectionState.waiting) {
-                    //     return Center(
-                    //       child: CircularProgressIndicator(),
-                    //     );
-                    //   } else if (snapshot.hasError) {
-                    //     print(user.uid);
-                    //     print(snapshot);
-//
-                    //     return Center(
-                    //       child: Text("Error loading data."),
-                    //     );
-                    //   } else if (snapshot.data!.isEmpty) {
-                    //     return Center(
-                    //       child: Text("Booking history is empty!",
-                    //           style: TextStyle(fontSize: 20)),
-                    //     );
-                    //   } else {
-                    //   return
-                    widget.snapshot.data!.isEmpty
-                        ? Center(
-                            child: Text("Booking history is empty!",
-                                style: TextStyle(fontSize: 20)),
-                          )
-                        : ListView.builder(
-                            itemCount: widget.snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              final String locker =
-                                  widget.snapshot.data![index]['locker'];
-                              final String cell =
-                                  widget.snapshot.data![index]['cell'];
-                              final DateTime dropOff = widget
-                                  .snapshot.data![index]['reservationStartDate']
-                                  .toDate();
-                              final DateTime pickUp = widget
-                                  .snapshot.data![index]['reservationEndDate']
-                                  .toDate();
-                              //   final String baggageSize =
-                              //       snapshot.data![index]['baggageSize'];
-                              final int duration = widget.snapshot.data![index]
-                                  ['reservationDuration'];
-                              final String reservationId =
-                                  widget.snapshot.data![index]['id'];
 
-                              // Create a CustomListItem using the data retrieved from Firestore
-                              return HistoryListTile(
-                                dropOff: dropOff,
-                                pickUp: pickUp,
-                                //   baggageSize: baggageSize,
-                                locker: locker,
-                                cell: cell,
-                                duration: duration,
-                                reservationId: reservationId,
-                                onDelete: () {},
-                                tileIndex: index + 1,
-                              );
-                            },
-                          ) //;
+    //  return StreamBuilder<User?>(
+    //    stream: authService.user,
+    //    builder: (_, AsyncSnapshot<User?> snapshot) {
+    //      if (snapshot.connectionState == ConnectionState.active) {
+    //        final User? user = snapshot.data;
 
-                //             }
-                //           },
-                //         ),
-
-                ),
-          );
-        } else {
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
+    return ScaffoldMessenger(
+      key: _bookingMessengerKey,
+      child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.orange,
+            foregroundColor: Colors.white,
+            title: const Text(
+              'Reservations history',
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
-          );
-        }
-      },
+            actions: [],
+          ),
+          body:
+              //FutureBuilder<List<Map<String, dynamic>>>(
+              // future: fetchReservations(user!),
+              // builder: (context, snapshot) {
+              //   if (snapshot.connectionState == ConnectionState.waiting) {
+              //     return Center(
+              //       child: CircularProgressIndicator(),
+              //     );
+              //   } else if (snapshot.hasError) {
+              //     print(user.uid);
+              //     print(snapshot);
+//
+              //     return Center(
+              //       child: Text("Error loading data."),
+              //     );
+              //   } else if (snapshot.data!.isEmpty) {
+              //     return Center(
+              //       child: Text("Booking history is empty!",
+              //           style: TextStyle(fontSize: 20)),
+              //     );
+              //   } else {
+              //   return
+              widget.snapshot.data!.isEmpty
+                  ? Center(
+                      child: Text("Booking history is empty!",
+                          style: TextStyle(fontSize: 20)),
+                    )
+                  : ListView.builder(
+                      itemCount: widget.snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        final String locker =
+                            widget.snapshot.data![index]['locker'];
+                        final String cell =
+                            widget.snapshot.data![index]['cell'];
+                        final DateTime dropOff = widget
+                            .snapshot.data![index]['reservationStartDate']
+                            .toDate();
+                        final DateTime pickUp = widget
+                            .snapshot.data![index]['reservationEndDate']
+                            .toDate();
+                        //   final String baggageSize =
+                        //       snapshot.data![index]['baggageSize'];
+                        final int duration =
+                            widget.snapshot.data![index]['reservationDuration'];
+                        final String reservationId =
+                            widget.snapshot.data![index]['id'];
+
+                        // Create a CustomListItem using the data retrieved from Firestore
+                        return HistoryListTile(
+                          dropOff: dropOff,
+                          pickUp: pickUp,
+                          //   baggageSize: baggageSize,
+                          locker: locker,
+                          cell: cell,
+                          duration: duration,
+                          reservationId: reservationId,
+                          onDelete: () {},
+                          tileIndex: index + 1,
+                        );
+                      },
+                    ) //;
+
+          //             }
+          //           },
+          //         ),
+
+          ),
     );
+
+    //      } else {
+    //        return const Scaffold(
+    //          body: Center(
+    //            child: CircularProgressIndicator(),
+    //          ),
+    //        );
+    //      }
+    //    },
+    //  );
   }
 }
