@@ -130,15 +130,22 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 padding: EdgeInsets.only(top: 10, bottom: 15),
                 child: ElevatedButton(
                     onPressed: () {
+                      Navigator.of(context).pop();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: ((context) =>
                                   BookingLockerHorizontalWrapper(
-                                      (widget.document))))).then((_) {
-                        Navigator.of(context)
-                            .pop(); // Close the dialog box after returning from BookingLockerHorizontalWrapper
-                      });
+                                      (widget.document)))));
+                      //        Navigator.push(
+                      //            context,
+                      //            MaterialPageRoute(
+                      //                builder: ((context) =>
+                      //                    BookingLockerHorizontalWrapper(
+                      //                        (widget.document))))).then((_) {
+                      //          Navigator.of(context)
+                      //              .pop(); // Close the dialog box after returning from BookingLockerHorizontalWrapper
+                      //        });
                     },
                     style: ButtonStyle(
                         foregroundColor:

@@ -31,7 +31,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
   DateTime dropoff = DateTime.now(); // Default drop-off date and time
   DateTime pickup = DateTime.now(); // Default pick-up date and time
   TimeOfDay dropoffTime =
-      TimeOfDay(hour: 12, minute: 12); // Default drop-off time
+      TimeOfDay(hour: 12, minute: 00); // Default drop-off time
   TimeOfDay pickupTime =
       TimeOfDay(hour: 23, minute: 59); // Default pick-up time
   //String lockerName = 'Select a locker';
@@ -164,11 +164,12 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                     }
 
                     setState(() {
-                      dropoff = DateTime(
-                          newDate.year, newDate.month, newDate.day, 12, 0);
+                      dropoff = DateTime(newDate.year, newDate.month,
+                          newDate.day, dropoffTime.hour, 0);
                       pickup =
                           dropoff.add(Duration(hours: duration, minutes: -1));
                       availabilityChecked = false;
+                      cellFare = '';
                       occupied_cells = [];
                     });
                   },
@@ -197,6 +198,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                           dropoff.day, newValue!, 0);
                       dropoffTime = TimeOfDay(hour: newValue, minute: 0);
                       availabilityChecked = false;
+                      cellFare = '';
                       occupied_cells = [];
                     });
                   },

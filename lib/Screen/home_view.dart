@@ -108,9 +108,7 @@ class _HomeViewState extends State<HomeView> {
                   markers.add(Marker(
                     markerId: MarkerId(document.id),
                     position: latLng,
-                    //infoWindow: InfoWindow(
-                    //    title: document['lockerName'],
-                    //    snippet: document['lockerFee'].toString() + '€'),
+
                     onTap: () => MediaQuery.of(context).size.width < 800
                         ? _showBottomSheet(document)
                         : showDialog(

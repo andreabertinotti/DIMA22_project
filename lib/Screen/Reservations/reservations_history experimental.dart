@@ -4,8 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pro/Models/user_model.dart';
-import 'package:pro/Services/auth_service.dart';
-import 'package:provider/provider.dart'; // package used to edit date format
 
 // A stateful widget representing the bookings page.
 class ReservationsHistoryPage extends StatefulWidget {
