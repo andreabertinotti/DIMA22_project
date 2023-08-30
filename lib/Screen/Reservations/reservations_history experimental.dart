@@ -18,111 +18,11 @@ class ReservationsHistoryPage extends StatefulWidget {
       _ReservationsHistoryPageState();
 }
 
-// A custom list item widget that displays booking information.
-//class CustomListItem extends StatelessWidget {
-//  const CustomListItem({
-//    super.key,
-//    required this.dropOff,
-//    required this.pickUp,
-//    required this.locker,
-//    required this.cell,
-//    required this.duration,
-//    required this.reservationId,
-//    required this.onDelete,
-//    //required this.notificationSet,
-//    //required this.price,
-//    // required this.lockerImage
-//  });
-//
-//  final DateTime dropOff;
-//  final DateTime pickUp;
-//  //final String baggageSize;
-//  final String locker;
-//  final String cell;
-//  final int duration;
-//  final String reservationId;
-//  final VoidCallback onDelete;
-//  //final bool notificationSet;
-//  //final int price;
-//  // final Widget lockerImage;
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return Column(
-//      children: [
-//        Container(
-//          height: 140,
-//          padding: EdgeInsets.all(10),
-//          child: Row(
-//            crossAxisAlignment: CrossAxisAlignment.start,
-//            children: <Widget>[
-//              Container(
-//                alignment: Alignment.centerLeft,
-//                margin: EdgeInsets.only(left: 10),
-//                child: Column(
-//                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                  crossAxisAlignment: CrossAxisAlignment.start,
-//                  children: [
-//                    Text(
-//                      // used 'intl' package for date format
-//                      "Drop-off: ${DateFormat('dd/MM/yyyy, HH:mm').format(dropOff)}",
-//                      style: TextStyle(
-//                        fontSize: 18,
-//                        fontWeight: FontWeight.w600,
-//                      ),
-//                    ),
-//                    Text(
-//                      // used 'intl' package for date format
-//                      "Pick-up: ${DateFormat('dd/MM/yyyy, HH:mm').format(pickUp)}",
-//                      style: TextStyle(
-//                        fontSize: 18,
-//                        fontWeight: FontWeight.w600,
-//                      ),
-//                    ),
-//                    Text(
-//                      "Duration: $duration hours",
-//                      style: TextStyle(
-//                        fontSize: 18,
-//                        fontWeight: FontWeight.w600,
-//                      ),
-//                    ),
-//                    //Text(
-//                    //  "Baggage size: $baggageSize",
-//                    //  style: TextStyle(
-//                    //    fontSize: 18,
-//                    //  ),
-//                    //),
-//                    Text(
-//                      "Cell: $cell",
-//                      style: TextStyle(
-//                        fontSize: 18,
-//                      ),
-//                    ),
-//                    /* Text(
-//                      "Price: ", //€$price",     //TODO:add price
-//                      style: TextStyle(
-//                        fontSize: 18,
-//                        fontWeight: FontWeight.bold,
-//                        color: Colors.orange,
-//                      ),
-//                    ) */
-//                  ],
-//                ),
-//              ),
-//            ],
-//          ),
-//        ),
-//      ],
-//    );
-//  }
-//}
-
 class HistoryListTile extends StatelessWidget {
   const HistoryListTile(
       {super.key,
       required this.dropOff,
       required this.pickUp,
-      //required this.baggageSize,
       required this.locker,
       required this.cell,
       required this.duration,
@@ -132,7 +32,7 @@ class HistoryListTile extends StatelessWidget {
 
   final DateTime dropOff;
   final DateTime pickUp;
-  //final String baggageSize;
+
   final String locker;
   final String cell;
   final int duration;
@@ -250,8 +150,7 @@ class _ReservationsHistoryPageState extends State<ReservationsHistoryPage> {
                     final DateTime pickUp = widget
                         .snapshot.data![index]['reservationEndDate']
                         .toDate();
-                    //   final String baggageSize =
-                    //       snapshot.data![index]['baggageSize'];
+
                     final int duration =
                         widget.snapshot.data![index]['reservationDuration'];
                     final String reservationId =
