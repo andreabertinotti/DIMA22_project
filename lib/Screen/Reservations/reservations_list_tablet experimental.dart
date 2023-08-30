@@ -7,6 +7,7 @@ import 'package:pro/Screen/Reservations/reservation_tile_horizontal.dart';
 import 'package:pro/Screen/Reservations/reservations_history.dart';
 import 'package:pro/Screen/Reservations/reservation_add_tablet.dart';
 import 'package:pro/Utils/reservationAddTabletWrapper.dart';
+import 'package:pro/Utils/reservationsHistoryWrapper.dart';
 
 // A stateful widget representing the bookings page.
 class TabletBookingsPage extends StatefulWidget {
@@ -93,7 +94,9 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ReservationsHistoryPage()));
+                            builder: (context) =>
+                                ReservationsHistoryWrapper()));
+                    //builder: (context) => ReservationsHistoryPage()));
                   },
                   icon: Icon(
                     Icons.history,

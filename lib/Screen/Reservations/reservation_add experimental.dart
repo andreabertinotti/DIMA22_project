@@ -56,7 +56,7 @@ class _EditBookingState extends State<EditBooking> {
 
   // Update locker address
   void _updateLockerAddress() {
-    print('HEREEEE!! PHONE');
+    print('HEREEEE!! PHONE experimental');
     if (lockerName != 'Select a locker') {
       String? address = lockersAddresses[lockerName];
       if (address != null) {
@@ -484,6 +484,7 @@ class _EditBookingState extends State<EditBooking> {
                 pickup = dropoff.add(Duration(hours: duration, minutes: -1));
                 availabilityChecked = false;
                 occupied_cells = [];
+                cellFare = '';
               });
             },
             items: dropdownDurations,
@@ -533,6 +534,7 @@ class _EditBookingState extends State<EditBooking> {
                   lockerName = newValue!;
                   availabilityChecked = false;
                   occupied_cells = [];
+                  cellFare = '';
                   _updateLockerAddress();
                 });
               },

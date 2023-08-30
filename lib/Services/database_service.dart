@@ -38,6 +38,44 @@ Stream<List<Map<String, dynamic>>> fetchReservations(String userUid) {
   });
 }
 
+Stream<List<Map<String, dynamic>>> fetchReservationsHistory(String userUid) {
+  return FirebaseFirestore.instance
+      .collection('users')
+      .doc(userUid)
+      .collection('reservations')
+      .snapshots()
+      .map((snapshot) {
+    return snapshot.docs.map((reservationDoc) {
+      Map<String, dynamic> reservationData =
+          reservationDoc.data()! as Map<String, dynamic>;
+      reservationData['id'] = reservationDoc.id;
+      return reservationData;
+    }).toList();
+  });
+}
+
+//Future<List<Map<String, dynamic>>> fetchReservationsHistory(
+//    String userUid) async {
+//  QuerySnapshot reservationSnapshot = await FirebaseFirestore.instance
+//      .collection('users')
+//      .doc(userUid)
+//      .collection('reservations')
+//      .get();
+//
+//  List<Map<String, dynamic>> reservations = [];
+//
+//  for (QueryDocumentSnapshot reservationDoc in reservationSnapshot.docs) {
+//    if (reservationDoc.exists && reservationDoc.data() != null) {
+//      Map<String, dynamic> reservationData =
+//          reservationDoc.data()! as Map<String, dynamic>;
+//      reservationData['id'] =
+//          reservationDoc.id; // Add the document ID to the map
+//      reservations.add(reservationData);
+//    }
+//  }
+//  return reservations;
+//}
+
 Future<String> retrieveCellFare(
     String locker, String cell, int duration, bool bookingAuthorized) async {
   if (!bookingAuthorized) {

@@ -473,6 +473,7 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                 pickup = dropoff.add(Duration(hours: duration, minutes: -1));
                 availabilityChecked = false;
                 occupied_cells = [];
+                cellFare = '';
               });
             },
             items: dropdownDurations,

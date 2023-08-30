@@ -524,6 +524,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                 pickup = dropoff.add(Duration(hours: duration, minutes: -1));
                 availabilityChecked = false;
                 occupied_cells = [];
+                cellFare = '';
               });
             },
             items: dropdownDurations,

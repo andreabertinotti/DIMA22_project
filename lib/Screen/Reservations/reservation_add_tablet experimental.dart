@@ -550,6 +550,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                 pickup = dropoff.add(Duration(hours: duration, minutes: -1));
                 availabilityChecked = false;
                 occupied_cells = [];
+                cellFare = '';
               });
             },
             items: dropdownDurations,
@@ -605,6 +606,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                   lockerName = newValue!;
                   availabilityChecked = false;
                   occupied_cells = [];
+                  cellFare = '';
                   _updateLockerAddress();
                 });
               },

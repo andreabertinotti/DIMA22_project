@@ -8,6 +8,8 @@ import 'package:pro/Screen/Reservations/reservations_history.dart';
 import 'package:pro/Screen/Reservations/reservation_add.dart';
 import 'package:pro/Utils/reservationAddWrapper.dart';
 
+import '../../Utils/reservationsHistoryWrapper.dart';
+
 // A stateful widget representing the bookings page.
 class BookingsPage extends StatefulWidget {
   const BookingsPage(this.snapshot, {super.key, required this.uid});
@@ -79,7 +81,8 @@ class _BookingsPageState extends State<BookingsPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ReservationsHistoryPage()));
+                        builder: (context) => ReservationsHistoryWrapper()));
+                //builder: (context) => ReservationsHistoryPage()));
               },
               icon: Icon(
                 Icons.history,

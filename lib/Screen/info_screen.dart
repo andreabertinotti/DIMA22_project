@@ -31,11 +31,11 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-    //final authService = Provider.of<AuthService>(context);
-    AuthService? authService = null;
-    if (!Platform.environment.containsKey('FLUTTER_TEST')) {
-      authService = Provider.of<AuthService>(context);
-    }
+    final authService = Provider.of<AuthService>(context);
+    //AuthService? authService = null;
+    //if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+    //  authService = Provider.of<AuthService>(context);
+    //}
 //
     var userData = widget.document;
 
