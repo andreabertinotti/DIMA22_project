@@ -18,11 +18,11 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
-    //AuthService? authService = null;
-    //if (!Platform.environment.containsKey('FLUTTER_TEST')) {
-    //  authService = Provider.of<AuthService>(context);
-    //}
+    //final authService = Provider.of<AuthService>(context);
+    AuthService? authService = null;
+    if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+      authService = Provider.of<AuthService>(context);
+    }
     return widget.userData == null
         ? Center(child: Text('No data available.'))
         : Scaffold(

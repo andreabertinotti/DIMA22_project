@@ -39,8 +39,8 @@ class ReservationTileHorizontal extends StatelessWidget {
           margin: EdgeInsets.only(
             top: MediaQuery.of(context).size.height * 0.05,
           ),
-          width: MediaQuery.of(context).size.width * 0.25,
-          height: MediaQuery.of(context).size.width * 0.25,
+          width: MediaQuery.of(context).size.width * 0.20,
+          height: MediaQuery.of(context).size.width * 0.20,
           decoration: BoxDecoration(
             border: Border.all(
               color: Colors.orange,
@@ -86,32 +86,6 @@ class ReservationTileHorizontal extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          MediaQuery.of(context).size.width * 0.075,
-                          MediaQuery.of(context).size.width * 0.01,
-                          MediaQuery.of(context).size.width * 0.075,
-                          0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: Text("Duration: $duration hours",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                )),
-                          ),
-                          Flexible(
-                            child: Text("Cell: $cell",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                )),
-                          ),
-                        ],
-                      ),
-                    ),
-                  Padding(
                     padding: EdgeInsets.fromLTRB(
                         MediaQuery.of(context).size.width * 0.075,
                         MediaQuery.of(context).size.width * 0.01,
@@ -121,29 +95,54 @@ class ReservationTileHorizontal extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(
-                          flex: 3,
-                          child: Text("Address: $address",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          overflow: TextOverflow.ellipsis,
-                          ),
+                          child: Text("Duration: $duration hours",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                              )),
                         ),
                         Flexible(
-                          flex: 1,
-                          child: Text(
-                            "Price: $price",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.orange[700],
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          )
+                          child: Text("Cell: $cell",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                              )),
                         ),
-                      ]
-                      ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        MediaQuery.of(context).size.width * 0.075,
+                        MediaQuery.of(context).size.width * 0.01,
+                        MediaQuery.of(context).size.width * 0.075,
+                        0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            flex: 3,
+                            child: Text(
+                              "Address: $address",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Flexible(
+                              flex: 1,
+                              child: Text(
+                                "Price: $price",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.orange[700],
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              )),
+                        ]),
                   ),
                   /* Padding(
                     padding: EdgeInsets.fromLTRB(

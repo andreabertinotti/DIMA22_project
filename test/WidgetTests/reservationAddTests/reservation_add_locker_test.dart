@@ -121,6 +121,8 @@ void main() {
   testWidgets('Check dialog box for reservation in the past',
       (WidgetTester tester) async {
     dynamic now = DateFormat('dd/MM/yyyy').format(DateTime.now()).toString();
+    final currentMonth = DateFormat.MMMM().format(DateTime.now());
+    final currentYear = DateTime.now().year;
     final firestore = FakeFirebaseFirestore();
     await firestore.collection('lockers').doc('Leonardo').set({
       'lockerName': 'Leonardo',
@@ -131,8 +133,12 @@ void main() {
     await tester.pumpWidget(
         MaterialApp(home: EditLockerBooking(document, uid: 'test_uid')));
 
-    // select a future date from the calendar widget
+    // select a past date from the calendar widget
     await tester.tap(find.text(now));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('$currentMonth $currentYear'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('2022'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('1'));
     await tester.pumpAndSettle();
@@ -166,6 +172,8 @@ void main() {
   testWidgets('Check dialog box for reservation in the future',
       (WidgetTester tester) async {
     dynamic now = DateFormat('dd/MM/yyyy').format(DateTime.now()).toString();
+    final currentMonth = DateFormat.MMMM().format(DateTime.now());
+    final currentYear = DateTime.now().year;
     final firestore = FakeFirebaseFirestore();
     await firestore.collection('lockers').doc('Leonardo').set({
       'lockerName': 'Leonardo',
@@ -180,7 +188,11 @@ void main() {
     await tester.tap(find.text(now));
     await tester.pumpAndSettle();
     // set a date in the future
-    await tester.tap(find.text('31'));
+    await tester.tap(find.text('$currentMonth $currentYear'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('2025'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('27'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('OK'));
     await tester.pumpAndSettle();

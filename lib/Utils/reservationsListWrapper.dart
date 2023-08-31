@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pro/Screen/Reservations/reservations_list_tablet%20experimental.dart';
-import '../Screen/Reservations/reservations_list_vertical experimental.dart';
+import 'package:pro/Screen/Reservations/reservations_list_tablet.dart';
+import '../Screen/Reservations/reservations_list_vertical.dart';
 import '../Services/database_service.dart';
 
 class ReservationsListWrapper extends StatefulWidget {

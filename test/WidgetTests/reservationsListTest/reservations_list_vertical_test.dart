@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:intl/intl.dart';
-import 'package:pro/Screen/Reservations/reservations_list_vertical%20experimental.dart';
+import 'package:pro/Screen/Reservations/reservations_list_vertical.dart';
 
 void main() {
   testWidgets('BookingsPage displays reservations',
