@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
-import 'package:pro/Screen/Reservations/reservation_add.dart';
+import 'package:pro/Screen/Reservations/reservation_add_vertical.dart';
 
 void main() {
   testWidgets('EditBooking widget loads correctly',
