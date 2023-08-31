@@ -32,7 +32,8 @@ void main() {
             4)); // Save booking and tooltip buttons + pre-selected locker button
   });
 
-  testWidgets('User tries to check availability without selecting a locker',
+  testWidgets(
+      'User directly tries to check availability without having filled any field',
       (WidgetTester tester) async {
     final firestore = FakeFirebaseFirestore();
     await firestore.collection('lockers').doc('Leonardo').set({
@@ -86,7 +87,7 @@ void main() {
   });
 
   testWidgets(
-      'User selects a locker, a time, and a duration and button check availability is displayed',
+      'User selects a time, and a duration and button check availability is displayed',
       (WidgetTester tester) async {
     final firestore = FakeFirebaseFirestore();
     await firestore.collection('lockers').doc('Leonardo').set({
