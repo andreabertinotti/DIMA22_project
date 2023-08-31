@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:io';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:pro/Services/auth_service.dart';
 
 import '../../Utils/editProfileWrapper.dart';
 
@@ -15,6 +18,11 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    //final authService = Provider.of<AuthService>(context);
+    AuthService? authService = null;
+    if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+      authService = Provider.of<AuthService>(context);
+    }
     return widget.userData == null
         ? Center(child: Text('No data available.'))
         : Scaffold(
@@ -71,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ? EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.2,
                             right: MediaQuery.of(context).size.width * 0.2,
-                            top: 10)
+                            top: 0)
                         : EdgeInsets.only(left: 25, right: 25, top: 10),
                     padding: EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
@@ -105,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ? EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.2,
                             right: MediaQuery.of(context).size.width * 0.2,
-                            top: 25)
+                            top: 15)
                         : EdgeInsets.only(left: 25, right: 25, top: 25),
                     padding: EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
@@ -137,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ? EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.2,
                             right: MediaQuery.of(context).size.width * 0.2,
-                            top: 25)
+                            top: 15)
                         : EdgeInsets.only(left: 25, right: 25, top: 25),
                     padding: EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
@@ -169,7 +177,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ? EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.2,
                             right: MediaQuery.of(context).size.width * 0.2,
-                            top: 25)
+                            top: 15)
                         : EdgeInsets.only(left: 25, right: 25, top: 25),
                     padding: EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
@@ -193,7 +201,29 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 40),
+                  SizedBox(height: 30),
+                  ElevatedButton.icon(
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EditProfileWrapper()),
+                      );
+                    },
+                    style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.orange),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                                side: BorderSide(color: Colors.orange)))),
+                    icon: Icon(Icons.edit, color: Colors.white),
+                    label: Text(
+                      "Edit profile".toUpperCase(),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -201,15 +231,13 @@ class _ProfilePageState extends State<ProfilePage> {
             // Floating button to open edit profile page
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const EditProfileWrapper()),
-                );
+                //if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+                  authService?.signOut(); // Handle "Logout" button press
+                //}
               },
-              backgroundColor: Color(0xFFFF9800),
+              backgroundColor: Colors.orange[900],
               child: Icon(
-                Icons.edit,
+                Icons.logout_outlined,
                 color: Colors.white,
               ),
             ),

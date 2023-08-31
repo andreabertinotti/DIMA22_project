@@ -244,7 +244,7 @@ class _MenuState extends State<Menu> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      /* floatingActionButton: FloatingActionButton(
         onPressed: () {
           //if (!Platform.environment.containsKey('FLUTTER_TEST')) {
           authService?.signOut(); // Handle "Logout" button press
@@ -255,7 +255,7 @@ class _MenuState extends State<Menu> {
           Icons.logout,
           color: Colors.white,
         ),
-      ),
+      ), */
     );
 
     //   },
