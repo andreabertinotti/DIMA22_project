@@ -3,11 +3,10 @@ import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
 import "../../Services/database_service.dart";
-import "../../Services/functions.dart";
 
 class EditBooking extends StatefulWidget {
-  EditBooking({Key? key, required this.uid}) : super(key: key);
-
+  EditBooking(this.lockers, {Key? key, required this.uid}) : super(key: key);
+  dynamic lockers;
   String uid;
 
   @override
@@ -27,7 +26,7 @@ class _EditBookingState extends State<EditBooking> {
   DateTime dropoff = DateTime.now(); // Default drop-off date and time
   DateTime pickup = DateTime.now(); // Default pick-up date and time
   TimeOfDay dropoffTime =
-      TimeOfDay(hour: 12, minute: 12); // Default drop-off time
+      TimeOfDay(hour: 12, minute: 00); // Default drop-off time
   TimeOfDay pickupTime =
       TimeOfDay(hour: 23, minute: 59); // Default pick-up time
   String lockerName = 'Select a locker';
@@ -46,6 +45,7 @@ class _EditBookingState extends State<EditBooking> {
 
   String cellFare = '';
   String lockerAddress = '';
+  Map<String, String> lockersAddresses = {};
 
 // Update cell fare
   void _updateCellFare() async {
@@ -55,42 +55,63 @@ class _EditBookingState extends State<EditBooking> {
   }
 
   // Update locker address
-  void _updateLockerAddress() async {
-    lockerAddress = await retrieveLockerAddress(lockerName);
-    setState(() {});
+  void _updateLockerAddress() {
+    print('HEREEEE!! PHONE experimental');
+    if (lockerName != 'Select a locker') {
+      String? address = lockersAddresses[lockerName];
+      if (address != null) {
+        lockerAddress = address;
+      }
+    } else {
+      lockerAddress = '';
+    }
   }
 
-  //Future<String> retrieveCellFare(
-  //    String locker, String cell, int duration) async {
-  //  if (!bookingAuthorized) {
-  //    return '';
-  //  }
-  //  DocumentSnapshot cellSnapshot = await FirebaseFirestore.instance
-  //      .collection('lockers')
-  //      .doc(locker)
-  //      .collection('cells')
-  //      .doc(cell)
-  //      .get();
+  // List<DropdownMenuItem<String>> get dropdownLockers {
+  //   List<DropdownMenuItem<String>> menuLockers = [
+  //     DropdownMenuItem(
+  //         value: 'Select a locker', child: Text('Select a locker')),
+  //     DropdownMenuItem(value: "Leonardo", child: Text("Leonardo")),
+  //     DropdownMenuItem(value: "Duomo", child: Text("Duomo")),
+  //     DropdownMenuItem(value: "Bovisa", child: Text("Bovisa")),
+  //     DropdownMenuItem(value: "Centrale", child: Text("Centrale")),
+  //     DropdownMenuItem(value: "Garibaldi", child: Text("Garibaldi")),
+  //     DropdownMenuItem(value: "Darsena", child: Text("Darsena")),
+  //   ];
+  //   return menuLockers;
+  // }
 
-  //  double cellFare = cellSnapshot['cellFare'] as double;
-  //  String fare = (cellFare * duration).toStringAsFixed(2);
-  //  String renderedFare = '$fare€';
-  //  return renderedFare;
-  //}
+  List<DropdownMenuItem<String>> fetchLockers() {
+    // Replace 'lockers' with your Firestore collection name
 
-  List<DropdownMenuItem<String>> get dropdownLockers {
-    List<DropdownMenuItem<String>> menuLockers = [
-      DropdownMenuItem(
-          value: 'Select a locker', child: Text('Select a locker')),
-      DropdownMenuItem(value: "Leonardo", child: Text("Leonardo")),
-      DropdownMenuItem(value: "Duomo", child: Text("Duomo")),
-      DropdownMenuItem(value: "Bovisa", child: Text("Bovisa")),
-      DropdownMenuItem(value: "Centrale", child: Text("Centrale")),
-      DropdownMenuItem(value: "Garibaldi", child: Text("Garibaldi")),
-      DropdownMenuItem(value: "Darsena", child: Text("Darsena")),
-    ];
-    return menuLockers;
+    List<DropdownMenuItem<String>> items = [];
+    items.add(DropdownMenuItem<String>(
+      value: 'Select a locker',
+      child: Text('Select a locker'),
+    ));
+    for (dynamic doc in widget.lockers) {
+      String name = doc['lockerName'];
+      String address = doc['lockerAddress'];
+      items.add(DropdownMenuItem<String>(
+        value: name,
+        child: Text(name),
+      ));
+      lockersAddresses[name] = address;
+    }
+
+    return items;
   }
+
+  // void setLockersAddress() {
+  //   // Iterate through the documents in the snapshot
+  //   for (QueryDocumentSnapshot document in widget.lockers.docs) {
+  //     String name = document['lockerName'];
+  //     String address = document['lockerAddress'];
+//
+  //     // Adding key-value pair to the map
+  //     lockersAddresses[name] = address;
+  //   }
+  // }
 
   // Widget to build the Drop-off date and time fields
   Padding buildDropOffField() {
@@ -148,11 +169,12 @@ class _EditBookingState extends State<EditBooking> {
                     }
 
                     setState(() {
-                      dropoff = DateTime(
-                          newDate.year, newDate.month, newDate.day, 12, 0);
+                      dropoff = DateTime(newDate.year, newDate.month,
+                          newDate.day, dropoffTime.hour, 0);
                       pickup =
                           dropoff.add(Duration(hours: duration, minutes: -1));
                       availabilityChecked = false;
+                      cellFare = '';
                       occupied_cells = [];
                     });
                   },
@@ -180,6 +202,7 @@ class _EditBookingState extends State<EditBooking> {
                           dropoff.day, newValue!, 0);
                       dropoffTime = TimeOfDay(hour: newValue, minute: 0);
                       availabilityChecked = false;
+                      cellFare = '';
                       occupied_cells = [];
                     });
                   },
@@ -463,6 +486,7 @@ class _EditBookingState extends State<EditBooking> {
                 pickup = dropoff.add(Duration(hours: duration, minutes: -1));
                 availabilityChecked = false;
                 occupied_cells = [];
+                cellFare = '';
               });
             },
             items: dropdownDurations,
@@ -512,10 +536,11 @@ class _EditBookingState extends State<EditBooking> {
                   lockerName = newValue!;
                   availabilityChecked = false;
                   occupied_cells = [];
+                  cellFare = '';
                   _updateLockerAddress();
                 });
               },
-              items: dropdownLockers,
+              items: fetchLockers(), //dropdownLockers,
               isExpanded: true,
             ),
           ),

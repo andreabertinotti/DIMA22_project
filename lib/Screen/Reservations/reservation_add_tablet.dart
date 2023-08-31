@@ -5,11 +5,11 @@ import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
 import "../../Services/database_service.dart";
-import "../../Services/functions.dart";
 
 class AddBookingTablet extends StatefulWidget {
-  AddBookingTablet({Key? key, required this.uid}) : super(key: key);
-
+  AddBookingTablet(this.lockers, {Key? key, required this.uid})
+      : super(key: key);
+  dynamic lockers;
   String uid;
 
   @override
@@ -30,7 +30,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
   DateTime dropoff = DateTime.now(); // Default drop-off date and time
   DateTime pickup = DateTime.now(); // Default pick-up date and time
   TimeOfDay dropoffTime =
-      TimeOfDay(hour: 12, minute: 12); // Default drop-off time
+      TimeOfDay(hour: 12, minute: 00); // Default drop-off time
   TimeOfDay pickupTime =
       TimeOfDay(hour: 23, minute: 59); // Default pick-up time
   String lockerName = 'Select a locker';
@@ -50,6 +50,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
 
   String cellFare = '';
   String lockerAddress = '';
+  Map<String, String> lockersAddresses = {};
 
   // Update cell fare
   void _updateCellFare() async {
@@ -59,9 +60,16 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
   }
 
   // Update locker address
-  void _updateLockerAddress() async {
-    lockerAddress = await retrieveLockerAddress(lockerName);
-    setState(() {});
+  void _updateLockerAddress() {
+    print('HEREEEE!! TABLET');
+    if (lockerName != 'Select a locker') {
+      String? address = lockersAddresses[lockerName];
+      if (address != null) {
+        lockerAddress = address;
+      }
+    } else {
+      lockerAddress = '';
+    }
   }
 
   /*
@@ -72,18 +80,39 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
   }
   */
 
-  List<DropdownMenuItem<String>> get dropdownLockers {
-    List<DropdownMenuItem<String>> menuLockers = [
-      DropdownMenuItem(
-          value: 'Select a locker', child: Text('Select a locker')),
-      DropdownMenuItem(value: "Leonardo", child: Text("Leonardo")),
-      DropdownMenuItem(value: "Duomo", child: Text("Duomo")),
-      DropdownMenuItem(value: "Bovisa", child: Text("Bovisa")),
-      DropdownMenuItem(value: "Centrale", child: Text("Centrale")),
-      DropdownMenuItem(value: "Garibaldi", child: Text("Garibaldi")),
-      DropdownMenuItem(value: "Darsena", child: Text("Darsena")),
-    ];
-    return menuLockers;
+  //List<DropdownMenuItem<String>> get dropdownLockers {
+  //  List<DropdownMenuItem<String>> menuLockers = [
+  //    DropdownMenuItem(
+  //        value: 'Select a locker', child: Text('Select a locker')),
+  //    DropdownMenuItem(value: "Leonardo", child: Text("Leonardo")),
+  //    DropdownMenuItem(value: "Duomo", child: Text("Duomo")),
+  //    DropdownMenuItem(value: "Bovisa", child: Text("Bovisa")),
+  //    DropdownMenuItem(value: "Centrale", child: Text("Centrale")),
+  //    DropdownMenuItem(value: "Garibaldi", child: Text("Garibaldi")),
+  //    DropdownMenuItem(value: "Darsena", child: Text("Darsena")),
+  //  ];
+  //  return menuLockers;
+  //}
+
+  List<DropdownMenuItem<String>> fetchLockers() {
+    // Replace 'lockers' with your Firestore collection name
+
+    List<DropdownMenuItem<String>> items = [];
+    items.add(DropdownMenuItem<String>(
+      value: 'Select a locker',
+      child: Text('Select a locker'),
+    ));
+    for (dynamic doc in widget.lockers) {
+      String name = doc['lockerName'];
+      String address = doc['lockerAddress'];
+      items.add(DropdownMenuItem<String>(
+        value: name,
+        child: Text(name),
+      ));
+      lockersAddresses[name] = address;
+    }
+
+    return items;
   }
 
   /*
@@ -163,11 +192,12 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                     }
 
                     setState(() {
-                      dropoff = DateTime(
-                          newDate.year, newDate.month, newDate.day, 12, 0);
+                      dropoff = DateTime(newDate.year, newDate.month,
+                          newDate.day, dropoffTime.hour, 0);
                       pickup =
                           dropoff.add(Duration(hours: duration, minutes: -1));
                       availabilityChecked = false;
+                      cellFare = '';
                       occupied_cells = [];
                     });
                   },
@@ -196,6 +226,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                           dropoff.day, newValue!, 0);
                       dropoffTime = TimeOfDay(hour: newValue, minute: 0);
                       availabilityChecked = false;
+                      cellFare = '';
                       occupied_cells = [];
                     });
                   },
@@ -521,6 +552,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                 pickup = dropoff.add(Duration(hours: duration, minutes: -1));
                 availabilityChecked = false;
                 occupied_cells = [];
+                cellFare = '';
               });
             },
             items: dropdownDurations,
@@ -576,10 +608,11 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                   lockerName = newValue!;
                   availabilityChecked = false;
                   occupied_cells = [];
+                  cellFare = '';
                   _updateLockerAddress();
                 });
               },
-              items: dropdownLockers,
+              items: fetchLockers(), //dropdownLockers,
               isExpanded: true,
               style: TextStyle(fontSize: 20, color: Colors.black),
               underline: Container(), // Remove the default underline
@@ -769,7 +802,8 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                   ],
                 )),
                 Flexible(
-                    child: Container(
+                  child: Container(
+                    height: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.orange[100],
                     boxShadow: [
@@ -784,82 +818,80 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                       )
                     ],
                   ),
-                  child: Flexible(
+                  child: SingleChildScrollView(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.045,
-                              bottom:
-                                  MediaQuery.of(context).size.height * 0.075),
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          height: MediaQuery.of(context).size.width * 0.3,
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: Colors.orange, width: 3.0),
-                              image: DecorationImage(
-                                  image: AssetImage(lockerName ==
-                                          'Select a locker'
-                                      ? 'assets/images/square/appLogo-placeholder-square.jpg'
-                                      : 'assets/images/square/$lockerName-locker-image-square.jpg'),
-                                  fit: BoxFit.cover)),
-                        ),
-                        Divider(
-                          thickness: 1,
-                          color: Colors.black,
-                          indent: MediaQuery.of(context).size.width * 0.035,
-                          endIndent: MediaQuery.of(context).size.width * 0.035,
-                        ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                  MediaQuery.of(context).size.width * 0.035,
-                                  MediaQuery.of(context).size.width * 0.015,
-                                  MediaQuery.of(context).size.width * 0.035,
-                                  MediaQuery.of(context).size.width * 0.035),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Locker Address:",
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.045,
+                            bottom: MediaQuery.of(context).size.height * 0.075),
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        height: MediaQuery.of(context).size.width * 0.3,
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.orange, width: 3.0),
+                            image: DecorationImage(
+                                image: AssetImage(lockerName ==
+                                        'Select a locker'
+                                    ? 'assets/images/square/appLogo-placeholder-square.jpg'
+                                    : 'assets/images/square/$lockerName-locker-image-square.jpg'),
+                                fit: BoxFit.cover)),
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: Colors.black,
+                        indent: MediaQuery.of(context).size.width * 0.035,
+                        endIndent: MediaQuery.of(context).size.width * 0.035,
+                      ),
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.width * 0.035,
+                                MediaQuery.of(context).size.width * 0.015,
+                                MediaQuery.of(context).size.width * 0.035,
+                                MediaQuery.of(context).size.width * 0.035),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Locker Address:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18)),
+                                    Flexible(
+                                      child: Text(lockerAddress,
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold,
+                                              fontWeight: FontWeight.w400,
                                               fontSize: 18)),
-                                      Flexible(
-                                        child: Text(lockerAddress,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 18)),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Price to pay:",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18)),
-                                      Text(cellFare,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18))
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Price to pay:",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18)),
+                                    Text(cellFare,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18))
+                                  ],
+                                ),
+                              ],
                             ),
-                          ],
-                        )
-                      ],
-                    ),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                ))
+                )))
               ],
             )));
   }
