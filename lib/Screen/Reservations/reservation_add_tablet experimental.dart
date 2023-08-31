@@ -802,7 +802,8 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                   ],
                 )),
                 Flexible(
-                    child: Container(
+                  child: Container(
+                    height: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.orange[100],
                     boxShadow: [
@@ -817,7 +818,8 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                       )
                     ],
                   ),
-                  child: Column(
+                  child: SingleChildScrollView(
+                    child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
@@ -889,7 +891,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                       )
                     ],
                   ),
-                ))
+                )))
               ],
             )));
   }
