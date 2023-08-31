@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pro/Services/database_service.dart';
-import '../Screen/Reservations/reservation_add_tablet experimental.dart';
+import '../Screen/Reservations/reservation_add_tablet.dart';
 
 // wrapping a widget: if user is logged in, wrapped widget will be returned, else LoginScreen() will
 
