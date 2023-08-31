@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
 import "package:intl/intl.dart";
 import "../../Services/database_service.dart";
+import "../../Services/functions.dart";
 
 class AddLockerBookingTablet extends StatefulWidget {
   final dynamic document;
@@ -521,21 +522,6 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
     );
   }
 
-  List<String> generateReservedSlots(
-      DateTime dropoffDate, int dropoffHour, int duration) {
-    // print(dropoffHour);
-    List<String> reservedSlots = [];
-
-    for (int i = 0; i < duration; i++) {
-      DateTime slotDateTime = dropoffDate.add(Duration(hours: i));
-      String slot = DateFormat('yyyyMMddHH').format(slotDateTime);
-      reservedSlots.add(slot);
-      //print(slot);
-    }
-
-    return reservedSlots;
-  }
-
   Padding buildLockerAddressField() {
     String lockerName = widget.document['lockerName'];
 
@@ -633,15 +619,6 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                                         side:
                                             BorderSide(color: Colors.orange)))),
                             onPressed: () async {
-                              //  if (baggageSize == 'Select a size') {
-                              //    // Show error message for baggage size
-                              //    ScaffoldMessenger.of(context)
-                              //        .showSnackBar(SnackBar(
-                              //      content: Text('Please select a baggage size'),
-                              //    ));
-                              //    return;
-                              //  }
-
                               if (bookingAuthorized == false) {
                                 // Show error message for locker name
                                 _bookingKey.currentState?.showSnackBar(SnackBar(

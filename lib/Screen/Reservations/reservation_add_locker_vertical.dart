@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import "../../Services/auth_service.dart";
 import "../../Services/database_service.dart";
+import "../../Services/functions.dart";
 
 class EditLockerBooking extends StatefulWidget {
   final dynamic document;
@@ -486,21 +487,6 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
         ],
       ),
     );
-  }
-
-  List<String> generateReservedSlots(
-      DateTime dropoffDate, int dropoffHour, int duration) {
-    // print(dropoffHour);
-    List<String> reservedSlots = [];
-
-    for (int i = 0; i < duration; i++) {
-      DateTime slotDateTime = dropoffDate.add(Duration(hours: i));
-      String slot = DateFormat('yyyyMMddHH').format(slotDateTime);
-      reservedSlots.add(slot);
-      //print(slot);
-    }
-
-    return reservedSlots;
   }
 
   Padding buildLockerAddressField() {

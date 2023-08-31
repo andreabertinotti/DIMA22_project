@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import "package:intl/intl.dart";
 
 import "../../Services/database_service.dart";
+import "../../Services/functions.dart";
 
 class AddBookingTablet extends StatefulWidget {
   AddBookingTablet(this.lockers, {Key? key, required this.uid})
@@ -79,20 +80,6 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
     getUser(); // Call the method to retrieve booking details from the database
   }
   */
-
-  //List<DropdownMenuItem<String>> get dropdownLockers {
-  //  List<DropdownMenuItem<String>> menuLockers = [
-  //    DropdownMenuItem(
-  //        value: 'Select a locker', child: Text('Select a locker')),
-  //    DropdownMenuItem(value: "Leonardo", child: Text("Leonardo")),
-  //    DropdownMenuItem(value: "Duomo", child: Text("Duomo")),
-  //    DropdownMenuItem(value: "Bovisa", child: Text("Bovisa")),
-  //    DropdownMenuItem(value: "Centrale", child: Text("Centrale")),
-  //    DropdownMenuItem(value: "Garibaldi", child: Text("Garibaldi")),
-  //    DropdownMenuItem(value: "Darsena", child: Text("Darsena")),
-  //  ];
-  //  return menuLockers;
-  //}
 
   List<DropdownMenuItem<String>> fetchLockers() {
     // Replace 'lockers' with your Firestore collection name
@@ -565,21 +552,6 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
     );
   }
 
-  List<String> generateReservedSlots(
-      DateTime dropoffDate, int dropoffHour, int duration) {
-    // print(dropoffHour);
-    List<String> reservedSlots = [];
-
-    for (int i = 0; i < duration; i++) {
-      DateTime slotDateTime = dropoffDate.add(Duration(hours: i));
-      String slot = DateFormat('yyyyMMddHH').format(slotDateTime);
-      reservedSlots.add(slot);
-      //print(slot);
-    }
-
-    return reservedSlots;
-  }
-
   // Widget to build the Locker Address field
   Padding buildLockerAddressField() {
     return Padding(
@@ -802,96 +774,105 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                   ],
                 )),
                 Flexible(
-                  child: Container(
-                    height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.orange[100],
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 15.0, // soften the shadow
-                        spreadRadius: 5.0, //extend the shadow
-                        offset: Offset(
-                          5.0, // Move to right 5  horizontally
-                          5.0, // Move to bottom 5 Vertically
-                        ),
-                      )
-                    ],
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.045,
-                            bottom: MediaQuery.of(context).size.height * 0.075),
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.width * 0.3,
+                    child: Container(
+                        height: double.infinity,
                         decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.orange, width: 3.0),
-                            image: DecorationImage(
-                                image: AssetImage(lockerName ==
-                                        'Select a locker'
-                                    ? 'assets/images/square/appLogo-placeholder-square.jpg'
-                                    : 'assets/images/square/$lockerName-locker-image-square.jpg'),
-                                fit: BoxFit.cover)),
-                      ),
-                      Divider(
-                        thickness: 1,
-                        color: Colors.black,
-                        indent: MediaQuery.of(context).size.width * 0.035,
-                        endIndent: MediaQuery.of(context).size.width * 0.035,
-                      ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                MediaQuery.of(context).size.width * 0.035,
-                                MediaQuery.of(context).size.width * 0.015,
-                                MediaQuery.of(context).size.width * 0.035,
-                                MediaQuery.of(context).size.width * 0.035),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("Locker Address:",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18)),
-                                    Flexible(
-                                      child: Text(lockerAddress,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 18)),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("Price to pay:",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18)),
-                                    Text(cellFare,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18))
-                                  ],
-                                ),
-                              ],
-                            ),
+                          color: Colors.orange[100],
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 15.0, // soften the shadow
+                              spreadRadius: 5.0, //extend the shadow
+                              offset: Offset(
+                                5.0, // Move to right 5  horizontally
+                                5.0, // Move to bottom 5 Vertically
+                              ),
+                            )
+                          ],
+                        ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height *
+                                        0.045,
+                                    bottom: MediaQuery.of(context).size.height *
+                                        0.075),
+                                width: MediaQuery.of(context).size.width * 0.3,
+                                height: MediaQuery.of(context).size.width * 0.3,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.orange, width: 3.0),
+                                    image: DecorationImage(
+                                        image: AssetImage(lockerName ==
+                                                'Select a locker'
+                                            ? 'assets/images/square/appLogo-placeholder-square.jpg'
+                                            : 'assets/images/square/$lockerName-locker-image-square.jpg'),
+                                        fit: BoxFit.cover)),
+                              ),
+                              Divider(
+                                thickness: 1,
+                                color: Colors.black,
+                                indent:
+                                    MediaQuery.of(context).size.width * 0.035,
+                                endIndent:
+                                    MediaQuery.of(context).size.width * 0.035,
+                              ),
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        MediaQuery.of(context).size.width *
+                                            0.035,
+                                        MediaQuery.of(context).size.width *
+                                            0.015,
+                                        MediaQuery.of(context).size.width *
+                                            0.035,
+                                        MediaQuery.of(context).size.width *
+                                            0.035),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text("Locker Address:",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18)),
+                                            Flexible(
+                                              child: Text(lockerAddress,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 18)),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text("Price to pay:",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18)),
+                                            Text(cellFare,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18))
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
                           ),
-                        ],
-                      )
-                    ],
-                  ),
-                )))
+                        )))
               ],
             )));
   }
