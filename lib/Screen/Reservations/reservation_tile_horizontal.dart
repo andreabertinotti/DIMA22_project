@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -83,8 +85,7 @@ class ReservationTileHorizontal extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Flexible(
-                    child: Padding(
+                  Padding(
                       padding: EdgeInsets.fromLTRB(
                           MediaQuery.of(context).size.width * 0.075,
                           MediaQuery.of(context).size.width * 0.01,
@@ -110,26 +111,41 @@ class ReservationTileHorizontal extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(
                         MediaQuery.of(context).size.width * 0.075,
                         MediaQuery.of(context).size.width * 0.01,
                         MediaQuery.of(context).size.width * 0.075,
                         0),
-                    child: FittedBox(
-                      child: Text(
-                        "Address: $address",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          flex: 3,
+                          child: Text("Address: $address",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                        overflow: TextOverflow.ellipsis,
+                        Flexible(
+                          flex: 1,
+                          child: Text(
+                            "Price: $price",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.orange[700],
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        ),
+                      ]
                       ),
-                    ),
                   ),
-                  Padding(
+                  /* Padding(
                     padding: EdgeInsets.fromLTRB(
                         MediaQuery.of(context).size.width * 0.075,
                         MediaQuery.of(context).size.width * 0.01,
@@ -145,7 +161,7 @@ class ReservationTileHorizontal extends StatelessWidget {
                       ),
                       overflow: TextOverflow.ellipsis,
                     )),
-                  ),
+                  ), */
                 ],
               )),
         ),
