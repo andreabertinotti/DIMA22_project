@@ -4,8 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pro/Screen/Reservations/reservation_tile_horizontal.dart';
-import 'package:pro/Screen/Reservations/reservations_history.dart';
-import 'package:pro/Screen/Reservations/reservation_add_tablet.dart';
 import 'package:pro/Utils/reservationAddTabletWrapper.dart';
 import 'package:pro/Utils/reservationsHistoryWrapper.dart';
 
