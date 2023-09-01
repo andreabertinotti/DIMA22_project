@@ -45,6 +45,15 @@ void main() {
 
     // Verify if the "My Reservations" title is displayed
     expect(find.text('My Reservations'), findsOneWidget);
+    // expect icon add reservation
+    expect(find.byIcon(Icons.add), findsOneWidget);
+    expect(find.text('Add booking'), findsOneWidget);
+    // expect icon history
+    expect(find.byIcon(Icons.history), findsOneWidget);
+    expect(find.text('History'), findsOneWidget);
+
+    expect(find.text('Please tap on a reservation to show details'),
+        findsOneWidget);
     expect(
         find.text('from ${DateFormat('dd/MM/yyyy').format(start1.toDate())}'),
         findsOneWidget);

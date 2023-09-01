@@ -48,6 +48,10 @@ void main() {
     expect(find.text('Reservation @ Leonardo'), findsOneWidget);
     expect(find.text('from ${DateFormat('dd/MM/yyyy').format(start.toDate())}'),
         findsOneWidget);
+    // expect icon add reservation
+    expect(find.byIcon(Icons.add), findsOneWidget);
+    // expect icon history
+    expect(find.byIcon(Icons.history), findsOneWidget);
     // expect to see the number next to the reservation item
     expect(find.text(sampleReservations.length.toString()), findsOneWidget);
 

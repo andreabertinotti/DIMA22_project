@@ -38,34 +38,17 @@ class _EditProfileState extends State<EditProfile> {
       isLoading = true; //page starts loading content
     });
 
-    //  try {
-    // Retrieve the user document from Firestore using the current user's uid
-    //final userUid = FirebaseAuth.instance.currentUser?.uid;
-    //final userQuerySnapshot = await FirebaseFirestore.instance
-    //    .collection('users')
-    //    .where('userUID', isEqualTo: userUid)
-    //    .get();
-
     if (widget.userData != null) {
-      // Document with userUID exists, update the TextEditingController values
-      //final userDoc = userQuerySnapshot.docs.first;
-      //final userData = userDoc;
-
       nameController.text = widget.userData['name'] ?? '';
       surnameController.text = widget.userData['surname'] ?? '';
       phoneController.text = widget.userData['phone'] ?? '';
       addressController.text = widget.userData['address'] ?? '';
-      //emailController.text = FirebaseAuth.instance.currentUser?.email ?? '';
     } else {
       nameController.text = 'Mario';
       surnameController.text = 'Rossi';
       phoneController.text = '1234567890';
       addressController.text = 'Kings street 104, London, UK';
-      //emailController.text = 'email';
     }
-    //  } catch (e) {
-    //    print('Error fetching user data: $e');
-    //  }
 
     setState(() {
       isLoading = false; //Page ends loading content
@@ -87,7 +70,8 @@ class _EditProfileState extends State<EditProfile> {
           cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Update name",
-            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange, width: 2.0)),
             errorText: _nameValid ? null : "Name is too short",
           ),
         )
@@ -110,7 +94,8 @@ class _EditProfileState extends State<EditProfile> {
           cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Update surname",
-            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange, width: 2.0)),
             errorText: _surnameValid ? null : "Surname is too short",
           ),
         )
@@ -133,7 +118,8 @@ class _EditProfileState extends State<EditProfile> {
           cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Update phone number",
-            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange, width: 2.0)),
             errorText: _numberValid ? null : "Wrong number format",
           ),
         )
@@ -156,7 +142,8 @@ class _EditProfileState extends State<EditProfile> {
           cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Update address",
-            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange, width: 2.0)),
             errorText: _addressValid ? null : "Address too long",
           ),
         )
@@ -207,7 +194,10 @@ class _EditProfileState extends State<EditProfile> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Data Updated', style: TextStyle(color: Colors.orange),),
+            title: Text(
+              'Data Updated',
+              style: TextStyle(color: Colors.orange),
+            ),
             content: Text('Your profile has been updated!'),
             actions: [
               TextButton(
@@ -217,7 +207,10 @@ class _EditProfileState extends State<EditProfile> {
                   //Navigator.pushReplacement(context,
                   //  MaterialPageRoute(builder: (context) => MyHome()));
                 },
-                child: Text('OK', style: TextStyle(color: Colors.orange),),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.orange),
+                ),
               ),
             ],
           );
@@ -229,14 +222,20 @@ class _EditProfileState extends State<EditProfile> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Error', style: TextStyle(color: Colors.orange),),
+            title: Text(
+              'Error',
+              style: TextStyle(color: Colors.orange),
+            ),
             content: Text('An error occurred while updating your data.'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.orange),),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.orange),
+                ),
               ),
             ],
           );
@@ -316,17 +315,19 @@ class _EditProfileState extends State<EditProfile> {
                             onPressed: () {
                               setState(() {
                                 //Check all fields' correctness before saving
-                                nameController.text.length < 2 
+                                nameController.text.length < 2
                                     ? _nameValid = false
                                     : _nameValid = true;
                                 surnameController.text.length < 2
                                     ? _surnameValid = false
                                     : _surnameValid = true;
                                 //Check phone number correctness through regular expression
-                                RegExp(r'^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$').hasMatch(phoneController.text)
+                                RegExp(r'^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$')
+                                        .hasMatch(phoneController.text)
                                     ? _numberValid = true
                                     : _numberValid = false;
-                                addressController.text.length < 3 || addressController.text.length > 69
+                                addressController.text.length < 3 ||
+                                        addressController.text.length > 69
                                     ? _addressValid = false
                                     : _addressValid = true;
                               });
@@ -338,18 +339,24 @@ class _EditProfileState extends State<EditProfile> {
                                   _addressValid &&
                                   _emailValid) {
                                 updateData(context);
-                              }
-                              else{
+                              } else {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: Text("Error!", style: TextStyle(color: Colors.orange),),
+                                      title: Text(
+                                        "Error!",
+                                        style: TextStyle(color: Colors.orange),
+                                      ),
                                       content: Text(
                                           "Please check the inserted values!"),
                                       actions: <Widget>[
                                         TextButton(
-                                          child: Text("OK", style: TextStyle(color: Colors.orange),),
+                                          child: Text(
+                                            "OK",
+                                            style:
+                                                TextStyle(color: Colors.orange),
+                                          ),
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
