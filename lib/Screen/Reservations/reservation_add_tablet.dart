@@ -62,7 +62,6 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
 
   // Update locker address
   void _updateLockerAddress() {
-    print('HEREEEE!! TABLET');
     if (lockerName != 'Select a locker') {
       String? address = lockersAddresses[lockerName];
       if (address != null) {
@@ -670,7 +669,7 @@ class _AddBookingTabletState extends State<AddBookingTablet> {
                                   _addBookingKey.currentState
                                       ?.showSnackBar(SnackBar(
                                     content: Text(
-                                        'Please complete your reservation before saving it!'),
+                                        'Please complete your reservation before saving it'),
                                     backgroundColor: Colors.red,
                                   ));
                                   return;

@@ -26,13 +26,89 @@ void main() {
     expect(find.text('Locker name:'), findsOneWidget);
     expect(find.text('Drop-off date and time:'), findsOneWidget);
     expect(find.text('Booking duration:'), findsOneWidget);
+    expect(find.text('Check available cells:'), findsOneWidget);
     expect(find.text('Fill the form'), findsOneWidget);
     expect(find.text('Select available cell:'), findsOneWidget);
+    expect(find.text('Locker address:'), findsOneWidget);
     expect(find.text('Price to pay:'), findsOneWidget);
     expect(find.byType(ElevatedButton),
         findsNWidgets(3)); // Save booking and tooltip buttons
+    expect(find.text('SAVE BOOKING'), findsOneWidget);
   });
 
+  testWidgets('User tries to save booking without selecting a locker',
+      (WidgetTester tester) async {
+    final List<Map<String, dynamic>> sampleLockers = [
+      {
+        'lockerName': 'Leonardo',
+        'lockerAddress': 'Piazza Leonardo da Vinci 32, Milano',
+      },
+      {
+        'lockerName': 'Duomo',
+        'lockerAddress': 'Piazza Duomo 21, Milano',
+      },
+    ];
+
+    await tester.pumpWidget(
+        MaterialApp(home: EditBooking(sampleLockers, uid: 'test_uid')));
+
+    // Find the ListView widget
+    final scrollableFinder = find.byType(SingleChildScrollView);
+
+    // Scroll to the bottom by dragging from the top to the bottom
+    await tester.drag(scrollableFinder, const Offset(0.0, -200.0));
+    await tester.pump();
+
+    // Tap the button for checking availability without having selected a locker
+    await tester.tap(find.text('SAVE BOOKING'));
+    await tester.pumpAndSettle();
+
+    // Verify that the AlertDialog is shown
+    expect(find.byType(SnackBar), findsOneWidget);
+    // Verify that the title text is present
+    expect(find.text('Please select a locker'), findsOneWidget);
+  });
+
+  testWidgets(
+      'User tries to save booking after selecting a locker without filling information',
+      (WidgetTester tester) async {
+    final List<Map<String, dynamic>> sampleLockers = [
+      {
+        'lockerName': 'Leonardo',
+        'lockerAddress': 'Piazza Leonardo da Vinci 32, Milano',
+      },
+      {
+        'lockerName': 'Duomo',
+        'lockerAddress': 'Piazza Duomo 21, Milano',
+      },
+    ];
+
+    await tester.pumpWidget(
+        MaterialApp(home: EditBooking(sampleLockers, uid: 'test_uid')));
+
+// Select a locker from the dropdown
+    await tester.tap(find.text('Select a locker'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Leonardo'));
+    await tester.pumpAndSettle();
+
+    // Find the scrollable widget
+    final scrollableFinder = find.byType(SingleChildScrollView);
+
+    // Scroll to the bottom by dragging from the top to the bottom
+    await tester.drag(scrollableFinder, const Offset(0.0, -200.0));
+    await tester.pump();
+
+    // Tap the button for checking availability without having selected a locker
+    await tester.tap(find.text('SAVE BOOKING'));
+    await tester.pumpAndSettle();
+
+    // Verify that the AlertDialog is shown
+    expect(find.byType(SnackBar), findsOneWidget);
+    // Verify that the title text is present
+    expect(find.text('Please complete your reservation before saving it'),
+        findsOneWidget);
+  });
   testWidgets('User tries to check availability without selecting a locker',
       (WidgetTester tester) async {
     final List<Map<String, dynamic>> sampleLockers = [
@@ -62,7 +138,6 @@ void main() {
             'You need to select the locker, date and a valid duration before checking availability.'),
         findsOneWidget);
   });
-
   testWidgets(
       'User tries to check availability with a locker selected but duration left to 0 (Fill the form is displayed instead of check availability)',
       (WidgetTester tester) async {
@@ -264,44 +339,6 @@ void main() {
             'Do you want to check for availability in the selected date and locker?'),
         findsOneWidget);
   });
-
-  // Write more test cases for different interactions and scenarios
-  // testWidgets('Selecting a locker updates available cells',
-  //     (WidgetTester tester) async {
-  //   final List<Map<String, dynamic>> sampleLockers = [
-  //     {
-  //       'lockerName': 'Leonardo',
-  //       'lockerAddress': 'Piazza Leonardo da Vinci 32, Milano',
-  //     },
-  //     {
-  //       'lockerName': 'Duomo',
-  //       'lockerAddress': 'Piazza Duomo 21, Milano',
-  //     },
-  //   ];
-  //   await tester.pumpWidget(
-  //       MaterialApp(home: EditBooking(sampleLockers, uid: 'test_uid')));
-//
-  //   // Select a locker from the dropdown
-  //   await tester.tap(find.text('Select a locker'));
-  //   await tester.pumpAndSettle();
-  //   await tester.tap(find.text('Leonardo'));
-  //   await tester.pumpAndSettle();
-//
-  //   // Check if available cell dropdown is updated
-  //   expect(find.text('Select available cell:'), findsOneWidget);
-//
-  //   await tester.tap(find.text('0 hours'));
-  //   await tester.pumpAndSettle();
-  //   await tester.tap(find.text('2 hours'));
-  //   await tester.pumpAndSettle();
-//
-  //   expect(find.text('Check availability'), findsOneWidget);
-//
-  //   await tester.tap(find.text('Check availability'));
-  //   await tester.pumpAndSettle();
-  //   //expect(find.text('cell 2 (small)'), findsOneWidget);
-  //   //expect(find.text('cell 3 (large)'), findsOneWidget);
-  // });
 }
 
-// flutter test test/WidgetTests/reservationAddTests/reservation_add_experimental_test.dart
+// flutter test test/WidgetTests/reservationAddTests/reservation_add_vertical_test.dart

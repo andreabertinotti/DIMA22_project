@@ -623,7 +623,7 @@ class _AddLockerBookingTabState extends State<AddLockerBookingTablet> {
                                 // Show error message for locker name
                                 _bookingKey.currentState?.showSnackBar(SnackBar(
                                   content: Text(
-                                      'Please complete your reservation before saving it!'),
+                                      'Please complete your reservation before saving it'),
                                   backgroundColor: Colors.red,
                                 ));
                                 return;

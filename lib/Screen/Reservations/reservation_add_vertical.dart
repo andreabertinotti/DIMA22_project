@@ -57,7 +57,6 @@ class _EditBookingState extends State<EditBooking> {
 
   // Update locker address
   void _updateLockerAddress() {
-    print('HEREEEE!! PHONE experimental');
     if (lockerName != 'Select a locker') {
       String? address = lockersAddresses[lockerName];
       if (address != null) {
@@ -67,20 +66,6 @@ class _EditBookingState extends State<EditBooking> {
       lockerAddress = '';
     }
   }
-
-  // List<DropdownMenuItem<String>> get dropdownLockers {
-  //   List<DropdownMenuItem<String>> menuLockers = [
-  //     DropdownMenuItem(
-  //         value: 'Select a locker', child: Text('Select a locker')),
-  //     DropdownMenuItem(value: "Leonardo", child: Text("Leonardo")),
-  //     DropdownMenuItem(value: "Duomo", child: Text("Duomo")),
-  //     DropdownMenuItem(value: "Bovisa", child: Text("Bovisa")),
-  //     DropdownMenuItem(value: "Centrale", child: Text("Centrale")),
-  //     DropdownMenuItem(value: "Garibaldi", child: Text("Garibaldi")),
-  //     DropdownMenuItem(value: "Darsena", child: Text("Darsena")),
-  //   ];
-  //   return menuLockers;
-  // }
 
   List<DropdownMenuItem<String>> fetchLockers() {
     // Replace 'lockers' with your Firestore collection name
@@ -102,17 +87,6 @@ class _EditBookingState extends State<EditBooking> {
 
     return items;
   }
-
-  // void setLockersAddress() {
-  //   // Iterate through the documents in the snapshot
-  //   for (QueryDocumentSnapshot document in widget.lockers.docs) {
-  //     String name = document['lockerName'];
-  //     String address = document['lockerAddress'];
-//
-  //     // Adding key-value pair to the map
-  //     lockersAddresses[name] = address;
-  //   }
-  // }
 
   // Widget to build the Drop-off date and time fields
   Padding buildDropOffField() {
@@ -365,8 +339,6 @@ class _EditBookingState extends State<EditBooking> {
 
           // Call the auxiliary functions to update fee state variables
           _updateCellFare();
-
-          //print('cell fare: ' + cellFare);
         });
       },
       items: dropdownCells,
@@ -595,7 +567,7 @@ class _EditBookingState extends State<EditBooking> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Locker Address:",
+                          Text("Locker address:",
                               style: TextStyle(fontWeight: FontWeight.bold)),
                           Text(lockerAddress,
                               style: TextStyle(fontWeight: FontWeight.w400))
@@ -642,7 +614,7 @@ class _EditBookingState extends State<EditBooking> {
                           // Show error message for locker name
                           _addBookingKey.currentState?.showSnackBar(SnackBar(
                             content: Text(
-                                'Please complete your reservation before saving it!'),
+                                'Please complete your reservation before saving it'),
                             backgroundColor: Colors.red,
                           ));
                           return;

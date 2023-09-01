@@ -2,9 +2,6 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
 import "package:intl/intl.dart";
-import 'package:provider/provider.dart';
-
-import "../../Services/auth_service.dart";
 import "../../Services/database_service.dart";
 import "../../Services/functions.dart";
 
@@ -345,10 +342,6 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
 
           // Call the auxiliary functions to update fee state variables
           _updateCellFare();
-          //_updateLockerFee();
-          //print(widget.document['lockerName'] + selectedCell);
-
-          //    print('cell fare: ' + cellFare);
         });
       },
       items: dropdownCells,
@@ -615,28 +608,11 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
                                       borderRadius: BorderRadius.circular(18),
                                       side: BorderSide(color: Colors.orange)))),
                       onPressed: () async {
-                        // Check for valid selections in dropdowns and date/time fields
-                        //if (lockerName == 'Select a locker') {
-                        //  // Show error message for locker name
-                        //  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //    content: Text('Please select a locker'),
-                        //  ));
-                        //  return;
-                        //}
-
-                        // if (baggageSize == 'Select a size') {
-                        //   // Show error message for baggage size
-                        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        //     content: Text('Please select a baggage size'),
-                        //   ));
-                        //   return;
-                        // }
-
                         if (bookingAuthorized == false) {
                           // Show error message for locker name
                           _bookingKey.currentState?.showSnackBar(SnackBar(
                             content: Text(
-                                'Please complete your reservation before saving it!'),
+                                'Please complete your reservation before saving it'),
                             backgroundColor: Colors.red,
                           ));
                           return;
@@ -729,13 +705,5 @@ class _EditLockerBookingState extends State<EditLockerBooking> {
             ),
           ),
         ));
-    //     } else {
-    //       return const Scaffold(
-    //         body: Center(
-    //           child: CircularProgressIndicator(),
-    //         ),
-    //       );
-    //     }
-    //   });
   }
 }

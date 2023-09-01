@@ -30,6 +30,31 @@ void main() {
         find.byType(ElevatedButton),
         findsNWidgets(
             4)); // Save booking and tooltip buttons + pre-selected locker button
+    expect(find.text('SAVE BOOKING'), findsOneWidget);
+  });
+
+  testWidgets(
+      'HORIZONTAL User tries to save booking after selecting a locker without filling information',
+      (WidgetTester tester) async {
+    final firestore = FakeFirebaseFirestore();
+    await firestore.collection('lockers').doc('Leonardo').set({
+      'lockerName': 'Leonardo',
+      'lockerAddress': 'via Roma 1, Milano',
+    });
+    final document =
+        await firestore.collection('lockers').doc('Leonardo').get();
+    await tester.pumpWidget(
+        MaterialApp(home: AddLockerBookingTablet(document, uid: 'test_uid')));
+
+    // Tap the button for checking availability without having selected a locker
+    await tester.tap(find.text('SAVE BOOKING'));
+    await tester.pumpAndSettle();
+
+    // Verify that the AlertDialog is shown
+    expect(find.byType(SnackBar), findsOneWidget);
+    // Verify that the title text is present
+    expect(find.text('Please complete your reservation before saving it'),
+        findsOneWidget);
   });
 
   // Write more test cases for different interactions and scenarios

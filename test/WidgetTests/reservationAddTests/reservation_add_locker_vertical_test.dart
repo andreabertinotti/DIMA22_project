@@ -45,6 +45,36 @@ void main() {
     await tester.pumpWidget(
         MaterialApp(home: EditLockerBooking(document, uid: 'test_uid')));
 
+// Find the scrollable widget
+    final scrollableFinder = find.byType(SingleChildScrollView);
+    // Scroll to the bottom by dragging from the top to the bottom
+    await tester.drag(scrollableFinder, const Offset(0.0, -200.0));
+    await tester.pump();
+
+    // Tap the button for checking availability without having selected a locker
+    await tester.tap(find.text('SAVE BOOKING'));
+    await tester.pumpAndSettle();
+
+    // Verify that the AlertDialog is shown
+    expect(find.byType(SnackBar), findsOneWidget);
+    // Verify that the title text is present
+    expect(find.text('Please complete your reservation before saving it'),
+        findsOneWidget);
+  });
+
+  testWidgets(
+      'User directly tries to check availability without having filled any field',
+      (WidgetTester tester) async {
+    final firestore = FakeFirebaseFirestore();
+    await firestore.collection('lockers').doc('Leonardo').set({
+      'lockerName': 'Leonardo',
+      'lockerAddress': 'via Roma 1, Milano',
+    });
+    final document =
+        await firestore.collection('lockers').doc('Leonardo').get();
+    await tester.pumpWidget(
+        MaterialApp(home: EditLockerBooking(document, uid: 'test_uid')));
+
     // Tap the button for checking availability without having selected a locker
     await tester.tap(find.text('Fill the form'));
     await tester.pumpAndSettle();
@@ -225,4 +255,4 @@ void main() {
   });
 }
 
-// flutter test test/WidgetTests/reservationAddTests/reservation_add_locker_test.dart
+// flutter test test/WidgetTests/reservationAddTests/reservation_add_locker_vertical_test.dart

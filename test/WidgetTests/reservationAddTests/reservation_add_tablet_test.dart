@@ -29,6 +29,67 @@ void main() {
     expect(find.text('Price to pay:'), findsOneWidget);
     expect(find.byType(ElevatedButton),
         findsNWidgets(3)); // Save booking and tooltip buttons
+    expect(find.text('SAVE BOOKING'), findsOneWidget);
+  });
+  testWidgets(
+      'HORIZONTAL User tries to save booking without selecting a locker',
+      (WidgetTester tester) async {
+    final List<Map<String, dynamic>> sampleLockers = [
+      {
+        'lockerName': 'Leonardo',
+        'lockerAddress': 'Piazza Leonardo da Vinci 32, Milano',
+      },
+      {
+        'lockerName': 'Duomo',
+        'lockerAddress': 'Piazza Duomo 21, Milano',
+      },
+    ];
+
+    await tester.pumpWidget(
+        MaterialApp(home: AddBookingTablet(sampleLockers, uid: 'test_uid')));
+
+    // Tap the button for checking availability without having selected a locker
+    await tester.tap(find.text('SAVE BOOKING'));
+    await tester.pumpAndSettle();
+
+    // Verify that the AlertDialog is shown
+    expect(find.byType(SnackBar), findsOneWidget);
+    // Verify that the title text is present
+    expect(find.text('Please select a locker'), findsOneWidget);
+  });
+
+  testWidgets(
+      'HORIZONTAL User tries to save booking after selecting a locker without filling information',
+      (WidgetTester tester) async {
+    final List<Map<String, dynamic>> sampleLockers = [
+      {
+        'lockerName': 'Leonardo',
+        'lockerAddress': 'Piazza Leonardo da Vinci 32, Milano',
+      },
+      {
+        'lockerName': 'Duomo',
+        'lockerAddress': 'Piazza Duomo 21, Milano',
+      },
+    ];
+
+    await tester.pumpWidget(
+        MaterialApp(home: AddBookingTablet(sampleLockers, uid: 'test_uid')));
+
+    // Select a locker from the dropdown
+    await tester.tap(find.text('Select a locker'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Leonardo'));
+    await tester.pumpAndSettle();
+
+    // Tap the button for checking availability without having selected a locker
+    await tester.tap(find.text('SAVE BOOKING'));
+    await tester.pumpAndSettle();
+
+    // Verify that the AlertDialog is shown
+    expect(find.byType(SnackBar), findsOneWidget);
+    // Verify that the title text is present
+    expect(find.text('Please complete your reservation before saving it'),
+        findsOneWidget);
   });
 
   testWidgets(
