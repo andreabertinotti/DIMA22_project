@@ -26,6 +26,8 @@ void main() {
       ),
     );
 
+    expect(find.text('Update your profile'), findsOneWidget);
+
 // Verify that the all the field names are correctly populated
     expect(find.text('Name'), findsOneWidget);
     expect(find.text('Surname'), findsOneWidget);
@@ -39,6 +41,42 @@ void main() {
     expect(find.text('via Roma 1, Milano'), findsOneWidget);
 // Verify that the button correctly is correctly displayed
     expect(find.text('UPDATE DATA'), findsOneWidget);
+  });
+
+  testWidgets('Edit profile hints are displayed correctly',
+      (WidgetTester tester) async {
+    // Create a fake instance of Cloud Firestore
+    final firestore = FakeFirebaseFirestore();
+
+    // Define the mock userData document
+    final mockUserData = {
+      'name': 'Mario',
+      'surname': 'Rossi',
+      'phone': '1234567890',
+      'address': 'via Roma 1, Milano',
+    };
+
+    // Add the mock userData document to the fake Firestore
+    firestore.collection('users').add(mockUserData);
+
+    // Build the EditProfile widget with the mock userData
+    await tester.pumpWidget(
+      MaterialApp(
+        home: EditProfile(mockUserData),
+      ),
+    );
+
+    // user ereases text in the pre-filled text forms
+    await tester.enterText(find.text('Mario'), '');
+    await tester.enterText(find.text('Rossi'), '');
+    await tester.enterText(find.text('1234567890'), '');
+    await tester.enterText(find.text('via Roma 1, Milano'), '');
+
+    // Verify that the all the fields are correctly populated
+    expect(find.text('Update name'), findsOneWidget);
+    expect(find.text('Update surname'), findsOneWidget);
+    expect(find.text('Update address'), findsOneWidget);
+    expect(find.text('Update phone number'), findsOneWidget);
   });
 
   testWidgets('User provides too short phone number',
