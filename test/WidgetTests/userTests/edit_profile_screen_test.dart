@@ -72,6 +72,68 @@ void main() {
     expect(find.text('Error!'), findsOneWidget);
     expect(find.text('Please check the inserted values!'), findsOneWidget);
   });
+
+  testWidgets('User provides too short name', (WidgetTester tester) async {
+    // Create a fake instance of Cloud Firestore
+    final firestore = FakeFirebaseFirestore();
+
+    // Define the mock userData document
+    final mockUserData = {
+      'name': 'Mario',
+      'surname': 'Rossi',
+      'phone': '1234567890',
+      'address': 'via Roma 1, Milano',
+    };
+
+    // Add the mock userData document to the fake Firestore
+    firestore.collection('users').add(mockUserData);
+
+    // Build the EditProfile widget with the mock userData
+    await tester.pumpWidget(
+      MaterialApp(
+        home: EditProfile(mockUserData),
+      ),
+    );
+
+    await tester.enterText(find.text('Mario'), 'M');
+    await tester.tap(find.text('UPDATE DATA'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Name is too short'), findsOneWidget);
+    expect(find.text('Error!'), findsOneWidget);
+    expect(find.text('Please check the inserted values!'), findsOneWidget);
+  });
+
+  testWidgets('User provides too short surname', (WidgetTester tester) async {
+    // Create a fake instance of Cloud Firestore
+    final firestore = FakeFirebaseFirestore();
+
+    // Define the mock userData document
+    final mockUserData = {
+      'name': 'Mario',
+      'surname': 'Rossi',
+      'phone': '1234567890',
+      'address': 'via Roma 1, Milano',
+    };
+
+    // Add the mock userData document to the fake Firestore
+    firestore.collection('users').add(mockUserData);
+
+    // Build the EditProfile widget with the mock userData
+    await tester.pumpWidget(
+      MaterialApp(
+        home: EditProfile(mockUserData),
+      ),
+    );
+
+    await tester.enterText(find.text('Rossi'), 'R');
+    await tester.tap(find.text('UPDATE DATA'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Surname is too short'), findsOneWidget);
+    expect(find.text('Error!'), findsOneWidget);
+    expect(find.text('Please check the inserted values!'), findsOneWidget);
+  });
 }
 
 
