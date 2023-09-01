@@ -1,8 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_final_fields, library_private_types_in_public_api
 //import 'dart:js_util';
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
+import 'package:pro/Services/auth_service.dart';
+import 'package:provider/provider.dart';
 
 class AddProfile extends StatefulWidget {
   const AddProfile(this.uid, this.email, {super.key});
@@ -63,7 +67,7 @@ class _AddProfileState extends State<AddProfile> {
           decoration: InputDecoration(
             hintText: "Insert your name",
             focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
-            errorText: _nameValid ? null : "Missing name",
+            errorText: _nameValid ? null : "Name must be longer than 2 characters",
           ),
         )
       ],
@@ -86,7 +90,7 @@ class _AddProfileState extends State<AddProfile> {
           decoration: InputDecoration(
             hintText: "Insert your surname",
             focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
-            errorText: _surnameValid ? null : "Missing surname",
+            errorText: _surnameValid ? null : "Surname must be longer than 2 characters",
           ),
         )
       ],
@@ -132,7 +136,7 @@ class _AddProfileState extends State<AddProfile> {
           decoration: InputDecoration(
             hintText: "Insert your address",
             focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
-            errorText: _addressValid ? null : "Wrong address format",
+            errorText: _addressValid ? null : "Address must be between 3 and 70 characters",
           ),
         )
       ],
@@ -202,6 +206,11 @@ class _AddProfileState extends State<AddProfile> {
 
   @override
   Widget build(BuildContext context) {
+    //final authService = Provider.of<AuthService>(context);
+    AuthService? authService = null;
+    if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+      authService = Provider.of<AuthService>(context);
+    }
     return ScaffoldMessenger(
         key: _scaffoldMessengerKey,
         child: Scaffold(
@@ -325,6 +334,18 @@ class _AddProfileState extends State<AddProfile> {
                           )),
                     )
                   ],
+                ),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    //if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+                    authService?.signOut(); // Handle "Logout" button press
+                    //}
+                  },
+                  backgroundColor: Colors.orange[900],
+                  child: Icon(
+                    Icons.logout_outlined,
+                    color: Colors.white,
+                  ),
                 ),
         ));
   }
