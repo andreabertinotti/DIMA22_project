@@ -125,7 +125,7 @@ class ReservationTileHorizontal extends StatelessWidget {
                             child: Text(
                               "Address: $address",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 20,
                                 fontWeight: FontWeight.w400,
                               ),
                               overflow: TextOverflow.ellipsis,
@@ -144,23 +144,6 @@ class ReservationTileHorizontal extends StatelessWidget {
                               )),
                         ]),
                   ),
-                  /* Padding(
-                    padding: EdgeInsets.fromLTRB(
-                        MediaQuery.of(context).size.width * 0.075,
-                        MediaQuery.of(context).size.width * 0.01,
-                        MediaQuery.of(context).size.width * 0.075,
-                        0),
-                    child: FittedBox(
-                        child: Text(
-                      "Price: $price",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.orange[700],
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    )),
-                  ), */
                 ],
               )),
         ),
