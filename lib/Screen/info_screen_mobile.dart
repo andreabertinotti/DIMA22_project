@@ -124,7 +124,6 @@ class _MenuMobileState extends State<MenuMobile> {
                                         controller: problemController,
                                         minLines: 5,
                                         maxLines: 5,
-                                        textAlign: TextAlign.justify,
                                         decoration: InputDecoration(
                                           hintText: "Problem description (max 600 characters)",
                                           labelText: "Description",
