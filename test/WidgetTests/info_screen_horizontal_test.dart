@@ -20,6 +20,7 @@ void main() {
             'Did you find a problem in the app? Do you have something to report about the lockers? Please let us know in this box and we\'ll take it on!'),
         findsOneWidget);
     expect(find.text('Description'), findsOneWidget);
+    expect(find.byKey(Key('text_key')), findsOneWidget);
     expect(find.text('SUBMIT'), findsOneWidget);
   });
 

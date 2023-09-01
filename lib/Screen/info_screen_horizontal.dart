@@ -61,6 +61,7 @@ class _InfoScreenHorizontalState extends State<InfoScreenHorizontal> {
                         ),
                       ),
                       Container(
+                        key: Key('text_key'),
                         margin: EdgeInsets.only(top: 25, bottom: 10),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,

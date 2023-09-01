@@ -14,6 +14,7 @@ void main() {
     // Verify if the texts are properly displayed
     expect(find.text('Info & Terms and Conditions'), findsOneWidget);
     expect(find.text('Terms of Use'), findsOneWidget);
+    expect(find.byKey(Key('text_key')), findsOneWidget);
     expect(find.text('REPORT A PROBLEM'), findsOneWidget);
   });
 

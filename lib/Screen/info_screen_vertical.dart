@@ -63,6 +63,7 @@ class _InfoScreenVerticalState extends State<InfoScreenVertical> {
                         ),
                       ),
                       Container(
+                        key: Key('text_key'),
                         margin: EdgeInsets.only(top: 20),
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height * 0.65,
