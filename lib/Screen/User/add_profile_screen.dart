@@ -66,8 +66,10 @@ class _AddProfileState extends State<AddProfile> {
           cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Insert your name",
-            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
-            errorText: _nameValid ? null : "Name must be longer than 2 characters",
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange, width: 2.0)),
+            errorText:
+                _nameValid ? null : "Name must be longer than 2 characters",
           ),
         )
       ],
@@ -89,8 +91,11 @@ class _AddProfileState extends State<AddProfile> {
           cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Insert your surname",
-            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
-            errorText: _surnameValid ? null : "Surname must be longer than 2 characters",
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange, width: 2.0)),
+            errorText: _surnameValid
+                ? null
+                : "Surname must be longer than 2 characters",
           ),
         )
       ],
@@ -112,7 +117,8 @@ class _AddProfileState extends State<AddProfile> {
           cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Update phone number",
-            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange, width: 2.0)),
             errorText: _numberValid ? null : "Wrong number format",
           ),
         )
@@ -135,8 +141,11 @@ class _AddProfileState extends State<AddProfile> {
           cursorColor: Colors.orange,
           decoration: InputDecoration(
             hintText: "Insert your address",
-            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.orange, width: 2.0)),
-            errorText: _addressValid ? null : "Address must be between 3 and 70 characters",
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.orange, width: 2.0)),
+            errorText: _addressValid
+                ? null
+                : "Address must be between 3 and 70 characters",
           ),
         )
       ],
@@ -169,14 +178,20 @@ class _AddProfileState extends State<AddProfile> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Data Updated', style: TextStyle(color: Colors.orange),),
+            title: Text(
+              'Data Updated',
+              style: TextStyle(color: Colors.orange),
+            ),
             content: Text('Your profile has been succesfully completed!'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.orange),),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.orange),
+                ),
               ),
             ],
           );
@@ -188,14 +203,20 @@ class _AddProfileState extends State<AddProfile> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Error', style: TextStyle(color: Colors.orange),),
+            title: Text(
+              'Error',
+              style: TextStyle(color: Colors.orange),
+            ),
             content: Text('An error occurred while updating your data.'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.orange),),
+                child: Text(
+                  'OK',
+                  style: TextStyle(color: Colors.orange),
+                ),
               ),
             ],
           );
@@ -233,12 +254,11 @@ class _AddProfileState extends State<AddProfile> {
                         width: 120,
                         height: 120,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/circleAppLogo.png'),
-                            fit: BoxFit.contain
-                          )
-                        ),
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/circleAppLogo.png'),
+                                fit: BoxFit.contain)),
                       ),
                     ),
                     Padding(
@@ -275,12 +295,14 @@ class _AddProfileState extends State<AddProfile> {
                                     ? _surnameValid = false
                                     : _surnameValid = true;
                                 //Check phone number correctness through regular expression
-                                RegExp(r'^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$').hasMatch(phoneController.text)
+                                RegExp(r'^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$')
+                                        .hasMatch(phoneController.text)
                                     ? _numberValid = true
                                     : _numberValid = false;
-                                addressController.text.length < 3 || addressController.text.length > 69
-                                  ? _addressValid = false
-                                  : _addressValid = true;                                    
+                                addressController.text.length < 3 ||
+                                        addressController.text.length > 69
+                                    ? _addressValid = false
+                                    : _addressValid = true;
                               });
 
                               //If all fields are correct, update the values in the db
@@ -289,18 +311,24 @@ class _AddProfileState extends State<AddProfile> {
                                   _numberValid &&
                                   _addressValid) {
                                 updateData(context);
-                              } 
-                              else {
+                              } else {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: Text("Error!", style: TextStyle(color: Colors.orange),),
+                                      title: Text(
+                                        "Error!",
+                                        style: TextStyle(color: Colors.orange),
+                                      ),
                                       content: Text(
                                           "Please check the inserted values!"),
                                       actions: <Widget>[
                                         TextButton(
-                                          child: Text("OK", style: TextStyle(color: Colors.orange),),
+                                          child: Text(
+                                            "OK",
+                                            style:
+                                                TextStyle(color: Colors.orange),
+                                          ),
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
@@ -335,18 +363,18 @@ class _AddProfileState extends State<AddProfile> {
                     )
                   ],
                 ),
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () {
-                    //if (!Platform.environment.containsKey('FLUTTER_TEST')) {
-                    authService?.signOut(); // Handle "Logout" button press
-                    //}
-                  },
-                  backgroundColor: Colors.orange[900],
-                  child: Icon(
-                    Icons.logout_outlined,
-                    color: Colors.white,
-                  ),
-                ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              //if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+              authService?.signOut(); // Handle "Logout" button press
+              //}
+            },
+            backgroundColor: Colors.orange[900],
+            child: Icon(
+              Icons.logout_outlined,
+              color: Colors.white,
+            ),
+          ),
         ));
   }
 }

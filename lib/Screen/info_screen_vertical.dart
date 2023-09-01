@@ -6,13 +6,12 @@ import 'package:flutter/services.dart';
 
 final problemGlobalKey = GlobalKey<FormState>();
 
-class MenuMobile extends StatefulWidget {
-  const MenuMobile(this.document, this.uid, {super.key});
-  final dynamic document;
+class InfoScreenVertical extends StatefulWidget {
+  const InfoScreenVertical(this.uid, {super.key});
   final dynamic uid;
 
   @override
-  _MenuMobileState createState() => _MenuMobileState();
+  _InfoScreenVerticalState createState() => _InfoScreenVerticalState();
 }
 
 class ProblemFieldValidator {
@@ -23,7 +22,7 @@ class ProblemFieldValidator {
   }
 }
 
-class _MenuMobileState extends State<MenuMobile> {
+class _InfoScreenVerticalState extends State<InfoScreenVertical> {
   TextEditingController problemController = TextEditingController();
   bool _problemValid = true;
 
@@ -33,22 +32,20 @@ class _MenuMobileState extends State<MenuMobile> {
 
   @override
   Widget build(BuildContext context) {
-    var userData = widget.document;
-
     return ScaffoldMessenger(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.orange,
-          foregroundColor: Colors.white,
-          title: const Text(
-            'Info & Terms and Conditions',
-            style: TextStyle(
-              color: Colors.white,
+        child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.orange,
+              foregroundColor: Colors.white,
+              title: const Text(
+                'Info & Terms and Conditions',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
             ),
-          ),
-        ),
-        body: SingleChildScrollView(
-            child: Column(
+            body: SingleChildScrollView(
+                child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
@@ -64,7 +61,7 @@ class _MenuMobileState extends State<MenuMobile> {
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                         ),
-                      ), 
+                      ),
                       Container(
                         margin: EdgeInsets.only(top: 20),
                         width: double.infinity,
@@ -108,83 +105,93 @@ class _MenuMobileState extends State<MenuMobile> {
                                 'Report a problem',
                                 style: TextStyle(color: Colors.orange),
                               ),
-                              contentPadding: EdgeInsets.only(left: 24, right: 24, bottom: 0, top: 20),
+                              contentPadding: EdgeInsets.only(
+                                  left: 24, right: 24, bottom: 0, top: 20),
                               content: SizedBox(
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(bottom: 15),
-                                        child: Text(
-                                          'Did you find a problem in the app? Do you have something to report about the lockers? Please let us know what\'s wrong in the following form field and we\'ll try to solve is as soon as possible!',
-                                          textAlign: TextAlign.justify,
-                                        ),
+                                  child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 15),
+                                      child: Text(
+                                        'Did you find a problem in the app? Do you have something to report about the lockers? Please let us know!',
+                                        textAlign: TextAlign.justify,
                                       ),
-                                      TextField(
-                                        controller: problemController,
-                                        minLines: 5,
-                                        maxLines: 5,
-                                        decoration: InputDecoration(
-                                          hintText: "Problem description (max 600 characters)",
+                                    ),
+                                    TextField(
+                                      controller: problemController,
+                                      minLines: 5,
+                                      maxLines: 5,
+                                      decoration: InputDecoration(
+                                          hintText:
+                                              "Problem description (max 600 characters)",
                                           labelText: "Description",
                                           alignLabelWithHint: true,
                                           focusColor: Colors.orange,
-                                          floatingLabelStyle: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+                                          floatingLabelStyle: TextStyle(
+                                              color: Colors.orange,
+                                              fontWeight: FontWeight.bold),
                                           border: OutlineInputBorder(),
                                           focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(color: Colors.orange, width: 2))
-                                        ),
-                                        cursorColor: Colors.orange,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ),
+                                              borderSide: BorderSide(
+                                                  color: Colors.orange,
+                                                  width: 2))),
+                                      cursorColor: Colors.orange,
+                                    ),
+                                  ],
+                                ),
+                              )),
                               actions: [
                                 TextButton(
                                   onPressed: () {
                                     setState(() {
-                                      problemController.text.length > 600 || problemController.text.isEmpty 
-                                      ? _problemValid = false
-                                      : _problemValid = true;
+                                      problemController.text.length > 600 ||
+                                              problemController.text.isEmpty
+                                          ? _problemValid = false
+                                          : _problemValid = true;
                                     });
 
-                                    if(_problemValid){
+                                    if (_problemValid) {
                                       FirebaseFirestore.instance
-                                            .collection('reports')
-                                            .add({
-                                          'userUid': widget.uid,
-                                          'locker': problemController.text,
-                                          'timestamp': DateTime.now(),
-                                        });
-                                        setState(() {
-                                          problemController.text = "";
-                                        });
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Text("Report sent successfully!"), 
-                                          backgroundColor: Colors.green,
-                                        )
-                                      );
+                                          .collection('reports')
+                                          .add({
+                                        'userUid': widget.uid,
+                                        'locker': problemController.text,
+                                        'timestamp': DateTime.now(),
+                                      });
+                                      setState(() {
+                                        problemController.text = "";
+                                      });
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content:
+                                            Text("Report sent successfully!"),
+                                        backgroundColor: Colors.green,
+                                      ));
                                       Navigator.of(context).pop();
-                                    }
-                                    else{
+                                    } else {
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
                                             title: Text(
                                               "Report Error",
-                                              style: TextStyle(color: Colors.orange),
+                                              style: TextStyle(
+                                                  color: Colors.orange),
                                             ),
-                                            contentPadding: EdgeInsets.only(left: 24, right: 24, bottom: 0, top: 20),
+                                            contentPadding: EdgeInsets.only(
+                                                left: 24,
+                                                right: 24,
+                                                bottom: 0,
+                                                top: 20),
                                             content: Text(
                                                 "The problem description cannot be empty or longer than 600 characters"),
                                             actions: <Widget>[
                                               TextButton(
                                                 child: Text(
                                                   "OK",
-                                                  style: TextStyle(color: Colors.orange),
+                                                  style: TextStyle(
+                                                      color: Colors.orange),
                                                 ),
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
@@ -198,8 +205,8 @@ class _MenuMobileState extends State<MenuMobile> {
                                   },
                                   child: Text(
                                     'Submit',
-                                    style:
-                                        TextStyle(fontSize: 16, color: Colors.orange),
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.orange),
                                   ),
                                 ),
                               ],
@@ -211,10 +218,11 @@ class _MenuMobileState extends State<MenuMobile> {
                             MaterialStateProperty.all<Color>(Colors.white),
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.orange),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
-                                side: BorderSide(color: Colors.orange)))),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18),
+                                    side: BorderSide(color: Colors.orange)))),
                     child: Text("Report a problem".toUpperCase(),
                         style: TextStyle(
                           color: Colors.white,
@@ -223,9 +231,6 @@ class _MenuMobileState extends State<MenuMobile> {
                   ),
                 ),
               ],
-            )
-          )
-      )
-    );
+            ))));
   }
 }

@@ -229,7 +229,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
-
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 //if (!Platform.environment.containsKey('FLUTTER_TEST')) {
