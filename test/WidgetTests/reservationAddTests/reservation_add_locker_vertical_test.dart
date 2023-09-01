@@ -32,6 +32,37 @@ void main() {
             4)); // Save booking and tooltip buttons + pre-selected locker button
   });
 
+  testWidgets('Info tooltip works correctly', (WidgetTester tester) async {
+    final firestore = FakeFirebaseFirestore();
+    await firestore.collection('lockers').doc('Leonardo').set({
+      'lockerName': 'Leonardo',
+      'lockerAddress': 'via Roma 1, Milano',
+    });
+    final document =
+        await firestore.collection('lockers').doc('Leonardo').get();
+    await tester.pumpWidget(
+        MaterialApp(home: EditLockerBooking(document, uid: 'test_uid')));
+
+    // Find the scrollable widget
+    final scrollableFinder = find.byType(SingleChildScrollView);
+
+    // Scroll to the bottom by dragging from the top to the bottom
+    await tester.drag(scrollableFinder, const Offset(0.0, -200.0));
+    await tester.pump();
+    expect(find.byType(Tooltip), findsOneWidget);
+    expect(find.text('?'), findsOneWidget);
+
+    // Tap the button for checking availability without having selected a locker
+    await tester.tap(find.text('?'));
+    await tester.pumpAndSettle();
+
+    // Verify that the title text is present
+    expect(
+        find.text(
+            '\nSmall cells can store baggages up to:\n60x40x25 cm\n\nLarge cells can store baggages up to:\n80x55x40 cm\n\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n'),
+        findsOneWidget);
+  });
+
   testWidgets(
       'User directly tries to check availability without having filled any field',
       (WidgetTester tester) async {

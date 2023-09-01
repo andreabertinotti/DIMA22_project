@@ -31,6 +31,37 @@ void main() {
         findsNWidgets(3)); // Save booking and tooltip buttons
     expect(find.text('SAVE BOOKING'), findsOneWidget);
   });
+
+  testWidgets('HORIZONTAL Info tooltip works correctly',
+      (WidgetTester tester) async {
+    final List<Map<String, dynamic>> sampleLockers = [
+      {
+        'lockerName': 'Leonardo',
+        'lockerAddress': 'Piazza Leonardo da Vinci 32, Milano',
+      },
+      {
+        'lockerName': 'Duomo',
+        'lockerAddress': 'Piazza Duomo 21, Milano',
+      },
+    ];
+
+    await tester.pumpWidget(
+        MaterialApp(home: AddBookingTablet(sampleLockers, uid: 'test_uid')));
+
+    expect(find.byType(Tooltip), findsOneWidget);
+    expect(find.text('?'), findsOneWidget);
+
+    // Tap the button for checking availability without having selected a locker
+    await tester.tap(find.text('?'));
+    await tester.pumpAndSettle();
+
+    // Verify that the title text is present
+    expect(
+        find.text(
+            '\nSmall cells can store baggages up to:\n60x40x25 cm\n\nLarge cells can store baggages up to:\n80x55x40 cm\n\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n'),
+        findsOneWidget);
+  });
+
   testWidgets(
       'HORIZONTAL User tries to save booking without selecting a locker',
       (WidgetTester tester) async {

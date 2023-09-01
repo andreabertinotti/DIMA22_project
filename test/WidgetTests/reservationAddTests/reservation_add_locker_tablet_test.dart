@@ -33,6 +33,32 @@ void main() {
     expect(find.text('SAVE BOOKING'), findsOneWidget);
   });
 
+  testWidgets('HORIZONTAL Info tooltip works correctly',
+      (WidgetTester tester) async {
+    final firestore = FakeFirebaseFirestore();
+    await firestore.collection('lockers').doc('Leonardo').set({
+      'lockerName': 'Leonardo',
+      'lockerAddress': 'via Roma 1, Milano',
+    });
+    final document =
+        await firestore.collection('lockers').doc('Leonardo').get();
+    await tester.pumpWidget(
+        MaterialApp(home: AddLockerBookingTablet(document, uid: 'test_uid')));
+
+    expect(find.byType(Tooltip), findsOneWidget);
+    expect(find.text('?'), findsOneWidget);
+
+    // Tap the button for checking availability without having selected a locker
+    await tester.tap(find.text('?'));
+    await tester.pumpAndSettle();
+
+    // Verify that the title text is present
+    expect(
+        find.text(
+            '\nSmall cells can store baggages up to:\n60x40x25 cm\n\nLarge cells can store baggages up to:\n80x55x40 cm\n\nDimensions are intended as:\nHEIGHT x WIDTH x DEPTH\n'),
+        findsOneWidget);
+  });
+
   testWidgets(
       'HORIZONTAL User tries to save booking after selecting a locker without filling information',
       (WidgetTester tester) async {
