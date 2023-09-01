@@ -68,7 +68,7 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
           actions: [
-            TextButton.icon(
+            IconButton(
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -80,8 +80,8 @@ class _HomeViewState extends State<HomeView> {
                   Icons.question_mark,
                   color: Colors.white,
                 ),
-                label: Text("",
-                    style: TextStyle(color: Colors.white, fontSize: 17))),
+            )
+
           ],
         ),
         //drawer: Drawer(

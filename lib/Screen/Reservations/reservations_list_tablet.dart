@@ -157,7 +157,7 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                                     fontWeight: FontWeight.bold, fontSize: 20)),
                             subtitle: Text(
                               "from ${DateFormat('dd/MM/yyyy').format(dropOff)}",
-                              style: TextStyle(fontSize: 18),
+                              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
                             ),
                             leading: CircleAvatar(
                               backgroundColor: Colors.orange,
@@ -192,7 +192,7 @@ class _TabletBookingsPageState extends State<TabletBookingsPage> {
                             child: _tapped == false
                                 ? Center(
                                     child: Text(
-                                        "Please tap on a reservation to show details"), //TODO: display app logo instead of text
+                                        "Please tap on a reservation to show details"), 
                                   )
                                 : ReservationTileHorizontal(
                                     dropOff: selectedDropOff,

@@ -155,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Row(
                       children: [
                         Icon(
-                          Icons.place_outlined,
+                          Icons.phone_outlined,
                           color: Colors.orange,
                           size: 45,
                         ),
@@ -163,11 +163,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           width: 20,
                         ),
                         Text(
-                          '${widget.userData['address'] ?? ''}',
-                          style: TextStyle(
-                              fontSize: widget.userData['address'].length > 30
-                                  ? 15
-                                  : 18),
+                          '${widget.userData['phone'] ?? ''}',
+                          style: TextStyle(fontSize: 18),
                         )
                       ],
                     ),
@@ -187,7 +184,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Row(
                       children: [
                         Icon(
-                          Icons.phone_outlined,
+                          Icons.place_outlined,
                           color: Colors.orange,
                           size: 45,
                         ),
@@ -195,8 +192,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           width: 20,
                         ),
                         Text(
-                          '${widget.userData['phone'] ?? ''}',
-                          style: TextStyle(fontSize: 18),
+                          '${widget.userData['address'] ?? ''}',
+                          style: TextStyle(
+                              fontSize: widget.userData['address'].length > 30
+                                  ? 15
+                                  : 18),
                         )
                       ],
                     ),
@@ -230,7 +230,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
 
-            // Floating button to open edit profile page
             floatingActionButton: FloatingActionButton(
               onPressed: () {
                 //if (!Platform.environment.containsKey('FLUTTER_TEST')) {

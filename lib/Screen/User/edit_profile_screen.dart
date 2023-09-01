@@ -69,7 +69,7 @@ class _EditProfileState extends State<EditProfile> {
             hintText: "Update name",
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.orange, width: 2.0)),
-            errorText: _nameValid ? null : "Name is too short",
+            errorText: _nameValid ? null : "Name must be longer than 2 characters",
           ),
         )
       ],
@@ -93,7 +93,7 @@ class _EditProfileState extends State<EditProfile> {
             hintText: "Update surname",
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.orange, width: 2.0)),
-            errorText: _surnameValid ? null : "Surname is too short",
+            errorText: _surnameValid ? null : "Surname must be longer than 2 characters",
           ),
         )
       ],
@@ -141,7 +141,7 @@ class _EditProfileState extends State<EditProfile> {
             hintText: "Update address",
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.orange, width: 2.0)),
-            errorText: _addressValid ? null : "Address too long",
+            errorText: _addressValid ? null : "Address must be between 3 and 70 characters",
           ),
         )
       ],
@@ -294,8 +294,8 @@ class _EditProfileState extends State<EditProfile> {
                         children: [
                           buildNameField(), //Insert all the fields through methods defined above
                           buildSurnameField(),
-                          buildAddressField(),
                           buildNumberField(),
+                          buildAddressField(),
                         ],
                       ),
                     ),

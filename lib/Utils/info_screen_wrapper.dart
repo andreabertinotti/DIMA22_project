@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pro/Screen/info_screen_tablet.dart';
 import 'package:pro/Screen/login_screen.dart';
-
-import '../Screen/info_screen_new.dart';
+import '../Screen/info_screen_mobile.dart';
 
 class MenuWrapper extends StatefulWidget {
   const MenuWrapper({Key? key}) : super(key: key);
@@ -34,16 +34,15 @@ class _MenuWrapperState extends State<MenuWrapper> {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
                 if (snapshot.data!.docs.isEmpty) {
-                  return Menu(
-                    null,
-                    _user?.uid,
-                  );
+                  return MediaQuery.of(context).size.width > 500 
+                  ? MenuTablet(null,_user?.uid,)
+                  : MenuMobile(null,_user?.uid,)
+                  ;
                 }
 
-                return Menu(
-                  snapshot.data!.docs[0],
-                  _user!.uid,
-                );
+                return MediaQuery.of(context).size.width > 500
+                ? MenuTablet(snapshot.data!.docs[0],_user!.uid,)
+                : MenuMobile(snapshot.data!.docs[0],_user!.uid,);
               },
             ),
           );
