@@ -8,7 +8,6 @@ import 'package:location/location.dart';
 
 import '../Utils/bookingLockerWrapper.dart';
 import '../Utils/custom_dialog_box.dart';
-import '../Utils/image_view.dart';
 import '../Utils/info_screen_wrapper.dart';
 import '../Utils/wrapper.dart';
 
@@ -114,9 +113,9 @@ class _HomeViewState extends State<HomeView> {
                         : showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              Map<String, dynamic> map = document.data();
+                              //Map<String, dynamic> map = document.data();
                               return CustomDialogBox(
-                                map: map,
+                                //map: map,
                                 document: document,
                               );
                             }),
@@ -145,7 +144,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   _showBottomSheet(dynamic document) async {
-    Map<String, dynamic> map = document.data();
+    //Map<String, dynamic> map = document.data();
     //A modal bottom sheet is an alternative to a menu or a dialog and prevents the user from interacting with the rest of the app.
     await showModalBottomSheet(
         context: context,
@@ -229,12 +228,12 @@ class _HomeViewState extends State<HomeView> {
                                     side: BorderSide(color: Colors.orange)))),
                         child: Text("Book this locker".toUpperCase())),
                   ),
-                  map.containsKey("urls") == true
-                      ? Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: ImageView(map: map),
-                        )
-                      : Container(),
+                  //map.containsKey("urls") == true
+                  //    ? Padding(
+                  //        padding: const EdgeInsets.all(15.0),
+                  //        child: ImageView(map: map),
+                  //      )
+                  //    : Container(),
                 ],
               ));
         });
