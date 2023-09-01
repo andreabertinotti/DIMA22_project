@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:pro/Screen/User/user_profile_screen%20live.dart';
+import 'package:pro/Screen/User/user_profile_screen.dart';
 
 void main() {
   testWidgets('ProfilePage displays user data correctly',
