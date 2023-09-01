@@ -64,7 +64,7 @@ void main() {
         findsOneWidget);
   });
 
-  testWidgets('User tries to register with wronlgly fromatted email',
+  testWidgets('User tries to register with wrongly fromatted email',
       (WidgetTester tester) async {
     // Create the widget by telling the tester to build it.
     await tester.pumpWidget(MaterialApp(home: Register()));
