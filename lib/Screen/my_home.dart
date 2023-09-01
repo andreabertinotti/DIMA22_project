@@ -78,10 +78,10 @@ class _MyHomeState extends State<MyHome> {
         title: 'Flutter layout demo',
         home: Scaffold(
           //drawer is the menu that can be hidden on left side
-          drawer: Drawer(
+          /* drawer: Drawer(
             //child: Wrapper(widget: Menu()),
             child: Wrapper(widget: MenuWrapper()),
-          ),
+          ), */
           body: Center(
             child: _widgetOptions.elementAt(_selectedIndex),
           ),
