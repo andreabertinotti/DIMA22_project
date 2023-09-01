@@ -115,6 +115,31 @@ void main() {
     expect(find.text('Password can\'t be empty or shorter than 6 characters'),
         findsOneWidget);
   });
+
+  testWidgets('User tries to Login with well formed but wrong credentials',
+      (WidgetTester tester) async {
+    // Create the widget by telling the tester to build it.
+    await tester.pumpWidget(MaterialApp(home: LoginScreen()));
+
+    final emailField = find.widgetWithText(TextFormField, 'Email');
+    final passwordField = find.widgetWithText(TextFormField, 'Password');
+
+    // email is fine
+    await tester.enterText(emailField, 'fakeemail@test.it');
+    // in this case password is fine
+    await tester.enterText(passwordField, 'test_good_password');
+    await tester.tap(find.text('Login'));
+    await tester.pumpAndSettle();
+    expect(find.byType(AlertDialog), findsNWidgets(1));
+    expect(find.text('Authentication Error'), findsOneWidget);
+    expect(
+        find.text(
+            'The provided email and password do not match any existing account.'),
+        findsOneWidget);
+
+    // close alert dialog
+    await tester.tap(find.text('OK'));
+  });
 }
 
 // flutter test test/WidgetTests/login_screen_test.dart

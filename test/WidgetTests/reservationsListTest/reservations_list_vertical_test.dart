@@ -48,14 +48,10 @@ void main() {
     expect(find.text('Reservation @ Leonardo'), findsOneWidget);
     expect(find.text('from ${DateFormat('dd/MM/yyyy').format(start.toDate())}'),
         findsOneWidget);
-    expect(find.text('Reservation deleted successfully'), findsNothing);
+    // expect to see the number next to the reservation item
+    expect(find.text(sampleReservations.length.toString()), findsOneWidget);
 
-    // Tap on the delete button
-    //await tester.tap(find.byIcon(Icons.delete));
-    //await tester.pump();
-//
-    //// Expect to see the success snackbar after deleting
-    //expect(find.text('Reservation deleted successfully'), findsOneWidget);
+    expect(find.text('Reservation deleted successfully'), findsNothing);
   });
 
   testWidgets('BookingsPage handles case in which user has no reservations',
@@ -85,13 +81,6 @@ void main() {
 
     // Expect to find the reservation information in the UI
     expect(find.text('No booking found!'), findsOneWidget);
-
-    // Tap on the delete button
-    //await tester.tap(find.byIcon(Icons.delete));
-    //await tester.pump();
-//
-    //// Expect to see the success snackbar after deleting
-    //expect(find.text('Reservation deleted successfully'), findsOneWidget);
   });
 
   testWidgets('Tap on reservation to see details', (WidgetTester tester) async {
@@ -165,13 +154,9 @@ void main() {
     expect(find.text('Duration: 3 hours'), findsOneWidget);
     expect(find.text('Cell: Cell 0 (small)'), findsOneWidget);
     expect(find.text('Address: via Roma 1, Milano'), findsOneWidget);
+    expect(find.text('Price: 3€'), findsOneWidget);
 
-    // Tap on the delete button
-    //await tester.tap(find.byIcon(Icons.delete));
-    //await tester.pump();
-//
-    //// Expect to see the success snackbar after deleting
-    //expect(find.text('Reservation deleted successfully'), findsOneWidget);
+    expect(find.text('Delete booking'), findsOneWidget);
   });
 
   testWidgets('Delete booking from list', (WidgetTester tester) async {
