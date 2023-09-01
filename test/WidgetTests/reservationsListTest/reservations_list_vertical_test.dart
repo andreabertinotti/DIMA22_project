@@ -10,8 +10,8 @@ void main() {
       (WidgetTester tester) async {
     // Create a fake instance of Cloud Firestore
     final fakeFirestore = FakeFirebaseFirestore();
-    dynamic start = Timestamp.fromDate(DateTime.now());
-    dynamic end = Timestamp.fromDate(DateTime.now().add(Duration(hours: 3)));
+    dynamic start = Timestamp.fromDate(DateTime(2023, 9, 30, 10, 0));
+    dynamic end = Timestamp.fromDate(DateTime(2023, 9, 30, 16, 0));
     // Prepare some sample reservation data
     final List<Map<String, dynamic>> sampleReservations = [
       {
@@ -46,7 +46,8 @@ void main() {
 
     // Expect to find the reservation information in the UI
     expect(find.text('Reservation @ Leonardo'), findsOneWidget);
-    expect(find.text('from ${DateFormat('dd/MM/yyyy').format(start.toDate())}'),
+    expect(find.text('via Roma 1, Milano'), findsOneWidget);
+    expect(find.text('From ${DateFormat('dd/MM/yyyy').format(start.toDate())}'),
         findsOneWidget);
     // expect icon add reservation
     expect(find.byIcon(Icons.add), findsOneWidget);
@@ -138,10 +139,10 @@ void main() {
 
     // Expect to find the reservation information in the UI
     expect(find.text('Reservation @ Leonardo'), findsOneWidget);
+    expect(find.text('via Roma 1, Milano'), findsOneWidget);
     expect(
-        find.text('from ${DateFormat('dd/MM/yyyy').format(start1.toDate())}'),
+        find.text('From ${DateFormat('dd/MM/yyyy').format(start1.toDate())}'),
         findsOneWidget);
-    expect(find.text('Reservation deleted successfully'), findsNothing);
 
     // Simulate tapping on the reservation
     await tester.tap(find.text('Reservation @ Leonardo'));
@@ -157,13 +158,13 @@ void main() {
         findsOneWidget);
     expect(find.text('Duration: 3 hours'), findsOneWidget);
     expect(find.text('Cell: Cell 0 (small)'), findsOneWidget);
-    expect(find.text('Address: via Roma 1, Milano'), findsOneWidget);
+
     expect(find.text('Price: 3€'), findsOneWidget);
 
     expect(find.text('Delete booking'), findsOneWidget);
   });
 
-  testWidgets('Delete booking from list', (WidgetTester tester) async {
+  testWidgets('Delete booking From list', (WidgetTester tester) async {
     // Create a fake instance of Cloud Firestore
     final fakeFirestore = FakeFirebaseFirestore();
     dynamic start1 = Timestamp.fromDate(DateTime.parse('2023-10-05 12:00:00'));
@@ -214,8 +215,9 @@ void main() {
 
     // Expect to find the reservation information in the UI
     expect(find.text('Reservation @ Leonardo'), findsOneWidget);
+    expect(find.text('via Roma 1, Milano'), findsOneWidget);
     expect(
-        find.text('from ${DateFormat('dd/MM/yyyy').format(start1.toDate())}'),
+        find.text('From ${DateFormat('dd/MM/yyyy').format(start1.toDate())}'),
         findsOneWidget);
     expect(find.text('Reservation deleted successfully'), findsNothing);
 

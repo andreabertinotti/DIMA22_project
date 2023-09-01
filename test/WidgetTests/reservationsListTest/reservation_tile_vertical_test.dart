@@ -47,7 +47,6 @@ void main() {
     expect(find.text("Duration: $mockDuration hours"), findsOneWidget);
     expect(find.text("Cell: $mockCell"), findsOneWidget);
     expect(find.text("Price: $mockPrice"), findsOneWidget);
-    expect(find.text('Address: $mockAddress'), findsOneWidget);
     // Verify delete button is displayed correctly
     expect(find.text('Delete booking'), findsOneWidget);
   });
