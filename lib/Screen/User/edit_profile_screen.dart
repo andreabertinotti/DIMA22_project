@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_final_fields, library_private_types_in_public_api
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 
 class EditProfile extends StatefulWidget {
@@ -19,13 +18,11 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController surnameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
   bool isLoading = false; //If application is still loading content
   bool _nameValid = true;
   bool _surnameValid = true; //checks for profile fields inserted
   bool _numberValid = true;
   bool _addressValid = true;
-  bool _emailValid = true;
 
   @override
   void initState() {
@@ -154,19 +151,16 @@ class _EditProfileState extends State<EditProfile> {
   void updateData(BuildContext context) async {
     // Save the data entered by the user in variables
     String name = nameController.text;
-    String email = FirebaseAuth.instance.currentUser?.email ?? "";
-    String uid = FirebaseAuth.instance.currentUser?.uid ?? "";
+    //String email = FirebaseAuth.instance.currentUser?.email ?? "";
+    //String uid = FirebaseAuth.instance.currentUser?.uid ?? "";
+    String email = widget.userData['email'];
+    String uid = widget.userData['userUID'];
     String phoneNumber = phoneController.text;
     String surname = surnameController.text;
     String address = addressController.text;
 
     // Check if the user document already exists
     try {
-      //  final userQuerySnapshot = await FirebaseFirestore.instance
-      //      .collection('users')
-      //      .where('userUID', isEqualTo: uid)
-      //      .get();
-
       if (widget.userData != null) {
         // Document with userUID exists, update the user data in the existing document
         final userDoc = widget.userData;
@@ -179,7 +173,7 @@ class _EditProfileState extends State<EditProfile> {
         });
       } else {
         // Document with userUID doesn't exist, create a new document in the "users" collection
-        await FirebaseFirestore.instance.collection('users').add({
+        await FirebaseFirestore.instance.collection('users').doc(uid).set({
           'name': name,
           'surname': surname,
           'email': email,
@@ -302,7 +296,6 @@ class _EditProfileState extends State<EditProfile> {
                           buildSurnameField(),
                           buildAddressField(),
                           buildNumberField(),
-                          //buildEmailField(),
                         ],
                       ),
                     ),
@@ -336,8 +329,7 @@ class _EditProfileState extends State<EditProfile> {
                               if (_nameValid &&
                                   _surnameValid &&
                                   _numberValid &&
-                                  _addressValid &&
-                                  _emailValid) {
+                                  _addressValid) {
                                 updateData(context);
                               } else {
                                 showDialog(
