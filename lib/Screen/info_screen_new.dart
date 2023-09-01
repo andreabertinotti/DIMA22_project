@@ -52,7 +52,7 @@ class _MenuState extends State<Menu> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                /* Container(
                   width: double.infinity,
                   height: 50,
                   color: Colors.orange[900],
@@ -66,7 +66,7 @@ class _MenuState extends State<Menu> {
                       )
                     )
                   )
-                ),
+                ), */
                 Container(
                   width: double.infinity,
                   margin: EdgeInsets.only(top: 30),
@@ -84,7 +84,7 @@ class _MenuState extends State<Menu> {
                       Container(
                         margin: EdgeInsets.only(top: 20),
                         width: double.infinity,
-                        height: MediaQuery.of(context).size.height * 0.60,
+                        height: MediaQuery.of(context).size.height * 0.65,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: FutureBuilder<String>(
@@ -387,7 +387,6 @@ class _MenuState extends State<Menu> {
                                   problemController.text = "";
                                 });
                               }
-
                             },
                             style: ButtonStyle(
                                 foregroundColor:
