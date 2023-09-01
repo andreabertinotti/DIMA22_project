@@ -66,13 +66,12 @@ void main() {
     await tester.tap(find.text('SAVE'));
     await tester.pumpAndSettle();
 
-    //TODO: UPDATE MISSING NAME WITH NEW MESSAGE
-    expect(find.text('Missing name'), findsOneWidget);
+    expect(find.text('Name must be longer than 2 characters'), findsOneWidget);
     expect(find.text('Error!'), findsOneWidget);
     expect(find.text('Please check the inserted values!'), findsOneWidget);
   });
 
-  testWidgets('AddProfile: user provides too short name',
+  testWidgets('AddProfile: user provides too short surname',
       (WidgetTester tester) async {
     // Provide sample uid and email for testing
     final String uid = 'test_uid';
@@ -100,8 +99,8 @@ void main() {
     await tester.tap(find.text('SAVE'));
     await tester.pumpAndSettle();
 
-    //TODO: UPDATE MISSING NAME WITH NEW MESSAGE
-    expect(find.text('Missing surname'), findsOneWidget);
+    expect(
+        find.text('Surname must be longer than 2 characters'), findsOneWidget);
     expect(find.text('Error!'), findsOneWidget);
     expect(find.text('Please check the inserted values!'), findsOneWidget);
   });
@@ -136,6 +135,40 @@ void main() {
 
     //TODO: UPDATE MISSING NAME WITH NEW MESSAGE
     expect(find.text('Wrong number format'), findsOneWidget);
+    expect(find.text('Error!'), findsOneWidget);
+    expect(find.text('Please check the inserted values!'), findsOneWidget);
+  });
+
+  testWidgets('AddProfile: user provides number with wrong format',
+      (WidgetTester tester) async {
+    // Provide sample uid and email for testing
+    final String uid = 'test_uid';
+    final String email = 'test@example.com';
+
+    // Build our widget and trigger a frame.
+    await tester.pumpWidget(
+      MaterialApp(
+        home: AddProfile(uid, email), // Pass the uid and email
+      ),
+    );
+
+    // Simulate filling in the form fields
+    await tester.enterText(
+        find.widgetWithText(TextField, 'Insert your name'), 'Mario');
+    await tester.enterText(
+        find.widgetWithText(TextField, 'Insert your surname'), 'Rossi');
+    await tester.enterText(
+        find.widgetWithText(TextField, 'Update phone number'), '1234567890');
+    await tester.enterText(
+        find.widgetWithText(TextField, 'Insert your address'), 'vi');
+
+    // Tap the Save button
+    await tester.tap(find.text('SAVE'));
+    await tester.pumpAndSettle();
+
+    //TODO: UPDATE MISSING NAME WITH NEW MESSAGE
+    expect(find.text('Address must be between 3 and 70 characters'),
+        findsOneWidget);
     expect(find.text('Error!'), findsOneWidget);
     expect(find.text('Please check the inserted values!'), findsOneWidget);
   });
