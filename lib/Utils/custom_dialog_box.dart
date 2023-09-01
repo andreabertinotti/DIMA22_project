@@ -1,17 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:pro/Utils/image_view.dart';
 import 'bookingLockerWrapper_horizontalView.dart';
 import 'constants.dart';
 
 class CustomDialogBox extends StatefulWidget {
   final dynamic document;
-  final Map<String, dynamic> map;
+  //final Map<String, dynamic> map;
 
   CustomDialogBox({
     Key? key,
     required this.document,
-    required this.map,
+    //required this.map,
   }) : super(key: key);
 
   @override
@@ -149,11 +148,11 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                     side: BorderSide(color: Colors.orange)))),
                     child: Text("Book this locker".toUpperCase())),
               ),
-              widget.map.containsKey("urls") == true
-                  ? ImageView(
-                      map: widget.map,
-                    )
-                  : Container(),
+              //  widget.map.containsKey("urls") == true
+              //      ? ImageView(
+              //          map: widget.map,
+              //        )
+              //      : Container(),
             ],
           ),
         ),
