@@ -92,12 +92,12 @@ class ReservationTileVertical extends StatelessWidget {
                         fontSize: 17,
                       ),
                     ),
-                    Text(
-                      "Address: $address",
+                    /* Text(
+                      "Address: $address",    //Indirizzo spostato all'interno della expanded tile su reservations_list_vertical 
                       style: TextStyle(
                         fontSize: 16,
                       ),
-                    ),
+                    ), */
                     Text(
                       "Price: $price",
                       style: TextStyle(

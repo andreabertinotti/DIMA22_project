@@ -130,9 +130,18 @@ class _BookingsPageState extends State<BookingsPage> {
                     title: Text("Reservation @ $locker",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20)),
-                    subtitle: Text(
-                      "from ${DateFormat('dd/MM/yyyy').format(dropOff)}",
-                      style: TextStyle(fontSize: 18),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          address,
+                          style: TextStyle(fontSize: 17),
+                        ),
+                        Text(
+                          "From ${DateFormat('dd/MM/yyyy').format(dropOff)}",
+                          style: TextStyle(fontSize: 17, fontStyle: FontStyle.italic),
+                        ),
+                      ],
                     ),
                     textColor: Colors.orange,
                     iconColor: Colors.orange,
