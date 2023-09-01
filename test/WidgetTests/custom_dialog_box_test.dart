@@ -14,7 +14,6 @@ void main() {
             'smallCellFare': 2.0,
             'largeCellFare': 3.0,
           },
-          map: {}, // You can add the necessary map data here
         ),
       ),
     );
