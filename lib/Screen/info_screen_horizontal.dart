@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-final problemGlobalKey = GlobalKey<FormState>();
 
 class InfoScreenHorizontal extends StatefulWidget {
   const InfoScreenHorizontal(this.uid, {super.key});
@@ -24,6 +23,7 @@ class ProblemFieldValidator {
 
 class _InfoScreenHorizontalState extends State<InfoScreenHorizontal> {
   TextEditingController problemController = TextEditingController();
+  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
   Future<String> loadRulesText() async {
     return await rootBundle.loadString('assets/texts/service_rules.txt');
@@ -32,6 +32,7 @@ class _InfoScreenHorizontalState extends State<InfoScreenHorizontal> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldMessenger(
+      key: _scaffoldMessengerKey,
         child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
@@ -166,15 +167,13 @@ class _InfoScreenHorizontalState extends State<InfoScreenHorizontal> {
                                 //print(problemController.text.length);
                                 if (problemController.text.length > 600 ||
                                     problemController.text.isEmpty) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
+                                  _scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
                                     content: Text(
                                         "Please check the problem description: it must not be empty or longer than 600 characters"),
                                     backgroundColor: Colors.red,
                                   ));
                                 } else {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
+                                  _scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
                                     content: Text("Report sent successfully!"),
                                     backgroundColor: Colors.green,
                                   ));
