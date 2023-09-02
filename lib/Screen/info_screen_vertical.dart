@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../Services/functions.dart';
+
 final problemGlobalKey = GlobalKey<FormState>();
 
 class InfoScreenVertical extends StatefulWidget {
@@ -18,9 +20,9 @@ class _InfoScreenVerticalState extends State<InfoScreenVertical> {
   TextEditingController problemController = TextEditingController();
   bool _problemValid = true;
 
-  Future<String> loadRulesText() async {
-    return await rootBundle.loadString('assets/texts/service_rules.txt');
-  }
+  // Future<String> loadRulesText() async {
+  //   return await rootBundle.loadString('assets/texts/service_rules.txt');
+  // }
 
   @override
   Widget build(BuildContext context) {

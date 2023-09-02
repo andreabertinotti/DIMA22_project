@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
 //
 //Future<String> retrieveLockerAddress(String locker) async {
 //  if (locker == 'Select a locker') {
@@ -34,4 +35,8 @@ List<String> generateReservedSlots(
   }
 
   return reservedSlots;
+}
+
+Future<String> loadRulesText() async {
+  return await rootBundle.loadString('assets/texts/service_rules.txt');
 }

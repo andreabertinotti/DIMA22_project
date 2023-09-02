@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../Services/functions.dart';
+
 class InfoScreenHorizontal extends StatefulWidget {
   const InfoScreenHorizontal(this.uid, {super.key});
   final dynamic uid;
@@ -17,9 +19,9 @@ class _InfoScreenHorizontalState extends State<InfoScreenHorizontal> {
   final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
-  Future<String> loadRulesText() async {
-    return await rootBundle.loadString('assets/texts/service_rules.txt');
-  }
+  // Future<String> loadRulesText() async {
+  //   return await rootBundle.loadString('assets/texts/service_rules.txt');
+  // }
 
   @override
   Widget build(BuildContext context) {

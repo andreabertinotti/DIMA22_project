@@ -83,8 +83,7 @@ void main() {
     expect(find.text('Update phone number'), findsOneWidget);
   });
 
-  testWidgets('User provides too short phone number',
-      (WidgetTester tester) async {
+  testWidgets('User provides wrong phone number', (WidgetTester tester) async {
     // Create a fake instance of Cloud Firestore
     final firestore = FakeFirebaseFirestore();
 
