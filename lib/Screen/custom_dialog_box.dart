@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'bookingLockerWrapper_horizontalView.dart';
-import 'constants.dart';
+import '../Utils/bookingLockerWrapper_horizontalView.dart';
+import '../Utils/constants.dart';
 
 class CustomDialogBox extends StatefulWidget {
   final dynamic document;

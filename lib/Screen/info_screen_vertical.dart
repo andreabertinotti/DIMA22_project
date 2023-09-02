@@ -151,7 +151,7 @@ class _InfoScreenVerticalState extends State<InfoScreenVertical> {
                                           .collection('reports')
                                           .add({
                                         'userUid': widget.uid,
-                                        'locker': problemController.text,
+                                        'report': problemController.text,
                                         'timestamp': DateTime.now(),
                                       });
                                       setState(() {

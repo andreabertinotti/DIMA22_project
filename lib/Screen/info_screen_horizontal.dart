@@ -179,7 +179,7 @@ class _InfoScreenHorizontalState extends State<InfoScreenHorizontal> {
                                           .collection('reports')
                                           .add({
                                         'userUid': widget.uid,
-                                        'locker': problemController.text,
+                                        'report': problemController.text,
                                         'timestamp': DateTime.now(),
                                       });
                                       setState(() {

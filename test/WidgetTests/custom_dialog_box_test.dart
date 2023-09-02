@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pro/Utils/custom_dialog_box.dart';
+import 'package:pro/Screen/custom_dialog_box.dart';
 
 void main() {
   testWidgets('CustomDialogBox widget test', (WidgetTester tester) async {
