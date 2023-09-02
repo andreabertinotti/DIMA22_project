@@ -40,8 +40,6 @@ void main() {
     expect(find.text('555-1234'), findsOneWidget);
     expect(find.text('EDIT PROFILE'), findsOneWidget);
     expect(find.byType(FloatingActionButton), findsOneWidget);
-
-    // Remember to add more tests based on your app's behavior and UI structure
   });
 }
 
