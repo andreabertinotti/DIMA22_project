@@ -7,7 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 import '../Utils/bookingLockerWrapper.dart';
-import '../Utils/custom_dialog_box.dart';
+import 'custom_dialog_box.dart';
 import '../Utils/info_screen_wrapper.dart';
 import '../Utils/wrapper.dart';
 
@@ -69,19 +69,17 @@ class _HomeViewState extends State<HomeView> {
           ),
           actions: [
             IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              Wrapper(widget: MenuWrapper())));
-                },
-                icon: Icon(
-                  Icons.question_mark,
-                  color: Colors.white,
-                ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Wrapper(widget: MenuWrapper())));
+              },
+              icon: Icon(
+                Icons.question_mark,
+                color: Colors.white,
+              ),
             )
-
           ],
         ),
         //drawer: Drawer(
