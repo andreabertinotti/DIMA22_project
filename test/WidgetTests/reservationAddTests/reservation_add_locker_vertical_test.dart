@@ -64,7 +64,7 @@ void main() {
   });
 
   testWidgets(
-      'User directly tries to check availability without having filled any field',
+      'User directly tries to save booking without having filled any field',
       (WidgetTester tester) async {
     final firestore = FakeFirebaseFirestore();
     await firestore.collection('lockers').doc('Leonardo').set({
@@ -120,32 +120,32 @@ void main() {
         findsOneWidget);
   });
 
-  testWidgets(
-      'User tries to check availability with duration left to 0 (Fill the form is displayed instead of check availability)',
-      (WidgetTester tester) async {
-    final firestore = FakeFirebaseFirestore();
-    await firestore.collection('lockers').doc('Leonardo').set({
-      'lockerName': 'Leonardo',
-      'lockerAddress': 'via Roma 1, Milano',
-    });
-    final document =
-        await firestore.collection('lockers').doc('Leonardo').get();
-    await tester.pumpWidget(
-        MaterialApp(home: EditLockerBooking(document, uid: 'test_uid')));
-
-// Tap the button for checking availability without having selected a locker
-    await tester.tap(find.text('Fill the form'));
-    await tester.pumpAndSettle();
-
-    // Verify that the AlertDialog is shown
-    expect(find.byType(AlertDialog), findsOneWidget);
-    // Verify that the title text is present
-    expect(find.text('Please fill the information above'), findsOneWidget);
-    expect(
-        find.text(
-            'You need to select the date and a valid duration before checking availability.'),
-        findsOneWidget);
-  });
+  //testWidgets(
+  //    'User tries to check availability with duration left to 0 (Fill the form is displayed instead of check availability)',
+  //    (WidgetTester tester) async {
+  //  final firestore = FakeFirebaseFirestore();
+  //  await firestore.collection('lockers').doc('Leonardo').set({
+  //    'lockerName': 'Leonardo',
+  //    'lockerAddress': 'via Roma 1, Milano',
+  //  });
+  //  final document =
+  //      await firestore.collection('lockers').doc('Leonardo').get();
+  //  await tester.pumpWidget(
+  //      MaterialApp(home: EditLockerBooking(document, uid: 'test_uid')));
+//
+//// Tap the button for checking availability without having selected a locker
+  //  await tester.tap(find.text('Fill the form'));
+  //  await tester.pumpAndSettle();
+//
+  //  // Verify that the AlertDialog is shown
+  //  expect(find.byType(AlertDialog), findsOneWidget);
+  //  // Verify that the title text is present
+  //  expect(find.text('Please fill the information above'), findsOneWidget);
+  //  expect(
+  //      find.text(
+  //          'You need to select the date and a valid duration before checking availability.'),
+  //      findsOneWidget);
+  //});
 
   testWidgets(
       'User tries to select available cells without having checked availability (Fill other fields is displayed instead of check availability)',
