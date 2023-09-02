@@ -8,36 +8,38 @@ void main() {
       (WidgetTester tester) async {
     final fakeFirestore = FakeFirebaseFirestore();
     await fakeFirestore.collection('users').doc('user_id').set({
-      'name': 'John',
-      'surname': 'Doe',
-      'email': 'john@example.com',
-      'address': '123 Main St',
+      'name': 'Mario',
+      'surname': 'Rossi',
+      'email': 'mario@example.com',
+      'address': 'via Roma 1, Milano',
       'phone': '555-1234',
     });
 
     await tester.pumpWidget(
       MaterialApp(
         home: ProfilePage({
-          'name': 'John',
-          'surname': 'Doe',
-          'email': 'john@example.com',
-          'address': '123 Main St',
+          'name': 'Mario',
+          'surname': 'Rossi',
+          'email': 'mario@example.com',
+          'address': 'via Roma 1, Milano',
           'phone': '555-1234'
         }),
       ),
     );
 
     // Ensure that the user's name and surname are displayed
-    expect(find.text('John Doe'), findsNWidgets(2));
+    expect(find.text('Mario Rossi'), findsNWidgets(2));
 
     // Ensure that the user's email is displayed
-    expect(find.text('john@example.com'), findsOneWidget);
+    expect(find.text('mario@example.com'), findsOneWidget);
 
     // Ensure that the user's address is displayed
-    expect(find.text('123 Main St'), findsOneWidget);
+    expect(find.text('via Roma 1, Milano'), findsOneWidget);
 
     // Ensure that the user's phone is displayed
     expect(find.text('555-1234'), findsOneWidget);
+    expect(find.text('EDIT PROFILE'), findsOneWidget);
+    expect(find.byType(FloatingActionButton), findsOneWidget);
 
     // Remember to add more tests based on your app's behavior and UI structure
   });
