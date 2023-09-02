@@ -105,7 +105,7 @@ void main() {
   });
 
   testWidgets(
-      'User tries to save booking after selecting a locker without filling information',
+      'User tries to save booking after selecting a locker without filling information (duration and cell)',
       (WidgetTester tester) async {
     final List<Map<String, dynamic>> sampleLockers = [
       {
@@ -145,7 +145,8 @@ void main() {
         findsOneWidget);
   });
 
-  testWidgets('User tries select available cells without filling information',
+  testWidgets(
+      'User tries select available cells without filling information (no locker selected)',
       (WidgetTester tester) async {
     final List<Map<String, dynamic>> sampleLockers = [
       {
