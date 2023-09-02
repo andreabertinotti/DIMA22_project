@@ -43,7 +43,8 @@ void main() {
         home: BookingsPage(sampleReservations, uid: 'user_id'),
       ),
     );
-
+    // Verify if the "My Reservations" title is displayed
+    expect(find.text('My Reservations'), findsOneWidget);
     // Expect to find the reservation information in the UI
     expect(find.text('Reservation @ Leonardo'), findsOneWidget);
     expect(find.text('via Roma 1, Milano'), findsOneWidget);
