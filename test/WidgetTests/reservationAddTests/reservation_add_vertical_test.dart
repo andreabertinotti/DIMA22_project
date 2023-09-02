@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
@@ -145,6 +144,41 @@ void main() {
     expect(find.text('Please complete your reservation before saving it'),
         findsOneWidget);
   });
+
+  testWidgets('User tries select available cells without filling information',
+      (WidgetTester tester) async {
+    final List<Map<String, dynamic>> sampleLockers = [
+      {
+        'lockerName': 'Leonardo',
+        'lockerAddress': 'Piazza Leonardo da Vinci 32, Milano',
+      },
+      {
+        'lockerName': 'Duomo',
+        'lockerAddress': 'Piazza Duomo 21, Milano',
+      },
+    ];
+
+    await tester.pumpWidget(
+        MaterialApp(home: EditBooking(sampleLockers, uid: 'test_uid')));
+
+    // Tap the button for selecting a cell without having selected a locker
+    await tester.tap(find.text('Fill other fields'));
+    await tester.pumpAndSettle();
+
+    // Verify that the AlertDialog is shown
+    expect(find.byType(AlertDialog), findsOneWidget);
+    // Verify that the title text is present
+    expect(find.text('Fill the information about your reservation'),
+        findsOneWidget);
+    expect(
+        find.text(
+            'You need to fill the reservation form and check for availability before selecting a cell.'),
+        findsOneWidget);
+    //close alert dialog
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+  });
+
   testWidgets('User tries to check availability without selecting a locker',
       (WidgetTester tester) async {
     final List<Map<String, dynamic>> sampleLockers = [

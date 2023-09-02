@@ -124,6 +124,41 @@ void main() {
   });
 
   testWidgets(
+      'HORIZONTAL User tries selecta available cells without having filled reservation information',
+      (WidgetTester tester) async {
+    final List<Map<String, dynamic>> sampleLockers = [
+      {
+        'lockerName': 'Leonardo',
+        'lockerAddress': 'Piazza Leonardo da Vinci 32, Milano',
+      },
+      {
+        'lockerName': 'Duomo',
+        'lockerAddress': 'Piazza Duomo 21, Milano',
+      },
+    ];
+
+    await tester.pumpWidget(
+        MaterialApp(home: AddBookingTablet(sampleLockers, uid: 'test_uid')));
+
+    // Tap the button for selecting a cell without having selected a locker
+    await tester.tap(find.text('Fill other fields'));
+    await tester.pumpAndSettle();
+
+    // Verify that the AlertDialog is shown
+    expect(find.byType(AlertDialog), findsOneWidget);
+    // Verify that the title text is present
+    expect(find.text('Fill the information about your reservation'),
+        findsOneWidget);
+    expect(
+        find.text(
+            'You need to fill the reservation form and check for availability before selecting a cell.'),
+        findsOneWidget);
+    //close alert dialog
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets(
       'HORIZONTAL User tries to check availability without selecting a locker',
       (WidgetTester tester) async {
     final List<Map<String, dynamic>> sampleLockers = [

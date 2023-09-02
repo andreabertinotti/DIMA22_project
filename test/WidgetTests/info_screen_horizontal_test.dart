@@ -24,31 +24,31 @@ void main() {
     expect(find.text('SUBMIT'), findsOneWidget);
   });
 
-  // testWidgets('User inserts a report that is longer than 600 characters',
-  //     (WidgetTester tester) async {
-  //   // Build our app and trigger a frame.
-  //   await tester.pumpWidget(
-  //     MaterialApp(
-  //       home: InfoScreenHorizontal('testUID'),
-  //     ),
-  //   );
-//
-  //   await tester.enterText(find.widgetWithText(TextField, 'Description'),
-  //       'aaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCdddddddddd');
-//
-  //   // Find the scrollable widget
-  //   final scrollableFinder = find.byKey(Key('report_scroll'));
-//
-  //   // Scroll to the bottom by dragging from the top to the bottom
-  //   await tester.drag(scrollableFinder, const Offset(0.0, -200.0));
-  //   await tester.tap(find.text('SUBMIT'));
-  //   await tester.pump();
-  //   expect(
-  //       find.text(
-  //           'Please check the problem description: it must not be empty or longer than 600 characters'),
-  //       findsOneWidget);
-  // });
-//
+  testWidgets('User inserts a report that is longer than 600 characters',
+      (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(
+      MaterialApp(
+        home: InfoScreenHorizontal('testUID'),
+      ),
+    );
+
+    await tester.enterText(find.widgetWithText(TextField, 'Description'),
+        'aaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCaaaaaaaaaabbbbbbbbbbccccccccccAAAAAAAAAABBBBBBBBBBCCCCCCCCCCdddddddddd');
+
+    // Find the scrollable widget
+    final scrollableFinder = find.byKey(Key('scrollview1'));
+
+    // Scroll to the bottom by dragging from the top to the bottom
+    await tester.drag(scrollableFinder, const Offset(0.0, -200.0));
+    await tester.tap(find.text('SUBMIT'));
+    await tester.pump();
+    expect(
+        find.text(
+            'Please check the problem description: it must not be empty or longer than 600 characters'),
+        findsOneWidget);
+  });
+
   testWidgets('User inserts a report and submits', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(

@@ -148,6 +148,37 @@ void main() {
   });
 
   testWidgets(
+      'User tries to select available cells without having checked availability (Fill other fields is displayed instead of check availability)',
+      (WidgetTester tester) async {
+    final firestore = FakeFirebaseFirestore();
+    await firestore.collection('lockers').doc('Leonardo').set({
+      'lockerName': 'Leonardo',
+      'lockerAddress': 'via Roma 1, Milano',
+    });
+    final document =
+        await firestore.collection('lockers').doc('Leonardo').get();
+    await tester.pumpWidget(
+        MaterialApp(home: EditLockerBooking(document, uid: 'test_uid')));
+
+// Tap the button for selecting a cell without having selected a locker
+    await tester.tap(find.text('Fill other fields'));
+    await tester.pumpAndSettle();
+
+    // Verify that the AlertDialog is shown
+    expect(find.byType(AlertDialog), findsOneWidget);
+    // Verify that the title text is present
+    expect(find.text('Fill the information about your reservation'),
+        findsOneWidget);
+    expect(
+        find.text(
+            'You need to fill the reservation form and check for availability before selecting a cell.'),
+        findsOneWidget);
+    //close alert dialog
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+  });
+
+  testWidgets(
       'User selects a time, and a duration and button check availability is displayed',
       (WidgetTester tester) async {
     final firestore = FakeFirebaseFirestore();

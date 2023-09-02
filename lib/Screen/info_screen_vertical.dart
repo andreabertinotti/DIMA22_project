@@ -14,14 +14,6 @@ class InfoScreenVertical extends StatefulWidget {
   _InfoScreenVerticalState createState() => _InfoScreenVerticalState();
 }
 
-class ProblemFieldValidator {
-  static String? validate(String value) {
-    return (value.isEmpty || value.length > 600)
-        ? 'Password can\'t be empty or shorter than 6 characters'
-        : null;
-  }
-}
-
 class _InfoScreenVerticalState extends State<InfoScreenVertical> {
   TextEditingController problemController = TextEditingController();
   bool _problemValid = true;
