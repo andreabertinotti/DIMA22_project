@@ -19,6 +19,7 @@ class InfoScreenVertical extends StatefulWidget {
 class _InfoScreenVerticalState extends State<InfoScreenVertical> {
   TextEditingController problemController = TextEditingController();
   bool _problemValid = true;
+    final GlobalKey<ScaffoldMessengerState> _reportScaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
   // Future<String> loadRulesText() async {
   //   return await rootBundle.loadString('assets/texts/service_rules.txt');
@@ -27,6 +28,7 @@ class _InfoScreenVerticalState extends State<InfoScreenVertical> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldMessenger(
+      key: _reportScaffoldKey,
         child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.orange,
@@ -157,8 +159,7 @@ class _InfoScreenVerticalState extends State<InfoScreenVertical> {
                                       setState(() {
                                         problemController.text = "";
                                       });
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
+                                      _reportScaffoldKey.currentState?.showSnackBar(SnackBar(
                                         content:
                                             Text("Report sent successfully!"),
                                         backgroundColor: Colors.green,
