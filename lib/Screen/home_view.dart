@@ -106,7 +106,7 @@ class _HomeViewState extends State<HomeView> {
                     markerId: MarkerId(document.id),
                     position: latLng,
 
-                    onTap: () => MediaQuery.of(context).size.width < 800
+                    onTap: () => MediaQuery.of(context).size.width < 600
                         ? _showBottomSheet(document)
                         : showDialog(
                             context: context,

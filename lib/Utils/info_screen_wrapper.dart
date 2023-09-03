@@ -18,7 +18,7 @@ class _MenuWrapperState extends State<MenuWrapper> {
   Widget build(BuildContext context) {
     return _user == null
         ? LoginScreen()
-        : MediaQuery.of(context).size.width > 500
+        : MediaQuery.of(context).size.width > 600
             ? InfoScreenHorizontal(
                 _user!.uid,
               )

@@ -22,7 +22,7 @@ class _ReservationsScreenState extends State<ReservationsScreen> {
           final User? user = snapshot.data;
           return
               //Scaffold(
-              //body: //MediaQuery.of(context).size.width < 500
+              //body: //MediaQuery.of(context).size.width < 600
               //? BookingsPage(uid: snapshot.data!.uid)
               //:
               ReservationsListWrapper(); //);
