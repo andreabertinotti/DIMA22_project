@@ -34,7 +34,7 @@ class _ReservationsListWrapperState extends State<ReservationsListWrapper> {
                     child: Text("Error loading data."),
                   );
                 } else {
-                  return MediaQuery.of(context).size.width < 500
+                  return MediaQuery.of(context).size.width < 600
                       ? BookingsPage(snapshot.data!, uid: user!.uid)
                       : TabletBookingsPage(snapshot.data!, uid: user!.uid);
                 }

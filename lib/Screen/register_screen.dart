@@ -84,7 +84,7 @@ class _RegisterState extends State<Register> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: SizedBox(
-                        width: MediaQuery.of(context).size.width > 500
+                        width: MediaQuery.of(context).size.width > 600
                             ? MediaQuery.of(context).size.width * 0.4
                             : MediaQuery.of(context).size.width * 0.75,
                         child: TextFormField(
@@ -107,7 +107,7 @@ class _RegisterState extends State<Register> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: SizedBox(
-                        width: MediaQuery.of(context).size.width > 500
+                        width: MediaQuery.of(context).size.width > 600
                             ? MediaQuery.of(context).size.width * 0.4
                             : MediaQuery.of(context).size.width * 0.75,
                         child: TextFormField(
@@ -130,7 +130,7 @@ class _RegisterState extends State<Register> {
                     ),
                     Container(
                       padding: EdgeInsets.only(bottom: 5),
-                      width: MediaQuery.of(context).size.width > 500
+                      width: MediaQuery.of(context).size.width > 600
                           ? MediaQuery.of(context).size.width * 0.2
                           : MediaQuery.of(context).size.width * 0.45,
                       child: ElevatedButton(
