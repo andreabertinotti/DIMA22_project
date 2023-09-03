@@ -133,7 +133,7 @@ class _HomeViewState extends State<HomeView> {
                 myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,
                 initialCameraPosition:
-                    CameraPosition(target: initial_location, zoom: 12.8),
+                    CameraPosition(target: initial_location, zoom: 12.6),
                 markers: markers,
               );
             },
